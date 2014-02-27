@@ -5,8 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.keygen.KeyGenerators;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
@@ -44,9 +42,9 @@ public class AuthorizationSpec {
 //        assertTrue(encoder.matches("myPassword", encryptedPassword));
     }
 
-    private String encryptPassword(String password) {
-        String salt = KeyGenerators.string().generateKey();
-        StandardPasswordEncoder encoder = new StandardPasswordEncoder(salt);
-        return encoder.encode(password);
-    }
+//    private String encryptPassword(String password) {
+//        String salt = KeyGenerators.string().generateKey();
+//        StandardPasswordEncoder encoder = new StandardPasswordEncoder(salt);
+//        return encoder.encode(password);
+//    }
 }
