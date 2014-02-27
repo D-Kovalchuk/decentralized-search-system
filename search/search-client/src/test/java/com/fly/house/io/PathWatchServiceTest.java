@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
  * Created by dimon on 1/29/14.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class PathWatchServiceSpec {
+public class PathWatchServiceTest {
 
     @Mock
     private WatchService watchService;

@@ -8,12 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.util.List;
 
 import static java.nio.file.Files.newInputStream;
+import static java.nio.file.Files.newOutputStream;
 
 /**
  * Created by dimon on 1/31/14.
@@ -24,6 +27,13 @@ public class CookieManager {
     private Path cookieDirPath;
     private HttpHeaders cookieHeader = new HttpHeaders();
     private static Logger logger = LoggerFactory.getLogger(CookieManager.class);
+
+    public CookieManager() {
+    }
+
+    CookieManager(Path path) {
+        cookieDirPath = path;
+    }
 
     public HttpHeaders getCookieHeader() {
         if (!cookieHeader.isEmpty()) {
@@ -38,8 +48,7 @@ public class CookieManager {
     public void saveCookie(List<String> cookie) {
         String fileName = generateFileName(cookie);
         Path path = cookieDirPath.resolve(fileName);
-        try (OutputStream is = Files.newOutputStream(path);
-             ObjectOutputStream oos = new ObjectOutputStream(is)) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(newOutputStream(path))) {
             oos.writeObject(cookie);
             cookieHeader.put("Cookie", cookie);
         } catch (IOException e) {
@@ -62,7 +71,7 @@ public class CookieManager {
     private Path getCookiePath() {
         File file = cookieDirPath.toFile();
         String[] cookieNames = file.list();
-        if (cookieNames.length == 1) {
+        if (cookieNames.length < 1) {
             throw new CookieNotFoundException("Cookie not found. Maybe you not authorized");
         }
         String cookieName = cookieNames[0];

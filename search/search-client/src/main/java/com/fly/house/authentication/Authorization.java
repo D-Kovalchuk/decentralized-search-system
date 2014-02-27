@@ -18,14 +18,18 @@ import static org.springframework.http.HttpMethod.POST;
 @Component
 public class Authorization {
 
-    @Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
     private CookieManager cookieManager;
 
-    @Autowired
     private HttpStatusHandler httpHandler;
+
+    @Autowired
+    public Authorization(CookieManager cookieManager, RestTemplate restTemplate, HttpStatusHandler httpHandler) {
+        this.cookieManager = cookieManager;
+        this.restTemplate = restTemplate;
+        this.httpHandler = httpHandler;
+    }
 
     private static Logger logger = LoggerFactory.getLogger(Authorization.class);
 

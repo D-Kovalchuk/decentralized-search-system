@@ -33,7 +33,7 @@ import static org.mockito.Mockito.spy;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-test.xml")
-public class FilePathRepositorySpec {
+public class FilePathRepositoryTest {
 
     @Autowired
     @Qualifier("pathsListFile")
@@ -48,12 +48,12 @@ public class FilePathRepositorySpec {
 
     @Before
     public void setUp() throws Exception {
-        veryFirstPath = Paths.get("search-client/src/test/resources/share").toAbsolutePath();
-        anotherPath = Paths.get("search-client/src/test/resources/anotherFolder").toAbsolutePath();
-        relativePath = Paths.get("search-client/src/test/resources/relative");
-        pathToFile = Paths.get("search-client/src/test/resources/file").toAbsolutePath();
+        veryFirstPath = Paths.get("share").toAbsolutePath();
+        anotherPath = Paths.get("anotherFolder").toAbsolutePath();
+        relativePath = Paths.get("relative");
+        pathToFile = Paths.get("file").toAbsolutePath();
         createFolders();
-        notRealPath = Paths.get("search-client/src/test/not/real/path");
+        notRealPath = Paths.get("not/real/path");
 
     }
 

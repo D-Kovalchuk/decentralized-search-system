@@ -20,7 +20,7 @@
     <bean id="restServer" class="org.springframework.test.web.client.MockRestServiceServer"/>
 
     <bean id="pathsListFile" class="java.nio.file.Paths" factory-method="get">
-        <constructor-arg index="0" value="search-client/src/test/resources/share/paths.pth" type="java.lang.String"/>
+        <constructor-arg index="0" value="paths.pth" type="java.lang.String"/>
         <constructor-arg index="1">
             <list>
                 <value></value>
