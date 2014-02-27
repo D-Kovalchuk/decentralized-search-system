@@ -1,5 +1,6 @@
-package com.fly.house.io;
+package com.fly.house.io.snapshot;
 
+import com.fly.house.io.event.Event;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.fly.house.io.EventType.CREATE;
-import static com.fly.house.io.EventType.DELETE;
+import static com.fly.house.io.event.EventType.CREATE;
+import static com.fly.house.io.event.EventType.DELETE;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

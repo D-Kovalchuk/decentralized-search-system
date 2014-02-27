@@ -1,11 +1,9 @@
-package com.fly.house.io;
+package com.fly.house.io.repositories;
 
-import com.fly.house.io.api.PathRepository;
 import com.fly.house.io.exceptions.DirectoryNotFoundException;
 import com.fly.house.io.exceptions.NotDirectoryException;
 import com.fly.house.io.exceptions.PathNotRegisteredException;
 import com.fly.house.io.exceptions.PathRegisteredException;
-import com.fly.house.io.repositories.FilePathRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +48,6 @@ public class FilePathRepositorySpec {
 
     @Before
     public void setUp() throws Exception {
-
         veryFirstPath = Paths.get("search-client/src/test/resources/share").toAbsolutePath();
         anotherPath = Paths.get("search-client/src/test/resources/anotherFolder").toAbsolutePath();
         relativePath = Paths.get("search-client/src/test/resources/relative");

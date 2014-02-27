@@ -1,4 +1,4 @@
-package com.fly.house.io;
+package com.fly.house.io.snapshot;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,23 +28,23 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class SnapshotBuilderSepc {
 
-    private SnapshotBuilder builder;
     @Mock
     private File file;
     @Mock
     private Path pathMock;
+    private SnapshotBuilder builder;
     private File snapshotDir;
-    private Path path;
+    private Path pathToDirectory;
 
 
     @Before
     public void setUp() {
         snapshotDir = new File("search-client/src/test/resources/snapshots/");
-        path = Paths.get("search-client/src/test/resources/path");
+        pathToDirectory = Paths.get("search-client/src/test/resources/path");
         snapshotDir.mkdir();
-        path.toFile().mkdir();
+        pathToDirectory.toFile().mkdir();
 
-        builder = new SnapshotBuilder(path);
+        builder = new SnapshotBuilder(pathToDirectory);
     }
 
     @After
@@ -54,7 +54,7 @@ public class SnapshotBuilderSepc {
             file1.delete();
         }
         snapshotDir.delete();
-        path.toFile().delete();
+        pathToDirectory.toFile().delete();
     }
 
     @Test
@@ -77,6 +77,7 @@ public class SnapshotBuilderSepc {
 
         builder = new SnapshotBuilder(pathMock);
         Snapshot freshSnapshot = builder.getFreshSnapshot();
+
         assertThat(freshSnapshot.getFiles().size(), is(2));
     }
 
@@ -88,13 +89,25 @@ public class SnapshotBuilderSepc {
 
     @Test
     public void getSteelSnapshotShouldLoadSnapshotWhenSteelSnapshotExists() throws IOException {
-        builder = new SnapshotBuilder(path);
         Path snapshotPath = snapshotDir.toPath();
         saveSnapshot(snapshotPath);
 
         Snapshot steelSnapshot = builder.getSteelSnapshot();
 
         assertThat(steelSnapshot.getFiles().size(), is(3));
+    }
+
+    @Test
+    public void save() {
+        List<File> list = new ArrayList<>();
+        list.add(new File("file1"));
+        list.add(new File("file2"));
+        Snapshot snapshot = new Snapshot(list);
+
+        builder.save(snapshot);
+
+        Path resolve = snapshotDir.toPath().resolve(builder.hash());
+        assertThat(resolve.toFile().exists(), is(true));
     }
 
     private void saveSnapshot(Path path) throws IOException {
