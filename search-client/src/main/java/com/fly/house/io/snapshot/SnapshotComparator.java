@@ -1,4 +1,7 @@
-package com.fly.house.io;
+package com.fly.house.io.snapshot;
+
+import com.fly.house.io.event.Event;
+import com.fly.house.io.event.EventType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,41 +12,39 @@ import java.util.List;
  */
 public class SnapshotComparator {
 
-
-    public SnapshotComparator() {
-
-    }
+    private List<Event> list;
 
     public List<Event> getDiff(Snapshot newSnapshot, Snapshot oldSnapshot) {
-        List<Event> list = new ArrayList<>();
-
+        list = new ArrayList<>();
         List<File> newSnapshotFiles = newSnapshot.getFiles();
         List<File> oldSnapshotFiles = oldSnapshot.getFiles();
+        fillWithCreatedFiles(newSnapshotFiles, oldSnapshotFiles);
+        fillWithDeletedFiles(newSnapshotFiles, oldSnapshotFiles);
+        return list;
+    }
 
-        List<File> added = getCreatedFiles(newSnapshotFiles, oldSnapshotFiles);
+    private void fillWithDeletedFiles(List<File> newSnapshotFiles, List<File> oldSnapshotFiles) {
         List<File> removed = getDeletedFiles(newSnapshotFiles, oldSnapshotFiles);
-
-
-        for (File file : added) {
-            Event event = Event.create(EventType.CREATE)
-                    .withNewPath(file.toPath());
-            list.add(event);
-        }
-
         for (File file : removed) {
             Event event = Event.create(EventType.DELETE)
                     .withOldPath(file.toPath());
             list.add(event);
         }
-        return list;
+    }
+
+    private void fillWithCreatedFiles(List<File> newSnapshotFiles, List<File> oldSnapshotFiles) {
+        List<File> added = getCreatedFiles(newSnapshotFiles, oldSnapshotFiles);
+        for (File file : added) {
+            Event event = Event.create(EventType.CREATE)
+                    .withNewPath(file.toPath());
+            list.add(event);
+        }
     }
 
     private List<File> getCreatedFiles(List<File> newSnapshotFiles, List<File> oldSnapshotFiles) {
         List<File> newCopy = new ArrayList<>(newSnapshotFiles);
         List<File> oldCopy = new ArrayList<>(oldSnapshotFiles);
-
         oldCopy.retainAll(newCopy);
-
         return newCopy;
     }
 

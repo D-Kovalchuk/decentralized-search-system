@@ -1,9 +1,9 @@
 package com.fly.house.io;
 
-import com.fly.house.io.api.PathRepository;
 import com.fly.house.io.exceptions.PathRepositoryException;
 import com.fly.house.io.exceptions.WatchServiceRegistrationException;
 import com.fly.house.io.exceptions.WatchServiceUnregistrationException;
+import com.fly.house.io.repositories.PathRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +85,19 @@ public class WatchServiceStorage {
         return new ArrayList<>(values);
     }
 
+    public List<Path> getPaths() {
+        return new ArrayList<>(storage.keySet());
+    }
+
+    /**
+     * Close file system and associated with it other resources.
+     */
+    @PreDestroy
+    public void destroy() {
+        logger.debug("Closing file system");
+        closeQuietly(fileSystem);
+    }
+
     void setStorage(Map<Path, WatchService> map) {
         storage = map;
     }
@@ -110,17 +123,5 @@ public class WatchServiceStorage {
                 logger.warn("Cannot close watch service", e);
             }
         }
-    }
-
-    /**
-     * Close file system and associated with it other resources.
-     */
-    @PreDestroy
-    public void destroy() {
-        closeQuietly(fileSystem);
-    }
-
-    public List<Path> getPaths() {
-        return new ArrayList<>(storage.keySet());
     }
 }

@@ -9,6 +9,8 @@
 
     <context:component-scan base-package="com.fly.house"/>
 
+    <context:property-placeholder location="application.properties"/>
+
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
 
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">

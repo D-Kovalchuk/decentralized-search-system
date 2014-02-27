@@ -1,13 +1,13 @@
-package com.fly.house.io.api;
+package com.fly.house.io.operations;
 
-import com.fly.house.io.Event;
+import com.fly.house.io.event.Event;
 
 import java.util.Collection;
 
 /**
  * Created by dimon on 1/31/14.
  */
-public abstract class AbstractFileOperationHistory {
+public abstract class AbstractFileOperationHistory implements OperationHistory {
 
     protected FileOperation fileManager;
 
@@ -15,6 +15,7 @@ public abstract class AbstractFileOperationHistory {
         this.fileManager = fileManager;
     }
 
+    @Override
     public void putCommand(Event event) {
         switch (event.getType()) {
             case CREATE:
@@ -30,6 +31,7 @@ public abstract class AbstractFileOperationHistory {
 
     }
 
+    @Override
     public void putCommands(Collection<? extends Event> events) {
         for (Event event : events) {
             putCommand(event);

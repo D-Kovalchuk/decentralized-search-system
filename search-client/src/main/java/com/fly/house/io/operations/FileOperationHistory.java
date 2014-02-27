@@ -1,9 +1,6 @@
 package com.fly.house.io.operations;
 
-import com.fly.house.io.Event;
-import com.fly.house.io.api.AbstractFileOperationHistory;
-import com.fly.house.io.api.Command;
-import com.fly.house.io.api.FileOperation;
+import com.fly.house.io.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

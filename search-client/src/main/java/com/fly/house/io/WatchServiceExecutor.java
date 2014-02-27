@@ -1,6 +1,9 @@
 package com.fly.house.io;
 
-import com.fly.house.io.operations.FileOperationHistory;
+import com.fly.house.io.event.Event;
+import com.fly.house.io.operations.OperationHistory;
+import com.fly.house.io.snapshot.SnapshotBuilder;
+import com.fly.house.io.snapshot.SnapshotComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -23,14 +26,14 @@ import java.util.List;
 @Component
 public class WatchServiceExecutor {
 
-    private final FileOperationHistory operationFactory;
+    private final OperationHistory operationFactory;
     private final WatchServiceStorage storage;
     private final ThreadPoolTaskExecutor executor;
 
     @Autowired
     public WatchServiceExecutor(WatchServiceStorage storage,
                                 ThreadPoolTaskExecutor executor,
-                                FileOperationHistory operationFactory) {
+                                OperationHistory operationFactory) {
         this.storage = storage;
         this.operationFactory = operationFactory;
         this.executor = executor;
@@ -47,9 +50,6 @@ public class WatchServiceExecutor {
         }
     }
 
-
-    //TODO should shutdown executor
-    //TODO set exception handler
     public void createWatchService(Path path) {
         addChangesToHistory(path);
         WatchService watchService = storage.register(path);
@@ -62,5 +62,4 @@ public class WatchServiceExecutor {
         List<Event> events = comparator.getDiff(builder.getFreshSnapshot(), builder.getSteelSnapshot());
         operationFactory.putCommands(events);
     }
-
 }

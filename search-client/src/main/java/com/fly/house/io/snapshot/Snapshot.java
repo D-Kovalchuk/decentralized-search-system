@@ -1,4 +1,4 @@
-package com.fly.house.io;
+package com.fly.house.io.snapshot;
 
 import java.io.File;
 import java.io.Serializable;
