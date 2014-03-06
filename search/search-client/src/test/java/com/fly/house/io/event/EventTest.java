@@ -1,6 +1,5 @@
-package com.fly.house.io;
+package com.fly.house.io.event;
 
-import com.fly.house.io.event.Event;
 import org.junit.Test;
 
 import java.nio.file.Path;

@@ -27,7 +27,7 @@ public class SnapshotBuilder {
     private String hash;
     private Path path;
     private static Logger logger = LoggerFactory.getLogger(SnapshotBuilder.class);
-    private static final Snapshot EMPTY_SNAPSHOT = new Snapshot(Collections.<File>emptyList());
+    public static final Snapshot EMPTY_SNAPSHOT = new Snapshot(Collections.<File>emptyList());
 
     public SnapshotBuilder(Path path) {
         this.path = path;

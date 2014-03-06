@@ -1,8 +1,13 @@
 package com.fly.house.io.operations;
 
 import com.fly.house.io.event.Event;
+import com.fly.house.io.snapshot.Snapshot;
+import com.fly.house.io.snapshot.SnapshotBuilder;
+import com.fly.house.io.snapshot.SnapshotComparator;
 
+import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by dimon on 1/31/14.
@@ -28,7 +33,6 @@ public abstract class AbstractFileOperationHistory implements OperationHistory {
                 update(event);
                 break;
         }
-
     }
 
     @Override
@@ -36,6 +40,16 @@ public abstract class AbstractFileOperationHistory implements OperationHistory {
         for (Event event : events) {
             putCommand(event);
         }
+    }
+
+    @Override
+    public void addChangesToHistory(Path path) {
+        SnapshotBuilder builder = new SnapshotBuilder(path);
+        SnapshotComparator comparator = new SnapshotComparator();
+        Snapshot freshSnapshot = builder.getFreshSnapshot();
+        Snapshot steelSnapshot = builder.getSteelSnapshot();
+        List<Event> events = comparator.getDiff(freshSnapshot, steelSnapshot);
+        putCommands(events);
     }
 
     protected abstract void create(Event event);

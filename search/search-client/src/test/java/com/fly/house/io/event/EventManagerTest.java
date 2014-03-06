@@ -1,7 +1,5 @@
-package com.fly.house.io;
+package com.fly.house.io.event;
 
-import com.fly.house.io.event.Event;
-import com.fly.house.io.event.EventManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,14 +11,15 @@ import java.util.ArrayList;
 import static com.fly.house.io.event.EventType.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * Created by dimon on 2/27/14.
  */
-public class EventManagerSpec {
+public class EventManagerTest {
 
     private EventManager eventManager;
 
@@ -52,7 +51,6 @@ public class EventManagerSpec {
         Event event = eventManager.encapsulateEvents(events);
 
         assertNotNull(event.getNewPath());
-        assertNull(event.getOldPath());
     }
 
     @Test
@@ -71,7 +69,6 @@ public class EventManagerSpec {
         Event event = eventManager.encapsulateEvents(events);
 
         assertNotNull(event.getOldPath());
-        assertNull(event.getNewPath());
     }
 
     @Test

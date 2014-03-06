@@ -7,6 +7,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fly.house.io.snapshot.SnapshotBuilder.EMPTY_SNAPSHOT;
+import static java.util.Collections.emptyList;
+
 /**
  * Created by dimon on 1/30/14.
  */
@@ -15,6 +18,9 @@ public class SnapshotComparator {
     private List<Event> list;
 
     public List<Event> getDiff(Snapshot newSnapshot, Snapshot oldSnapshot) {
+        if (newSnapshot == EMPTY_SNAPSHOT && oldSnapshot == EMPTY_SNAPSHOT) {
+            return emptyList();
+        }
         list = new ArrayList<>();
         List<File> newSnapshotFiles = newSnapshot.getFiles();
         List<File> oldSnapshotFiles = oldSnapshot.getFiles();
