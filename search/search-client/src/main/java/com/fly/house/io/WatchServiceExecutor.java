@@ -1,18 +1,13 @@
 package com.fly.house.io;
 
-import com.fly.house.io.event.Event;
 import com.fly.house.io.operations.OperationHistory;
-import com.fly.house.io.snapshot.SnapshotBuilder;
-import com.fly.house.io.snapshot.SnapshotComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.nio.file.Path;
 import java.nio.file.WatchService;
-import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Class responsible for creating and starting <code>PathWatchService</code>.
@@ -39,27 +34,18 @@ public class WatchServiceExecutor {
         this.executor = executor;
     }
 
-    @PostConstruct
     public void init() {
-        for (Path path : storage.getPaths()) {
-            addChangesToHistory(path);
-        }
-        Collection<WatchService> services = storage.getWatchServices();
-        for (WatchService service : services) {
-            executor.submit(new PathWatchService(service, operationFactory));
+        for (Map.Entry<Path, WatchService> entry : storage.asMap().entrySet()) {
+            operationFactory.addChangesToHistory(entry.getKey());
+            executor.submit(new PathWatchService(entry.getValue(), operationFactory));
         }
     }
 
     public void createWatchService(Path path) {
-        addChangesToHistory(path);
+        operationFactory.addChangesToHistory(path);
         WatchService watchService = storage.register(path);
         executor.submit(new PathWatchService(watchService, operationFactory));
     }
 
-    private void addChangesToHistory(Path path) {
-        SnapshotBuilder builder = new SnapshotBuilder(path);
-        SnapshotComparator comparator = new SnapshotComparator();
-        List<Event> events = comparator.getDiff(builder.getFreshSnapshot(), builder.getSteelSnapshot());
-        operationFactory.putCommands(events);
-    }
+
 }

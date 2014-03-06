@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.Closeable;
 import java.io.IOException;
@@ -17,7 +16,9 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.WatchService;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
@@ -42,8 +43,7 @@ public class WatchServiceStorage {
         this.storage = new HashMap<>();
     }
 
-    @PostConstruct
-    public void init() {
+    public void load() {
         logger.info("Initialization {}", WatchServiceStorage.class.toString());
         List<Path> registeredPaths = pathManager.getPaths();
         for (Path path : registeredPaths) {
@@ -80,13 +80,8 @@ public class WatchServiceStorage {
         return watchService;
     }
 
-    public List<WatchService> getWatchServices() {
-        Collection<WatchService> values = storage.values();
-        return new ArrayList<>(values);
-    }
-
-    public List<Path> getPaths() {
-        return new ArrayList<>(storage.keySet());
+    public Map<Path, WatchService> asMap() {
+        return new HashMap<>(storage);
     }
 
     /**
