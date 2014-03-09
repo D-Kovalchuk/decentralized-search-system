@@ -5,6 +5,4 @@ package com.fly.house.ui.event;
  */
 public class LoginEvent {
 
-    // can have some information
-
 }

@@ -7,12 +7,10 @@ import javax.swing.*;
 /**
  * Created by dimon on 3/6/14.
  */
-public interface AuthorizationView {
+public interface AuthorizationView extends View<AuthorizationPresenter> {
+
     JTextField getPasswordField();
 
     JTextField getLoginField();
 
-    JPanel asJPanel();
-
-    void setPresenter(AuthorizationPresenter presenter);
 }

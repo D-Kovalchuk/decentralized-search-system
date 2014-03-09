@@ -11,11 +11,8 @@ import java.awt.event.ActionEvent;
  * Created by dimon on 3/6/14.
  */
 @Component
-//@Scope(SCOPE_PROTOTYPE)
-public class AuthorizationViewImpl extends JPanel implements AuthorizationView {
+public class AuthorizationViewImpl extends AbstractView<AuthorizationPresenter> implements AuthorizationView {
 
-
-    private AuthorizationPresenter presenter;
     private JButton authButton = new JButton("login");
     private JTextField loginField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
@@ -41,16 +38,6 @@ public class AuthorizationViewImpl extends JPanel implements AuthorizationView {
     @Override
     public JTextField getLoginField() {
         return loginField;
-    }
-
-    @Override
-    public JPanel asJPanel() {
-        return this;
-    }
-
-    @Override
-    public void setPresenter(AuthorizationPresenter presenter) {
-        this.presenter = presenter;
     }
 
     public void addLoginButtonClickedListener() {

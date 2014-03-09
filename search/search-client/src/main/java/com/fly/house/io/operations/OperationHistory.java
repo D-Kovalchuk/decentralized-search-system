@@ -4,6 +4,7 @@ import com.fly.house.io.event.Event;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by dimon on 2/26/14.
@@ -16,4 +17,5 @@ public interface OperationHistory {
 
     void addChangesToHistory(Path path);
 
+    List<Command> getHistory();
 }

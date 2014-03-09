@@ -20,6 +20,7 @@ public class FileOperationHistory extends AbstractFileOperationHistory {
         super(fileManager);
     }
 
+    @Override
     public List<Command> getHistory() {
         return history;
     }
