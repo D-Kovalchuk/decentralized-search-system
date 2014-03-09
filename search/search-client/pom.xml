@@ -14,6 +14,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -21,7 +29,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ApplicationClass</mainClass>
+                            <mainClass>com.fly.house.ApplicationClass</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
