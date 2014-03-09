@@ -1,5 +1,7 @@
+package com.fly.house;
+
 import com.fly.house.ui.view.RootView;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 
@@ -10,19 +12,10 @@ public class ApplicationClass {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // create infrastructure
-        ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("spring.xml");
-//        final TopMenu menu = appContext.getBean(TopMenu.class);
-//        System.out.println(menu);
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext(Config.class);
         final RootView rootView = appContext.getBean(RootView.class);
 
-
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
         rootView.run();
-//            }
-//        });
-
 
 //        appContext.registerShutdownHook();
 //        appContext.close();

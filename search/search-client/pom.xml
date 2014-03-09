@@ -29,7 +29,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ApplicationClass</mainClass>
+                            <mainClass>com.fly.house.ApplicationClass</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
