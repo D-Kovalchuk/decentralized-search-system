@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.fly.house.io.event.EventType.*;
 import static java.nio.file.StandardWatchEventKinds.*;
@@ -30,73 +31,73 @@ public class EventManagerTest {
 
     @Test
     public void encapsulateEventsShouldReturnNullWhenFiredNoEvents() {
-        Event event = eventManager.encapsulateEvents(new ArrayList<WatchEvent<Path>>());
+        List<Event> event = eventManager.encapsulateEvents(new ArrayList<WatchEvent<Path>>());
 
-        assertThat(event.getType(), is(UNKNOWN));
+        assertThat(event.get(0).getType(), is(UNKNOWN));
     }
 
     @Test
     public void encapsulateEventsShouldReturnCreateEvent() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_CREATE);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertThat(event.getType(), is(CREATE));
+        assertThat(event.get(0).getType(), is(CREATE));
     }
 
     @Test
     public void encapsulateEventsShouldReturnCreateEventAndNewPathIsNotNull() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_CREATE);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertNotNull(event.getNewPath());
+        assertNotNull(event.get(0).getPath());
     }
 
     @Test
     public void encapsulateEventsShouldReturnDeleteEvent() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_DELETE);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertThat(event.getType(), is(DELETE));
+        assertThat(event.get(0).getType(), is(DELETE));
     }
 
     @Test
     public void encapsulateEventsShouldReturnDeleteEventAndOldPathIsNotNull() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_DELETE);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertNotNull(event.getOldPath());
+        assertNotNull(event.get(0).getPath());
     }
 
     @Test
     public void encapsulateEventsShouldReturnUnknownEventWhenPassedModifyEvent() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_MODIFY);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertThat(event.getType(), is(UNKNOWN));
+        assertThat(event.get(0).getType(), is(UNKNOWN));
     }
 
     @Test
-    public void encapsulateEventsShouldReturnModifyEvent() {
+    public void encapsulateEventsShouldReturnTwoEvent() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_CREATE, ENTRY_DELETE);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertThat(event.getType(), is(MODIFY));
+        assertThat(event.size(), is(2));
     }
 
     @Test
     public void encapsulateEventsShouldReturnModifyEventAndNewPathAndOldPathAreNotNull() {
         ArrayList<WatchEvent<Path>> events = createEvent(ENTRY_CREATE, ENTRY_DELETE);
 
-        Event event = eventManager.encapsulateEvents(events);
+        List<Event> event = eventManager.encapsulateEvents(events);
 
-        assertNotNull(event.getNewPath());
-        assertNotNull(event.getOldPath());
+        assertNotNull(event.get(0).getPath());
+        assertNotNull(event.get(1).getPath());
     }
 
 

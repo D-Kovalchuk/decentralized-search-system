@@ -29,9 +29,6 @@ public abstract class AbstractFileOperationHistory implements OperationHistory {
             case DELETE:
                 delete(event);
                 break;
-            case MODIFY:
-                update(event);
-                break;
         }
     }
 
@@ -55,8 +52,6 @@ public abstract class AbstractFileOperationHistory implements OperationHistory {
     protected abstract void create(Event event);
 
     protected abstract void delete(Event event);
-
-    protected abstract void update(Event event);
 
 
 }

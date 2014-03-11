@@ -4,8 +4,8 @@ import com.fly.house.io.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by dimon on 1/27/14.
@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class FileOperationHistory extends AbstractFileOperationHistory {
 
-    private List<Command> history = new CopyOnWriteArrayList<>();
+    private Map<Event, Command> history = new ConcurrentHashMap<>();
 
     @Autowired
     public FileOperationHistory(FileOperation fileManager) {
@@ -21,23 +21,18 @@ public class FileOperationHistory extends AbstractFileOperationHistory {
     }
 
     @Override
-    public List<Command> getHistory() {
+    public Map<Event, Command> getHistory() {
         return history;
     }
 
     @Override
     protected void create(Event event) {
-        history.add(new CreateFileCommand(fileManager, event.getNewPath()));
+        history.put(event, new CreateFileCommand(fileManager, event.getPath()));
     }
 
     @Override
     protected void delete(Event event) {
-        history.add(new DeleteFileCommand(fileManager, event.getOldPath()));
-    }
-
-    @Override
-    protected void update(Event event) {
-        history.add(new UpdateFileCommand(fileManager, event.getNewPath(), event.getOldPath()));
+        history.put(event, new DeleteFileCommand(fileManager, event.getPath()));
     }
 
 }
