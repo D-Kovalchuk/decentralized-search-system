@@ -2,7 +2,7 @@ package com.fly.house.ui.presenter;
 
 import com.fly.house.authentication.Authorization;
 import com.fly.house.io.exceptions.WatchServiceException;
-import com.fly.house.ui.event.LoginEvent;
+import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.view.AuthorizationView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
@@ -30,9 +30,10 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
         String password = view.getPasswordField().getText();
         try {
             authorization.authentication(login, password);
-            eventBus.post(new LoginEvent());
+            eventBus.post(new ChoosePathEvent());
         } catch (WatchServiceException e) {
-            //fixme
+            String message = e.getMessage();
+            view.getErrorLabel().setText(message);
         }
     }
 

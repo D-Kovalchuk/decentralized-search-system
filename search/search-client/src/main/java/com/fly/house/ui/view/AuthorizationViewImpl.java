@@ -16,9 +16,10 @@ public class AuthorizationViewImpl extends AbstractView<AuthorizationPresenter> 
     private JButton authButton = new JButton("login");
     private JTextField loginField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
+    private JLabel errorLabel = new JLabel();
 
     public AuthorizationViewImpl() {
-        super(new GridLayout(3, 2));
+        super(new GridLayout(4, 2));
         setPreferredSize(new Dimension(500, 200));
         add(new Label("Login: "));
         add(loginField);
@@ -27,6 +28,7 @@ public class AuthorizationViewImpl extends AbstractView<AuthorizationPresenter> 
         add(passwordField);
         add(new Label());
         add(authButton);
+        add(errorLabel);
         addLoginButtonClickedListener();
     }
 
@@ -38,6 +40,11 @@ public class AuthorizationViewImpl extends AbstractView<AuthorizationPresenter> 
     @Override
     public JTextField getLoginField() {
         return loginField;
+    }
+
+    @Override
+    public JLabel getErrorLabel() {
+        return errorLabel;
     }
 
     public void addLoginButtonClickedListener() {

@@ -7,11 +7,6 @@ import com.fly.house.io.exceptions.PathRegisteredException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,23 +26,19 @@ import static org.mockito.Mockito.spy;
 /**
  * Created by dimon on 1/26/14.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-test.xml")
 public class FilePathRepositoryTest {
 
-    @Autowired
-    @Qualifier("pathsListFile")
-    private Path pathRegister;
-    @Autowired
     private PathRepository pathRepository;
     private Path veryFirstPath;
     private Path anotherPath;
     private Path relativePath;
     private Path notRealPath;
     private Path pathToFile;
+    private Path pathRegister;
 
     @Before
     public void setUp() throws Exception {
+        pathRegister = Paths.get("paths.pth");
         veryFirstPath = Paths.get("share").toAbsolutePath();
         anotherPath = Paths.get("anotherFolder").toAbsolutePath();
         relativePath = Paths.get("relative");
@@ -55,6 +46,7 @@ public class FilePathRepositoryTest {
         createFolders();
         notRealPath = Paths.get("not/real/path");
 
+        pathRepository = new FilePathRepository(pathRegister);
     }
 
     @After
