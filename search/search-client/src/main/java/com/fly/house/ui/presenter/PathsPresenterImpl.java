@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Set;
 import java.util.Vector;
 
@@ -22,6 +20,7 @@ import java.util.Vector;
 @Component
 public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements PathsPresenter {
 
+    private static final int EDITABLE_COLUMN = 1;
     private WatchServiceStorage storage;
     private DefaultTableModel dataModel;
 
@@ -34,57 +33,35 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
 
     @PostConstruct
     public void init() {
-        JTable table = view.getTable();
         String[] header = view.getHeader();
 
         Set<Path> pathsSet = storage.asMap().keySet();
         Path[] paths = pathsSet.toArray(new Path[pathsSet.size()]);
-        Object[][] data = new Object[header.length][2];
+        Object[][] data = new Object[header.length][pathsSet.size()];
+        fillData(paths, data);
 
+        dataModel = new TableModel(data, header, EDITABLE_COLUMN);
+        view.getTable().setModel(dataModel);
+    }
 
-        for (int i = 0; i < 2; i++) {
-            data[i][0] = Paths.get("/");
+    private void fillData(Path[] paths, Object[][] data) {
+        for (int i = 0; i < paths.length; i++) {
+            data[i][0] = paths[i];
             data[i][1] = Boolean.FALSE;
         }
-
-        dataModel = new PathTableModel(data, header);
-        table.setModel(dataModel);
-
-
     }
 
     @Override
     public void onUnregisterPath() {
-        Vector vector = dataModel.getDataVector();
-        for (int i = 0; i < vector.size(); i++) {
-            Vector vector1 = (Vector) vector.elementAt(i);
-            Boolean valueAt = (Boolean) vector1.elementAt(1);
+        Vector rowVector = dataModel.getDataVector();
+        for (int i = 0; i < rowVector.size(); i++) {
+            Vector columnVector = (Vector) rowVector.elementAt(i);
+            Boolean valueAt = (Boolean) columnVector.elementAt(1);
             if (valueAt) {
                 dataModel.removeRow(i);
+                Path path = (Path) columnVector.elementAt(0);
+                storage.unregister(path);
             }
         }
     }
-
-
-    private class PathTableModel extends DefaultTableModel {
-
-        private PathTableModel(Object[][] data, String[] header) {
-            super(data, header);
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if (columnIndex == 1) {
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return getValueAt(0, columnIndex).getClass();
-        }
-
-    }
-
 }

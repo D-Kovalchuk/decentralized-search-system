@@ -5,4 +5,6 @@ package com.fly.house.ui.presenter;
  */
 public interface HistoryPresenter extends Presenter {
     void onApply();
+
+    void onShare();
 }

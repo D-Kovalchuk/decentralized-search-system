@@ -1,6 +1,7 @@
 package com.fly.house.io.snapshot;
 
 import com.fly.house.io.event.Event;
+import com.fly.house.io.event.EventBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,8 +46,8 @@ public class SnapshotComparatorSpec {
 
         List<Event> events = comparator.getDiff(newSnapshot, new Snapshot(Collections.<File>emptyList()));
 
-        assertThat(events.contains(Event.create(CREATE).withNewPath(file1.toPath())), is(true));
-        assertThat(events.contains(Event.create(CREATE).withNewPath(file2.toPath())), is(true));
+        assertThat(events.contains(new EventBuilder().type(CREATE).path(file1.toPath()).build()), is(true));
+        assertThat(events.contains(new EventBuilder().type(CREATE).path(file2.toPath()).build()), is(true));
     }
 
     @Test
@@ -64,9 +65,9 @@ public class SnapshotComparatorSpec {
 
         List<Event> events = comparator.getDiff(newSnapshot, oldSnapshot);
 
-        assertThat(events.contains(Event.create(CREATE).withNewPath(file1.toPath())), is(true));
-        assertThat(events.contains(Event.create(CREATE).withNewPath(file3.toPath())), is(true));
-        assertThat(events.contains(Event.create(DELETE).withOldPath(file2.toPath())), is(true));
+        assertThat(events.contains(new EventBuilder().type(CREATE).path(file1.toPath()).build()), is(true));
+        assertThat(events.contains(new EventBuilder().type(CREATE).path(file3.toPath()).build()), is(true));
+        assertThat(events.contains(new EventBuilder().type(CREATE).path(file2.toPath()).build()), is(true));
     }
 
 
@@ -81,8 +82,8 @@ public class SnapshotComparatorSpec {
 
         List<Event> events = comparator.getDiff(new Snapshot(Collections.<File>emptyList()), oldSnapshot);
 
-        assertThat(events.contains(Event.create(DELETE).withOldPath(file1.toPath())), is(true));
-        assertThat(events.contains(Event.create(DELETE).withOldPath(file2.toPath())), is(true));
+        assertThat(events.contains(new EventBuilder().type(DELETE).path(file1.toPath()).build()), is(true));
+        assertThat(events.contains(new EventBuilder().type(DELETE).path(file2.toPath()).build()), is(true));
     }
 
 }

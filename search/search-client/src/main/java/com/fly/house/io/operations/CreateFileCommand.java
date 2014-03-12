@@ -8,15 +8,15 @@ import java.nio.file.Path;
 public class CreateFileCommand implements Command {
 
     private FileOperation fileManager;
-    private Path newPath;
+    private Path path;
 
     public CreateFileCommand(FileOperation fileManager, Path newPath) {
         this.fileManager = fileManager;
-        this.newPath = newPath;
+        this.path = newPath;
     }
 
     @Override
     public void execute() {
-        fileManager.create(newPath);
+        fileManager.create(path);
     }
 }

@@ -42,8 +42,8 @@ public class PathWatchService implements Runnable {
                 List<WatchEvent<?>> events = watchKey.pollEvents();
                 EventManager eventManager = new EventManager();
                 List<WatchEvent<Path>> contexts = eventManager.filterEvents(events);
-                Event event = eventManager.encapsulateEvents(contexts);
-                operationFactory.putCommand(event);
+                List<Event> event = eventManager.encapsulateEvents(contexts);
+                operationFactory.putCommands(event);
                 watchKey.reset();
                 checkWatchKey(watchKey);
                 logger.debug("WatchKey has been rested: {}", watchKey);

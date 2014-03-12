@@ -1,7 +1,5 @@
 package com.fly.house.io;
 
-import com.fly.house.io.event.Event;
-import com.fly.house.io.event.EventType;
 import com.fly.house.io.operations.OperationHistory;
 import org.junit.After;
 import org.junit.Before;
@@ -82,12 +80,9 @@ public class PathWatchServiceTest {
         when(watchKey.pollEvents()).thenReturn(event);
         when(watchService.poll(5, TimeUnit.MINUTES)).thenReturn(watchKey);
 
-        Event event1 = Event.create(EventType.CREATE)
-                .withNewPath(Paths.get("/"));
-
         pathWatchService.startWatch();
 
-        verify(operationHistory).putCommand(event1);
+        verify(operationHistory).putCommands(anyCollection());
         verifyNoMoreInteractions(operationHistory);
     }
 

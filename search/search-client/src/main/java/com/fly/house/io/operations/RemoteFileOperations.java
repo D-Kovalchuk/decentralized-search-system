@@ -39,9 +39,9 @@ public class RemoteFileOperations implements FileOperation {
     }
 
     @Override
-    public void update(Path newPath, Path oldPath) {
+    public void update(Path path) {
         HttpHeaders header = cookieManager.getCookieHeader();
-        Message<String> message = new Message<>(newPath.toString());
+        Message<String> message = new Message<>(path.toString());
         HttpEntity<Message<String>> requestEntity = new HttpEntity<>(message, header);
         ResponseEntity<Message<String>> entity = restTemplate.exchange(URL, PUT, requestEntity, responseType);
         httpHandler.handle(entity.getStatusCode());

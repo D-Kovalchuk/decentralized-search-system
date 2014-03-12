@@ -13,4 +13,5 @@ public interface AuthorizationView extends View<AuthorizationPresenter> {
 
     JTextField getLoginField();
 
+    JLabel getErrorLabel();
 }

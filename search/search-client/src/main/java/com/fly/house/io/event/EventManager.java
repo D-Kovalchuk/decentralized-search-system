@@ -11,6 +11,7 @@ import java.util.List;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.util.Arrays.asList;
 
 /**
  * Created by dimon on 2/27/14.
@@ -33,7 +34,7 @@ public class EventManager {
         return eventList;
     }
 
-    public Event encapsulateEvents(List<WatchEvent<Path>> events) {
+    public List<Event> encapsulateEvents(List<WatchEvent<Path>> events) {
         if (!events.isEmpty()) {
             if (isModifyEvent(events)) {
                 return createModifyEvent(events);
@@ -41,41 +42,43 @@ public class EventManager {
             if (events.size() == 1) {
                 WatchEvent<Path> event = events.get(0);
                 if (isCreateEvent(event)) {
-                    return createCreateEvent(events);
+                    return asList(createCreateEvent(events));
                 }
                 if (isDeleteEvent(event)) {
-                    return createDeleteEvent(events);
+                    return asList(createDeleteEvent(events));
                 }
             }
         }
-        return Event.create(EventType.UNKNOWN);
+        return asList(EventBuilder.UNKNOWN_EVENT);
     }
 
     private Event createDeleteEvent(List<WatchEvent<Path>> events) {
         logger.debug("Delete event has been fired");
         Path path = events.get(0).context();
-        return Event.create(EventType.DELETE).withOldPath(path);
+        return new EventBuilder().type(EventType.DELETE).path(path).build();
     }
 
     private Event createCreateEvent(List<WatchEvent<Path>> events) {
         logger.debug("Create event has been fired");
-        return Event.create(EventType.CREATE)
-                .withNewPath(events.get(0).context());
+        return new EventBuilder().type(EventType.CREATE)
+                .path(events.get(0).context()).build();
     }
 
-    private Event createModifyEvent(List<WatchEvent<Path>> events) {
-        Event event1 = Event.create(EventType.MODIFY);
+    private List<Event> createModifyEvent(List<WatchEvent<Path>> events) {
+        List<Event> eventList = new ArrayList<>();
         for (WatchEvent<Path> event : events) {
+            Path path = event.context();
             if (event.kind() == ENTRY_CREATE) {
-                event1.withNewPath(event.context());
+                Event createEvent = new EventBuilder().type(EventType.CREATE).path(path).build();
+                eventList.add(createEvent);
             }
-
             if (event.kind() == ENTRY_DELETE) {
-                event1.withOldPath((event.context()));
+                Event deleteEvent = new EventBuilder().type(EventType.DELETE).path(path).build();
+                eventList.add(deleteEvent);
             }
         }
-        logger.debug("Modify event has been fired: new path {}, old path {}", event1.getNewPath(), event1.getOldPath());
-        return event1;
+        logger.debug("Modify event has been fired: {}", eventList);
+        return eventList;
     }
 
 

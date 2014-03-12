@@ -8,15 +8,15 @@ import java.nio.file.Path;
 public class DeleteFileCommand implements Command {
 
     private FileOperation fileManager;
-    private Path oldPath;
+    private Path path;
 
     public DeleteFileCommand(FileOperation fileManager, Path oldPath) {
         this.fileManager = fileManager;
-        this.oldPath = oldPath;
+        this.path = oldPath;
     }
 
     @Override
     public void execute() {
-        fileManager.delete(oldPath);
+        fileManager.delete(path);
     }
 }

@@ -1,6 +1,7 @@
 package com.fly.house.io.snapshot;
 
 import com.fly.house.io.event.Event;
+import com.fly.house.io.event.EventBuilder;
 import com.fly.house.io.event.EventType;
 
 import java.io.File;
@@ -32,8 +33,9 @@ public class SnapshotComparator {
     private void fillWithDeletedFiles(List<File> newSnapshotFiles, List<File> oldSnapshotFiles) {
         List<File> removed = getDeletedFiles(newSnapshotFiles, oldSnapshotFiles);
         for (File file : removed) {
-            Event event = Event.create(EventType.DELETE)
-                    .withOldPath(file.toPath());
+            Event event = new EventBuilder().type(EventType.DELETE)
+                    .path(file.toPath())
+                    .build();
             list.add(event);
         }
     }
@@ -41,8 +43,9 @@ public class SnapshotComparator {
     private void fillWithCreatedFiles(List<File> newSnapshotFiles, List<File> oldSnapshotFiles) {
         List<File> added = getCreatedFiles(newSnapshotFiles, oldSnapshotFiles);
         for (File file : added) {
-            Event event = Event.create(EventType.CREATE)
-                    .withNewPath(file.toPath());
+            Event event = new EventBuilder().type(EventType.CREATE)
+                    .path(file.toPath())
+                    .build();
             list.add(event);
         }
     }

@@ -21,14 +21,16 @@ public class HistoryViewImpl extends AbstractView<HistoryPresenter> implements H
 
     private JTable table = new JTable();
     private JButton applyButton = new JButton("apply");
-
+    private JButton shareButton = new JButton("share");
 
     public HistoryViewImpl() {
         super(500, 475);
         add(table.getTableHeader(), PAGE_START);
         add(table, CENTER);
         add(applyButton, BorderLayout.SOUTH);
+        add(shareButton, BorderLayout.SOUTH);
         addApplyButtonClickedListener();
+        addShareButtonClickedListener();
     }
 
     private void addApplyButtonClickedListener() {
@@ -36,6 +38,15 @@ public class HistoryViewImpl extends AbstractView<HistoryPresenter> implements H
             @Override
             public void actionPerformed(ActionEvent e) {
                 presenter.onApply();
+            }
+        });
+    }
+
+    private void addShareButtonClickedListener() {
+        shareButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                presenter.onShare();
             }
         });
     }

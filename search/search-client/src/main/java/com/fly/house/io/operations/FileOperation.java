@@ -7,11 +7,11 @@ import java.nio.file.Path;
  */
 public interface FileOperation {
 
-    void create(Path newPath);
+    void create(Path path);
 
-    void update(Path newPath, Path oldPath);
+    void update(Path path);
 
-    void delete(Path oldPath);
+    void delete(Path path);
 
 
 }
