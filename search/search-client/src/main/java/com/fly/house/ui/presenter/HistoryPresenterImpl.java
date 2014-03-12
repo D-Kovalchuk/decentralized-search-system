@@ -1,5 +1,7 @@
 package com.fly.house.ui.presenter;
 
+import com.fly.house.io.event.Event;
+import com.fly.house.io.operations.Command;
 import com.fly.house.io.operations.OperationHistory;
 import com.fly.house.ui.view.HistoryView;
 import com.fly.house.ui.view.ViewContainer;
@@ -8,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -19,68 +21,67 @@ import java.util.Vector;
 @Component
 public class HistoryPresenterImpl extends AbstractPresenter<HistoryView> implements HistoryPresenter {
 
+    private static final int EDITABLE_COLUMN = 2;
+    private DefaultTableModel dataModel;
     private OperationHistory history;
 
-    private DefaultTableModel dataModel;
-
     @Autowired
-    protected HistoryPresenterImpl(EventBus eventBus, HistoryView view,
-                                   ViewContainer container, OperationHistory history) {
+    public HistoryPresenterImpl(EventBus eventBus, HistoryView view,
+                                ViewContainer container, OperationHistory history) {
         super(eventBus, view, container);
         this.history = history;
     }
 
     @PostConstruct
     public void init() {
-        JTable table = view.getTable();
         String[] header = view.getHeader();
-
-        Object[][] data = new Object[header.length][3];
-
-        for (int i = 0; i < 3; i++) {
-            data[i][0] = Paths.get("/home/dimon/");
-            data[i][1] = "DELETE";
-            data[i][2] = Boolean.FALSE;
-        }
-
-        dataModel = new PathTableModel(data, header);
-        table.setModel(dataModel);
-
-
+        Object[][] data = new Object[header.length][history.getHistory().size()];
+        fillData(data);
+        dataModel = new TableModel(data, header, EDITABLE_COLUMN);
+        view.getTable().setModel(dataModel);
     }
 
     @Override
     public void onApply() {
-        Vector vector = dataModel.getDataVector();
-        for (int i = 0; i < vector.size(); i++) {
-            Vector vector1 = (Vector) vector.elementAt(i);
-            Boolean valueAt = (Boolean) vector1.elementAt(2);
+        Vector rowVector = dataModel.getDataVector();
+        for (int i = 0; i < rowVector.size(); i++) {
+            Vector columnVector = (Vector) rowVector.elementAt(i);
+            Boolean valueAt = (Boolean) columnVector.elementAt(2);
             if (valueAt) {
                 dataModel.removeRow(i);
+                Path path = (Path) columnVector.elementAt(0);
+                removeFormHistory(path);
             }
         }
     }
 
-
-    private class PathTableModel extends DefaultTableModel {
-
-        private PathTableModel(Object[][] data, String[] header) {
-            super(data, header);
+    @Override
+    public void onShare() {
+        for (Command command : history.getHistory().values()) {
+            command.execute();
         }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if (columnIndex == 2) {
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return getValueAt(0, columnIndex).getClass();
-        }
-
     }
+
+    private void fillData(Object[][] data) {
+        Set<Event> events = history.getHistory().keySet();
+        Event[] eventsArray = events.toArray(new Event[events.size()]);
+        for (int i = 0; i < eventsArray.length; i++) {
+            data[i][0] = eventsArray[i].getPath();
+            data[i][1] = eventsArray[i].getType();
+            data[i][2] = Boolean.FALSE;
+        }
+    }
+
+    private void removeFormHistory(Path path) {
+        Event eventToDelete = null;
+        for (Event event : history.getHistory().keySet()) {
+            if (event.getPath() == path) {
+                eventToDelete = event;
+                break;
+            }
+        }
+        history.getHistory().remove(eventToDelete);
+    }
+
 
 }
