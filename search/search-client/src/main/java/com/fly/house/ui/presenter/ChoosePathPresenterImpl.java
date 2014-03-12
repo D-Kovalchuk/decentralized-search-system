@@ -6,6 +6,8 @@ import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.ChoosePathView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
@@ -23,8 +25,8 @@ import static javax.swing.JFileChooser.APPROVE_OPTION;
 public class ChoosePathPresenterImpl extends AbstractPresenter<ChoosePathView> implements ChoosePathPresenter {
 
     private WatchServiceExecutor executor;
-
     private List<Path> paths = new ArrayList<>();
+    private static Logger logger = LoggerFactory.getLogger(ChoosePathPresenterImpl.class);
 
     @Autowired
     protected ChoosePathPresenterImpl(EventBus eventBus, ChoosePathView view,
@@ -44,17 +46,21 @@ public class ChoosePathPresenterImpl extends AbstractPresenter<ChoosePathView> i
     public void onPathsChosen() {
         JFileChooser fileChooser = view.getFileChooser();
         int returnVal = fileChooser.showOpenDialog(new JDialog());
+        logger.debug("Show JFileChooser in new dialog window");
         if (returnVal == APPROVE_OPTION) {
-            String text = filesToString();
+            logger.debug("User approve chosen files");
+            File[] files = fileChooser.getSelectedFiles();
+            String text = filesToString(files);
             JTextArea pathArea = view.getPathArea();
             pathArea.setText(text);
-            paths = filesToPath();
+            paths = filesToPath(files);
+        } else {
+            logger.debug("User close dialog");
         }
     }
 
-    private List<Path> filesToPath() {
-        JFileChooser fileChooser = view.getFileChooser();
-        File[] files = fileChooser.getSelectedFiles();
+    private List<Path> filesToPath(File[] files) {
+        logger.debug("transform file array to list of paths");
         List<Path> pathList = new ArrayList<>();
         for (File file : files) {
             pathList.add(file.toPath());
@@ -62,10 +68,9 @@ public class ChoosePathPresenterImpl extends AbstractPresenter<ChoosePathView> i
         return pathList;
     }
 
-    private String filesToString() {
+    private String filesToString(File[] files) {
+        logger.debug("transform file array to string");
         StringBuilder sb = new StringBuilder();
-        JFileChooser fileChooser = view.getFileChooser();
-        File[] files = fileChooser.getSelectedFiles();
         for (File file : files) {
             sb.append(file);
             sb.append("\n");

@@ -2,6 +2,8 @@ package com.fly.house.ui;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -18,6 +20,8 @@ public class EventBusPostProcessor implements BeanPostProcessor {
     @Autowired
     private EventBus eventBus;
 
+    private static Logger logger = LoggerFactory.getLogger(EventBusPostProcessor.class);
+
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
@@ -30,6 +34,7 @@ public class EventBusPostProcessor implements BeanPostProcessor {
             boolean isAnnotationPresent = method.isAnnotationPresent(Subscribe.class);
             if (isAnnotationPresent) {
                 eventBus.register(bean);
+                logger.debug("{} handler registered in the event bus", bean.getClass().getName());
                 return bean;
             }
         }

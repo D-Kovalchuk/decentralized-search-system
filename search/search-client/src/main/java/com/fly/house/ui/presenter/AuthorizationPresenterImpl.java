@@ -9,6 +9,8 @@ import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.AuthorizationView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Presenter
 public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationView> implements AuthorizationPresenter {
 
+    private static Logger logger = LoggerFactory.getLogger(AuthorizationPresenterImpl.class);
     private Authorization authorization;
 
     @Autowired
@@ -32,9 +35,11 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
         String password = view.getPasswordField().getText();
         try {
             authorization.authentication(login, password);
+            logger.debug("fired ChoosePathEvent");
             eventBus.post(new ChoosePathEvent());
         } catch (WatchServiceException e) {
             String message = e.getMessage();
+            logger.debug("show error message");
             view.getErrorLabel().setText(message);
         }
     }
