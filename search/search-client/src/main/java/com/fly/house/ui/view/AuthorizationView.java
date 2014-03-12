@@ -1,6 +1,7 @@
 package com.fly.house.ui.view;
 
 import com.fly.house.ui.presenter.AuthorizationPresenter;
+import com.fly.house.ui.view.api.View;
 
 import javax.swing.*;
 

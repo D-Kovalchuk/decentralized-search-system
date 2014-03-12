@@ -1,11 +1,12 @@
 package com.fly.house.ui.presenter;
 
 import com.fly.house.io.WatchServiceExecutor;
+import com.fly.house.ui.presenter.api.AbstractPresenter;
+import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.ChoosePathView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.io.File;
@@ -18,7 +19,7 @@ import static javax.swing.JFileChooser.APPROVE_OPTION;
 /**
  * Created by dimon on 3/7/14.
  */
-@Component
+@Presenter
 public class ChoosePathPresenterImpl extends AbstractPresenter<ChoosePathView> implements ChoosePathPresenter {
 
     private WatchServiceExecutor executor;

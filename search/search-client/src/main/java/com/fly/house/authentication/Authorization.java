@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import static org.springframework.http.HttpMethod.POST;
 /**
  * Created by dimon on 1/26/14.
  */
-@Component
+@Service
 public class Authorization {
 
     private RestTemplate restTemplate;

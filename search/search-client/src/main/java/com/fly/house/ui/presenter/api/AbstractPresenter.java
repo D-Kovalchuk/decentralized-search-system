@@ -1,8 +1,8 @@
-package com.fly.house.ui.presenter;
+package com.fly.house.ui.presenter.api;
 
 import com.fly.house.ui.view.TopMenu;
-import com.fly.house.ui.view.View;
 import com.fly.house.ui.view.ViewContainer;
+import com.fly.house.ui.view.api.View;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,4 +1,4 @@
-package com.fly.house.io.repositories;
+package com.fly.house.io.repositories.api;
 
 import com.fly.house.io.exceptions.DirectoryNotFoundException;
 import com.fly.house.io.exceptions.NotDirectoryException;

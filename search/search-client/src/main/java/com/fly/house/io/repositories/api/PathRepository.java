@@ -1,4 +1,4 @@
-package com.fly.house.io.repositories;
+package com.fly.house.io.repositories.api;
 
 import java.nio.file.Path;
 import java.util.List;

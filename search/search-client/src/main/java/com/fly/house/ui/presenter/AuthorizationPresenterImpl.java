@@ -1,18 +1,20 @@
 package com.fly.house.ui.presenter;
 
+
 import com.fly.house.authentication.Authorization;
 import com.fly.house.io.exceptions.WatchServiceException;
 import com.fly.house.ui.event.ChoosePathEvent;
+import com.fly.house.ui.presenter.api.AbstractPresenter;
+import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.AuthorizationView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by dimon on 3/6/14.
  */
-@Component
+@Presenter
 public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationView> implements AuthorizationPresenter {
 
     private Authorization authorization;

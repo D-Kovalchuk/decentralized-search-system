@@ -4,6 +4,7 @@ import com.fly.house.io.exceptions.DirectoryNotFoundException;
 import com.fly.house.io.exceptions.NotDirectoryException;
 import com.fly.house.io.exceptions.PathNotRegisteredException;
 import com.fly.house.io.exceptions.PathRegisteredException;
+import com.fly.house.io.repositories.api.PathRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

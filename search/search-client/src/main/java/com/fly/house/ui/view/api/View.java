@@ -1,6 +1,6 @@
-package com.fly.house.ui.view;
+package com.fly.house.ui.view.api;
 
-import com.fly.house.ui.presenter.Presenter;
+import com.fly.house.ui.presenter.api.Presenter;
 
 import javax.swing.*;
 

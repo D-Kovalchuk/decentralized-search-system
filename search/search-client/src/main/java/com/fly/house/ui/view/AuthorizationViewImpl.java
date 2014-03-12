@@ -1,7 +1,8 @@
 package com.fly.house.ui.view;
 
 import com.fly.house.ui.presenter.AuthorizationPresenter;
-import org.springframework.stereotype.Component;
+import com.fly.house.ui.qualifier.View;
+import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionEvent;
 /**
  * Created by dimon on 3/6/14.
  */
-@Component
+@View
 public class AuthorizationViewImpl extends AbstractView<AuthorizationPresenter> implements AuthorizationView {
 
     private JButton authButton = new JButton("login");

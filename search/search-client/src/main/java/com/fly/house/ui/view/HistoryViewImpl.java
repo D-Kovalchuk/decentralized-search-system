@@ -1,7 +1,8 @@
 package com.fly.house.ui.view;
 
 import com.fly.house.ui.presenter.HistoryPresenter;
-import org.springframework.stereotype.Component;
+import com.fly.house.ui.qualifier.View;
+import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ import static java.awt.BorderLayout.PAGE_START;
 /**
  * Created by dimon on 3/9/14.
  */
-@Component
+@View
 public class HistoryViewImpl extends AbstractView<HistoryPresenter> implements HistoryView {
 
     private static final String[] HEADER = {"Path", "Action", "Close"};

@@ -3,6 +3,7 @@ package com.fly.house.io.operations;
 import com.fly.house.authentication.CookieManager;
 import com.fly.house.authentication.HttpStatusHandler;
 import com.fly.house.authentication.Message;
+import com.fly.house.io.operations.api.FileOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.file.Path;
 
-import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.POST;
 
 /**
  * Created by dimon on 1/26/14.
@@ -35,15 +37,6 @@ public class RemoteFileOperations implements FileOperation {
         Message<String> message = new Message<>(newPath.toString());
         HttpEntity<Message<String>> requestEntity = new HttpEntity<>(message, header);
         ResponseEntity<Message<String>> entity = restTemplate.exchange(URL, POST, requestEntity, responseType);
-        httpHandler.handle(entity.getStatusCode());
-    }
-
-    @Override
-    public void update(Path path) {
-        HttpHeaders header = cookieManager.getCookieHeader();
-        Message<String> message = new Message<>(path.toString());
-        HttpEntity<Message<String>> requestEntity = new HttpEntity<>(message, header);
-        ResponseEntity<Message<String>> entity = restTemplate.exchange(URL, PUT, requestEntity, responseType);
         httpHandler.handle(entity.getStatusCode());
     }
 

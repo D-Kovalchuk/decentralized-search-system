@@ -1,7 +1,8 @@
 package com.fly.house.ui.view;
 
 import com.fly.house.ui.presenter.PathsPresenter;
-import org.springframework.stereotype.Component;
+import com.fly.house.ui.qualifier.View;
+import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ import static java.awt.BorderLayout.PAGE_START;
 /**
  * Created by dimon on 3/8/14.
  */
-@Component
+@View
 public class PathsViewImpl extends AbstractView<PathsPresenter> implements PathsView {
 
     private static final String[] HEADER = {"Path", "Action"};

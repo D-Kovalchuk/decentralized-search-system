@@ -2,11 +2,12 @@ package com.fly.house.io.repositories;
 
 
 import com.fly.house.io.exceptions.PathNotRegisteredException;
+import com.fly.house.io.repositories.api.AbstractPathRepository;
+import com.fly.house.io.repositories.api.PathRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +27,7 @@ import static java.util.Collections.emptyList;
 /**
  * Created by dimon on 1/26/14.
  */
-@Component
+@PathRepo
 public class FilePathRepository extends AbstractPathRepository {
 
     protected Path pathsFile;

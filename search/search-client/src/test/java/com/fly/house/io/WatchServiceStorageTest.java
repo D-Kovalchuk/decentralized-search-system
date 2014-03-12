@@ -3,7 +3,7 @@ package com.fly.house.io;
 import com.fly.house.io.exceptions.NotDirectoryException;
 import com.fly.house.io.exceptions.WatchServiceRegistrationException;
 import com.fly.house.io.exceptions.WatchServiceUnregistrationException;
-import com.fly.house.io.repositories.PathRepository;
+import com.fly.house.io.repositories.api.PathRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

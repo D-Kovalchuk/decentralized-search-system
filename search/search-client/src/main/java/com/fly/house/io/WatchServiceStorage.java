@@ -3,7 +3,7 @@ package com.fly.house.io;
 import com.fly.house.io.exceptions.PathRepositoryException;
 import com.fly.house.io.exceptions.WatchServiceRegistrationException;
 import com.fly.house.io.exceptions.WatchServiceUnregistrationException;
-import com.fly.house.io.repositories.PathRepository;
+import com.fly.house.io.repositories.api.PathRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

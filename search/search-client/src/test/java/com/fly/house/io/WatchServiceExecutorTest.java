@@ -1,6 +1,6 @@
 package com.fly.house.io;
 
-import com.fly.house.io.operations.OperationHistory;
+import com.fly.house.io.operations.api.OperationHistory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

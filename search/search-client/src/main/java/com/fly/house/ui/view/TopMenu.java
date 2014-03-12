@@ -4,9 +4,9 @@ import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.event.LogoutEvent;
 import com.fly.house.ui.event.ShowHistoryEvent;
 import com.fly.house.ui.event.ShowPathsEvent;
+import com.fly.house.ui.qualifier.View;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by dimon on 3/7/14.
  */
-@Component
+@View
 public class TopMenu {
 
     @Autowired

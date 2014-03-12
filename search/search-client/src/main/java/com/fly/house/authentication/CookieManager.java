@@ -5,6 +5,8 @@ import com.fly.house.authentication.exception.CookieNotFoundException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -28,10 +30,8 @@ public class CookieManager {
     private HttpHeaders cookieHeader = new HttpHeaders();
     private static Logger logger = LoggerFactory.getLogger(CookieManager.class);
 
-    public CookieManager() {
-    }
-
-    CookieManager(Path path) {
+    @Autowired
+    public CookieManager(@Qualifier("cookiePath") Path path) {
         cookieDirPath = path;
     }
 

@@ -1,11 +1,12 @@
 package com.fly.house.ui.presenter;
 
 import com.fly.house.io.WatchServiceStorage;
+import com.fly.house.ui.presenter.api.AbstractPresenter;
+import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.PathsView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +18,7 @@ import java.util.Vector;
 /**
  * Created by dimon on 3/8/14.
  */
-@Component
+@Presenter
 public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements PathsPresenter {
 
     private static final int EDITABLE_COLUMN = 1;

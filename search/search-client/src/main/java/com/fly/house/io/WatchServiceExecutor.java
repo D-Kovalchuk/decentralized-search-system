@@ -1,6 +1,6 @@
 package com.fly.house.io;
 
-import com.fly.house.io.operations.OperationHistory;
+import com.fly.house.io.operations.api.OperationHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;

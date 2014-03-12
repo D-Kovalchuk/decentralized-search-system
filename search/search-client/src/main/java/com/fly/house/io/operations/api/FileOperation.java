@@ -1,4 +1,4 @@
-package com.fly.house.io.operations;
+package com.fly.house.io.operations.api;
 
 import java.nio.file.Path;
 
@@ -8,8 +8,6 @@ import java.nio.file.Path;
 public interface FileOperation {
 
     void create(Path path);
-
-    void update(Path path);
 
     void delete(Path path);
 

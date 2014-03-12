@@ -3,9 +3,9 @@ package com.fly.house.ui.view;
 import com.fly.house.authentication.Authorization;
 import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.event.LoginEvent;
+import com.fly.house.ui.qualifier.View;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.awt.*;
 /**
  * Created by dimon on 3/6/14.
  */
-@Component
+@View
 public class RootView extends JFrame {
 
     @Autowired
