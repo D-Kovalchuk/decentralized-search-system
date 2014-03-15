@@ -3,7 +3,7 @@ package com.fly.house.io;
 import com.fly.house.io.operations.api.OperationHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
 import java.nio.file.WatchService;
@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author Dmitriy Kovalchuk
  */
-@Component
+@Service
 public class WatchServiceExecutor {
 
     private final OperationHistory operationFactory;

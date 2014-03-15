@@ -3,6 +3,7 @@ package com.fly.house.io.repositories;
 
 import com.fly.house.io.exceptions.PathNotRegisteredException;
 import com.fly.house.io.repositories.api.AbstractPathRepository;
+import com.fly.house.io.repositories.api.FileRepo;
 import com.fly.house.io.repositories.api.PathRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import static java.util.Collections.emptyList;
 /**
  * Created by dimon on 1/26/14.
  */
+@FileRepo
 @PathRepo
 public class FilePathRepository extends AbstractPathRepository {
 
