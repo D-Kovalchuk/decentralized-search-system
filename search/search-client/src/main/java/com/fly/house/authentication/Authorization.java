@@ -3,6 +3,7 @@ package com.fly.house.authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,13 @@ public class Authorization {
 
     private HttpStatusHandler httpHandler;
 
+    @Value("${restUrl}")
+    private String restUrl;
+
+    private static Logger logger = LoggerFactory.getLogger(Authorization.class);
+
+    public static final String AUTH_URL = "login?user={user}&password={pass}";
+
     @Autowired
     public Authorization(CookieManager cookieManager, RestTemplate restTemplate, HttpStatusHandler httpHandler) {
         this.cookieManager = cookieManager;
@@ -31,16 +39,15 @@ public class Authorization {
         this.httpHandler = httpHandler;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(Authorization.class);
 
-    public static final String AUTH_URL = "/resources/login?user={user}&password={pass}";
 
     public void authentication(String login, String password) {
         logger.debug("Start authentication with login={} password={}", login, password);
         Account account = new Account(login, password);
         HttpEntity<Message<Account>> request = new HttpEntity<>(new Message<>(account));
         logger.debug("Call to server to authenticate user");
-        ResponseEntity<Message<Account>> entity = restTemplate.exchange(AUTH_URL, POST, request, new Message<Account>(), login, password);
+        String url = String.format("%s/%s", restUrl, AUTH_URL);
+        ResponseEntity<Message<Account>> entity = restTemplate.exchange(url, POST, request, new Message<Account>(), login, password);
         httpHandler.handle(entity.getStatusCode());
         List<String> cookie = entity.getHeaders().get("Cookie");
         cookieManager.saveCookie(cookie);
