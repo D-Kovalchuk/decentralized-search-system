@@ -1,4 +1,4 @@
-package com.fly.house;
+package com.fly.house.config;
 
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
