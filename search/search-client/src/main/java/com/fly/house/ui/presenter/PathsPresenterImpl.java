@@ -8,7 +8,6 @@ import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import javax.swing.table.DefaultTableModel;
 import java.nio.file.Path;
 import java.util.Set;
@@ -32,8 +31,9 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
         this.storage = storage;
     }
 
-    @PostConstruct
+    @Override
     public void init() {
+        super.init();
         String[] header = view.getHeader();
 
         Set<Path> pathsSet = storage.asMap().keySet();
@@ -65,4 +65,5 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
             }
         }
     }
+
 }

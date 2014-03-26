@@ -30,7 +30,13 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
     }
 
     @Override
+    public void init() {
+        logger.debug("Start initializing {}", getClass().getName());
+    }
+
+    @Override
     public void go() {
+        init();
         logger.debug("Clean container");
         container.removeAll();
         menu.setVisible(true);

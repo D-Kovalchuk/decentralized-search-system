@@ -24,7 +24,7 @@ public class ChoosePathViewImpl extends AbstractView<ChoosePathPresenter> implem
 
 
     public ChoosePathViewImpl() {
-        super(500, 500);
+        super(500, 475);
         setFileChooseConfig();
         add(chooseButton, BorderLayout.NORTH);
         pathArea.setEditable(false);

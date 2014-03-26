@@ -10,7 +10,6 @@ import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import javax.swing.table.DefaultTableModel;
 import java.nio.file.Path;
 import java.util.Set;
@@ -33,8 +32,9 @@ public class HistoryPresenterImpl extends AbstractPresenter<HistoryView> impleme
         this.history = history;
     }
 
-    @PostConstruct
+    @Override
     public void init() {
+        super.init();
         String[] header = view.getHeader();
         Object[][] data = new Object[header.length][history.getHistory().size()];
         fillData(data);
@@ -83,6 +83,5 @@ public class HistoryPresenterImpl extends AbstractPresenter<HistoryView> impleme
         }
         history.getHistory().remove(eventToDelete);
     }
-
 
 }
