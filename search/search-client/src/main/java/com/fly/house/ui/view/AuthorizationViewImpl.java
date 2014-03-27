@@ -6,7 +6,6 @@ import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Created by dimon on 3/6/14.
@@ -49,12 +48,7 @@ public class AuthorizationViewImpl extends AbstractView<AuthorizationPresenter> 
     }
 
     public void addLoginButtonClickedListener() {
-        authButton.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.onLogin();
-            }
-        });
+        authButton.addActionListener(e -> presenter.onLogin());
     }
 
 }

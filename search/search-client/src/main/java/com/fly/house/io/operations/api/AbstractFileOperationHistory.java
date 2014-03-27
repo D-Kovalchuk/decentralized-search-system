@@ -44,7 +44,7 @@ public abstract class AbstractFileOperationHistory implements OperationHistory {
         SnapshotBuilder builder = new SnapshotBuilder(path);
         SnapshotComparator comparator = new SnapshotComparator();
         Snapshot freshSnapshot = builder.getFreshSnapshot();
-        Snapshot steelSnapshot = builder.getSteelSnapshot();
+        Snapshot steelSnapshot = builder.getStaleSnapshot();
         List<Event> events = comparator.getDiff(freshSnapshot, steelSnapshot);
         putCommands(events);
     }

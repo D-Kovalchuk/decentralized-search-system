@@ -23,4 +23,31 @@ public class Event {
         return type;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "path=" + path +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        if (!path.equals(event.path)) return false;
+        if (type != event.type) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = path.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
 import java.nio.file.WatchService;
-import java.util.Map;
 
 /**
  * Class responsible for creating and starting <code>PathWatchService</code>.
@@ -35,10 +34,10 @@ public class WatchServiceExecutor {
     }
 
     public void init() {
-        for (Map.Entry<Path, WatchService> entry : storage.asMap().entrySet()) {
-            operationFactory.addChangesToHistory(entry.getKey());
-            executor.submit(new PathWatchService(entry.getValue(), operationFactory));
-        }
+        storage.asMap().forEach((k, v) -> {
+            operationFactory.addChangesToHistory(k);
+            executor.submit(new PathWatchService(v, operationFactory));
+        });
     }
 
     public void createWatchService(Path path) {

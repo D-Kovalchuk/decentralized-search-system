@@ -6,8 +6,6 @@ import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 
@@ -50,21 +48,11 @@ public class ChoosePathViewImpl extends AbstractView<ChoosePathPresenter> implem
     }
 
     private void addChooseButtonClickListener() {
-        chooseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.onPathsChosen();
-            }
-        });
+        chooseButton.addActionListener(e -> presenter.onPathsChosen());
     }
 
     private void addOkButtonClickListener() {
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.onAccept();
-            }
-        });
+        okButton.addActionListener(e -> presenter.onAccept());
     }
 
 }

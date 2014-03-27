@@ -6,8 +6,6 @@ import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
@@ -41,11 +39,6 @@ public class PathsViewImpl extends AbstractView<PathsPresenter> implements Paths
     }
 
     private void addUnregisterListener() {
-        unregisterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.onUnregisterPath();
-            }
-        });
+        unregisterButton.addActionListener(e -> presenter.onUnregisterPath());
     }
 }

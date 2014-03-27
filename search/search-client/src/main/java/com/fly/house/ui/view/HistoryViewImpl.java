@@ -6,8 +6,6 @@ import com.fly.house.ui.view.api.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
@@ -35,21 +33,11 @@ public class HistoryViewImpl extends AbstractView<HistoryPresenter> implements H
     }
 
     private void addApplyButtonClickedListener() {
-        applyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.onApply();
-            }
-        });
+        applyButton.addActionListener(e -> presenter.onApply());
     }
 
     private void addShareButtonClickedListener() {
-        shareButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                presenter.onShare();
-            }
-        });
+        shareButton.addActionListener(e -> presenter.onShare());
     }
 
     @Override

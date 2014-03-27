@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by dimon on 3/7/14.
@@ -32,14 +30,14 @@ public class TopMenu {
 
     private void addLogoutMenu() {
         JMenuItem logoutItem = new JMenuItem("Logout");
-        logoutItem.addActionListener(new Dispatcher(new LogoutEvent()));
+        logoutItem.addActionListener(e -> eventBus.post(new LogoutEvent()));
         menuBar.add(logoutItem);
     }
 
     private void addHistoryMenu() {
         JMenu history = new JMenu("History");
         JMenuItem historyItem = new JMenuItem("Show history");
-        historyItem.addActionListener(new Dispatcher(new ShowHistoryEvent()));
+        historyItem.addActionListener(e -> eventBus.post(new ShowHistoryEvent()));
         history.add(historyItem);
         menuBar.add(history);
     }
@@ -47,10 +45,10 @@ public class TopMenu {
     private void addPathsMenu() {
         JMenu paths = new JMenu("Paths");
         JMenuItem chooseItem = new JMenuItem("Choose path");
-        chooseItem.addActionListener(new Dispatcher(new ChoosePathEvent()));
+        chooseItem.addActionListener(e -> eventBus.post(new ChoosePathEvent()));
         paths.add(chooseItem);
         JMenuItem showPathItem = new JMenuItem("Show paths");
-        showPathItem.addActionListener(new Dispatcher(new ShowPathsEvent()));
+        showPathItem.addActionListener(e -> eventBus.post(new ShowPathsEvent()));
         paths.add(showPathItem);
         menuBar.add(paths);
     }
@@ -63,17 +61,4 @@ public class TopMenu {
         return menuBar;
     }
 
-    private class Dispatcher implements ActionListener {
-
-        private Object event;
-
-        private Dispatcher(Object event) {
-            this.event = event;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            eventBus.post(event);
-        }
-    }
 }

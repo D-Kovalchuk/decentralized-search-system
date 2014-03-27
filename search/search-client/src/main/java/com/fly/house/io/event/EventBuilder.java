@@ -11,6 +11,7 @@ public class EventBuilder {
     private EventType type;
     public static Event UNKNOWN_EVENT = new EventBuilder().type(EventType.UNKNOWN).build();
 
+    //todo make private and method static
     public EventBuilder() {
     }
 

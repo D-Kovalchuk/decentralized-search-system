@@ -18,12 +18,7 @@ public class ApplicationClass {
         appContext.registerShutdownHook();
 
         final RootView rootView = appContext.getBean(RootView.class);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                rootView.run();
-            }
-        });
+        SwingUtilities.invokeLater(rootView::run);
 
         FileShareServer fileShareServer = appContext.getBean(FileShareServer.class);
         fileShareServer.start();
