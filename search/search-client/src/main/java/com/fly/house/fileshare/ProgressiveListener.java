@@ -24,7 +24,7 @@ public class ProgressiveListener implements ChannelProgressiveFutureListener {
         if (total < 0) {
             logger.debug("Transfer progress: {}" + progress);
         } else {
-            logger.debug("Transfer progress: {} / {}", progress, total);
+            logger.debug("Transfer progress: {} / {} {}", progress, total, "[request from " + ctx.channel().remoteAddress() + "]");
         }
     }
 

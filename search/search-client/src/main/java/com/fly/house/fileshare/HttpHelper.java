@@ -10,7 +10,7 @@ import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
-import static io.netty.handler.codec.http.HttpMethod.POST;
+import static io.netty.handler.codec.http.HttpMethod.GET;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 
@@ -18,7 +18,6 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
  * Created by dimon on 3/26/14.
  */
 public class HttpHelper {
-
 
     public static void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
         FullHttpResponse response = new DefaultFullHttpResponse(
@@ -40,8 +39,8 @@ public class HttpHelper {
         response.headers().set(CONTENT_TYPE, mimeTypesMap.getContentType(file.getPath()));
     }
 
-    public static boolean isPost(FullHttpRequest request) {
-        return request.getMethod() == POST;
+    public static boolean isNotGet(FullHttpRequest request) {
+        return request.getMethod() != GET;
     }
 
 }

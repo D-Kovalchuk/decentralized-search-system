@@ -22,7 +22,13 @@ public class ProtocolInitializer extends ChannelInitializer<SocketChannel> {
     private FileShareHandler handler;
 
     @Autowired
-    private ValidatorHandler validatorHandler;
+    private HttpValidatorHandler httpValidatorHandler;
+
+    @Autowired
+    private CacheHandler cacheHandler;
+
+    @Autowired
+    private FileAccessHandler fileAccessHandler;
 
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
@@ -31,7 +37,9 @@ public class ProtocolInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("decompressor", new HttpContentDecompressor());
         pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
         pipeline.addLast("chunkedWriter", new ChunkedWriteHandler());
-        pipeline.addLast("validatorHandler", validatorHandler);
+        pipeline.addLast("httpValidatorHandler", httpValidatorHandler);
+        pipeline.addLast("cacheHandler", cacheHandler);
+        pipeline.addLast("fileAccessHandler", fileAccessHandler);
         pipeline.addLast("handler", handler);
         pipeline.addLast("encoder", new HttpResponseEncoder());
     }

@@ -40,40 +40,48 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
     private static Logger logger = LoggerFactory.getLogger(FileShareHandler.class);
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        logger.debug("TestHandler channel active");
-        super.channelActive(ctx);
+    protected void channelRead0(final ChannelHandlerContext ctx, FullHttpRequest request) {
+        writeHeader(ctx, request);
+        writeContent(ctx, request);
+        ctx.fireChannelRead(request);
     }
 
     @Override
-    protected void channelRead0(final ChannelHandlerContext ctx, FullHttpRequest request) {
-        final String path = request.getUri();
-        File file = new File(path);
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        logger.debug("{} channel active", getClass().getName());
+        super.channelActive(ctx);
+    }
 
-        ContentProvider contentProvider;
+    private File getFile(FullHttpRequest request) {
+        final String path = request.getUri();
+        return new File(path);
+    }
+
+    private void writeContent(ChannelHandlerContext ctx, FullHttpRequest request) {
+        File file = getFile(request);
+        ContentProvider contentProvider = null;
         try {
             contentProvider = new ContentProvider(file);
         } catch (FileNotFoundException e) {
             sendError(ctx, NOT_FOUND);
-            return;
         }
-
-        writeHeader(ctx, request, file);
 
         ChannelFuture sendFileFuture = ctx.write(contentProvider.getRegion(), ctx.newProgressivePromise());
         sendFileFuture.addListener(new ProgressiveListener(ctx));
 
         ChannelFuture lastContentFuture = ctx.writeAndFlush(EMPTY_LAST_CONTENT);
-
         if (!isKeepAlive(request)) {
             lastContentFuture.addListener(ChannelFutureListener.CLOSE);
         }
-
-        ctx.fireChannelRead(request);
     }
 
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        super.exceptionCaught(ctx, cause);
+    }
 
-    private void writeHeader(ChannelHandlerContext ctx, FullHttpRequest request, File file) {
+    private void writeHeader(ChannelHandlerContext ctx, FullHttpRequest request) {
+        File file = getFile(request);
         HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
         setContentLength(response, file.length());
         setContentTypeHeader(response, file);
@@ -81,14 +89,7 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
         if (isKeepAlive(request)) {
             response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
         }
-
-        // Write the initial line and the header.
         ctx.write(response);
     }
 
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
-    }
 }
