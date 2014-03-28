@@ -44,7 +44,6 @@ public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpReque
         final String path = request.getUri();
         logger.debug("Hit an url {}", path);
         File file = new File(path);
-
         if (isPathOnTrack(file)) {
             sendError(ctx, FORBIDDEN);
             logger.debug("you don't have an access {}", "[request from " + ctx.channel().remoteAddress() + "]");

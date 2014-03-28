@@ -24,7 +24,6 @@ import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
  */
 public class SnapshotBuilder {
 
-    //TODO move it to config file
     private Path snapshotFolder = Paths.get("./snapshots");
     private String hash;
     private Path path;

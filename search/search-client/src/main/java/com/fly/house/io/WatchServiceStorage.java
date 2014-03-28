@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.util.Collections.unmodifiableMap;
 
 /**
  * Class is not thread-safe.
@@ -33,7 +34,6 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 public class WatchServiceStorage {
 
     private PathRepository pathManager;
-    //todo consider swtichiing to an ConcurrentHashMap
     private Map<Path, WatchService> storage;
     private FileSystem fileSystem;
     private static Logger logger = LoggerFactory.getLogger(WatchServiceStorage.class);
@@ -83,7 +83,7 @@ public class WatchServiceStorage {
     }
 
     public Map<Path, WatchService> asMap() {
-        return new HashMap<>(storage);
+        return unmodifiableMap(storage);
     }
 
     /**
@@ -93,10 +93,6 @@ public class WatchServiceStorage {
     public void destroy() {
         logger.debug("Closing file system");
         closeQuietly(fileSystem);
-    }
-
-    void setStorage(Map<Path, WatchService> map) {
-        storage = map;
     }
 
     private WatchService put(Path path) throws IOException {

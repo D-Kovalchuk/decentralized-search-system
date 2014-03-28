@@ -80,10 +80,10 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
 
     @Ignore
     @Test
-    public void fileAccessShouldPassWhenFileExist() throws IOException {
-        String pathToFile = join("/", RIGHT_PATH, "fileop.html");
-        File file = new File(pathToFile.substring(1));
-        file.createNewFile();
+    public void fileAccessShouldPassWhenDirExist() throws IOException {
+        String pathToFile = join("/", RIGHT_PATH, "fileop");
+        File file = new File(pathToFile);
+        file.mkdir();
         FullHttpRequest fullHttpRequest = createRequest(GET, pathToFile);
 
         embeddedChannel.writeInbound(fullHttpRequest);
@@ -94,5 +94,5 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
     }
 
     //TODO check next if statement
-
+    //TODO fix this when as an argument will be passed hash of a file path
 }

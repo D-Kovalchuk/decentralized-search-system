@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class WatchServiceStorageTest {
     public void setUp() throws Exception {
         storage = new WatchServiceStorage(pathRepository);
         map = new HashMap<>();
-        storage.setStorage(map);
+        Whitebox.setInternalState(storage, "storage", map);
     }
 
 

@@ -32,7 +32,6 @@ public class PathWatchService implements Runnable {
         }
     }
 
-    //TODO write more tests
     void startWatch() {
         try {
             logger.debug("Block on obtaining WatchKey");
