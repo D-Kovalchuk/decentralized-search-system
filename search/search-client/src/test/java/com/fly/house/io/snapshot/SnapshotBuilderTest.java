@@ -2,7 +2,6 @@ package com.fly.house.io.snapshot;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -15,9 +14,10 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -39,7 +39,7 @@ public class SnapshotBuilderTest {
 
     @Before
     public void setUp() {
-        snapshotDir = new File("snapshots");
+        snapshotDir = new File("./snapshots");
         pathToDirectory = Paths.get("path");
         snapshotDir.mkdir();
         pathToDirectory.toFile().mkdir();
@@ -76,7 +76,6 @@ public class SnapshotBuilderTest {
     }
 
     @Test
-    @Ignore
     public void getStaleSnapshotShouldLoadSnapshotWhenSteelSnapshotExists() throws IOException {
         Path snapshotPath = snapshotDir.toPath();
         saveSnapshot(snapshotPath);
@@ -84,34 +83,31 @@ public class SnapshotBuilderTest {
         Snapshot steelSnapshot = builder.getStaleSnapshot();
 
         assertThat(steelSnapshot.getFiles().size(), is(3));
-        //fixme
     }
 
     @Test
-    @Ignore
     public void save() {
-        List<Path> list = new ArrayList<>();
-        list.add(Paths.get("file1"));
-        list.add(Paths.get("file2"));
+        List<Path> list = listOf("file1", "file2");
         Snapshot snapshot = new Snapshot(list);
 
         builder.save(snapshot);
 
         Path resolve = snapshotDir.toPath().resolve(builder.hash());
         assertThat(resolve.toFile().exists(), is(true));
-        //fixme
+    }
+
+    private List<Path> listOf(String... paths) {
+        return Stream.of(paths)
+                .map(s -> Paths.get(s))
+                .collect(toList());
     }
 
     private void saveSnapshot(Path path) throws IOException {
-        List<Path> list = new ArrayList<>();
-        list.add(Paths.get("file1"));
-        list.add(Paths.get("file2"));
-        list.add(Paths.get("file3"));
+        List<Path> list = listOf("file1", "file2", "file3");
         Snapshot snapshot = new Snapshot(list);
         Path name = path.resolve(builder.hash());
         try (OutputStream outputStream = Files.newOutputStream(name);
              ObjectOutputStream ios = new ObjectOutputStream(outputStream)) {
-            System.out.println("sdfs");
             ios.writeObject(snapshot);
         }
     }

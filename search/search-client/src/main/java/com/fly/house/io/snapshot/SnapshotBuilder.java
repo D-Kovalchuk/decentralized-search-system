@@ -16,19 +16,16 @@ import java.util.stream.Stream;
 
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Collections.emptyList;
 import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 
 /**
  * Created by dimon on 1/30/14.
  */
-//todo exception
 public class SnapshotBuilder {
 
     //TODO move it to config file
-    private Path snapshotFolder = Paths.get("search-client/src/test/resources/snapshots/");
+    private Path snapshotFolder = Paths.get("./snapshots");
     private String hash;
     private Path path;
     private static Logger logger = LoggerFactory.getLogger(SnapshotBuilder.class);
@@ -70,7 +67,7 @@ public class SnapshotBuilder {
     public void save(Snapshot snapshot) {
         Path name = snapshotFolder.resolve(hash);
         logger.debug("Saving snapshot to {}", name.toString());
-        try (ObjectOutputStream oos = new ObjectOutputStream(newOutputStream(name, WRITE, CREATE_NEW))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(newOutputStream(name))) {
             oos.writeObject(snapshot);
         } catch (IOException e) {
             logger.warn("Problems with saving snapshot", e);
