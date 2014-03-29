@@ -1,6 +1,8 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler;
 
-import com.fly.house.io.WatchServiceStorage;
+//import com.fly.house.fileshare.Service;
+
+import com.fly.house.fileshare.handler.util.PathService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -11,14 +13,12 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.WatchService;
-import java.util.Map;
+import java.nio.file.Paths;
 
-import static com.fly.house.fileshare.HttpHelper.sendError;
+import static com.fly.house.fileshare.handler.util.HttpHelper.sendError;
 import static io.netty.channel.ChannelHandler.Sharable;
 import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
 import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
-import static java.util.Objects.isNull;
 
 /**
  * Created by dimon on 3/27/14.
@@ -27,7 +27,7 @@ import static java.util.Objects.isNull;
 @Component
 public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
-    private WatchServiceStorage storage;
+    private PathService pathService;
 
     private static Logger logger = LoggerFactory.getLogger(FileAccessHandler.class);
 
@@ -35,8 +35,8 @@ public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpReque
     }
 
     @Autowired
-    public FileAccessHandler(WatchServiceStorage storage) {
-        this.storage = storage;
+    public FileAccessHandler(PathService pathService) {
+        this.pathService = pathService;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpReque
         final String path = request.getUri();
         logger.debug("Hit an url {}", path);
         File file = new File(path);
-        if (isPathOnTrack(file)) {
+        if (!isPathOnTrack(path)) {
             sendError(ctx, FORBIDDEN);
             logger.debug("you don't have an access {}", "[request from " + ctx.channel().remoteAddress() + "]");
             return;
@@ -79,10 +79,8 @@ public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpReque
         return !file.exists();
     }
 
-    private boolean isPathOnTrack(File file) {
-        Map<Path, WatchService> map = storage.asMap();
-        Path pathToFile = file.toPath();
-        Path parentToDir = pathToFile.getParent();
-        return isNull(map.get(parentToDir));
+    private boolean isPathOnTrack(String path) {
+        Path pathToFolder = Paths.get(path).getParent();
+        return pathService.isPathTracked(pathToFolder);
     }
 }

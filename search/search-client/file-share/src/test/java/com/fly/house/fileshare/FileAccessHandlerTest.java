@@ -1,6 +1,7 @@
 package com.fly.house.fileshare;
 
-import com.fly.house.io.WatchServiceStorage;
+import com.fly.house.fileshare.handler.FileAccessHandler;
+import com.fly.house.fileshare.handler.util.PathService;
 import io.netty.handler.codec.http.FullHttpRequest;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -8,15 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchService;
-import java.util.HashMap;
 
 import static io.netty.handler.codec.http.HttpMethod.GET;
 import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
@@ -24,6 +21,7 @@ import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static java.lang.String.join;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -35,17 +33,13 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
     public static final String RIGHT_PATH = "/search-client/src/test/resources";
 
     @Mock
-    private WatchServiceStorage mock;
+    private PathService pathService;
 
     @InjectMocks
     private FileAccessHandler fileAccessHandler;
 
     @Before
     public void setUp() throws Exception {
-        HashMap<Path, WatchService> map = new HashMap<>();
-        map.put(Paths.get(RIGHT_PATH), Mockito.mock(WatchService.class));
-        when(mock.asMap()).thenReturn(map);
-
         super.setUp(fileAccessHandler);
     }
 
@@ -62,6 +56,7 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
     public void fileAccessShouldPassWhenWasSpecifiedPathThatWasRegistered() throws IOException {
         String pathToFile = join("/", RIGHT_PATH, "file.html");
         FullHttpRequest fullHttpRequest = createRequest(GET, pathToFile);
+        when(pathService.isPathTracked(any(Path.class))).thenReturn(true);
 
         embeddedChannel.writeInbound(fullHttpRequest);
 
@@ -72,6 +67,7 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
     public void fileAccessShouldThrowNotFoundStatusWhenFileDoesNotExist() {
         String pathToFile = join("/", RIGHT_PATH, "file.html");
         FullHttpRequest fullHttpRequest = createRequest(GET, pathToFile);
+        when(pathService.isPathTracked(any(Path.class))).thenReturn(true);
 
         embeddedChannel.writeInbound(fullHttpRequest);
 

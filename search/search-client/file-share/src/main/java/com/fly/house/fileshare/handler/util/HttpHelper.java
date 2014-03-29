@@ -1,4 +1,4 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler.util;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;

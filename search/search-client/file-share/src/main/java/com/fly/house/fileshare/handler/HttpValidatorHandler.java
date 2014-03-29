@@ -1,4 +1,4 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import static com.fly.house.fileshare.HttpHelper.isNotGet;
-import static com.fly.house.fileshare.HttpHelper.sendError;
+import static com.fly.house.fileshare.handler.util.HttpHelper.isNotGet;
+import static com.fly.house.fileshare.handler.util.HttpHelper.sendError;
 import static io.netty.channel.ChannelHandler.Sharable;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 import static io.netty.handler.codec.http.HttpResponseStatus.METHOD_NOT_ALLOWED;

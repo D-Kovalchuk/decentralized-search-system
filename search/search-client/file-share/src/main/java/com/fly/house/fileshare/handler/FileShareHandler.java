@@ -1,5 +1,8 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler;
 
+import com.fly.house.fileshare.handler.util.CacheManager;
+import com.fly.house.fileshare.handler.util.ContentProvider;
+import com.fly.house.fileshare.handler.util.ProgressiveListener;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,8 +19,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import static com.fly.house.fileshare.HttpHelper.sendError;
-import static com.fly.house.fileshare.HttpHelper.setContentTypeHeader;
+import static com.fly.house.fileshare.handler.util.HttpHelper.sendError;
+import static com.fly.house.fileshare.handler.util.HttpHelper.setContentTypeHeader;
 import static io.netty.channel.ChannelHandler.Sharable;
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;

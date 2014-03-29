@@ -1,5 +1,9 @@
 package com.fly.house.fileshare;
 
+import com.fly.house.fileshare.handler.CacheHandler;
+import com.fly.house.fileshare.handler.FileAccessHandler;
+import com.fly.house.fileshare.handler.FileShareHandler;
+import com.fly.house.fileshare.handler.HttpValidatorHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

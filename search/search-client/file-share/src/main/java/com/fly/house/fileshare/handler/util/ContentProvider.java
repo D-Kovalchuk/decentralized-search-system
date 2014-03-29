@@ -1,4 +1,4 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler.util;
 
 import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.FileRegion;
