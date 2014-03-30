@@ -1,10 +1,10 @@
 package com.fly.house.io.operations;
 
-import com.fly.house.authentication.CookieManager;
-import com.fly.house.authentication.HttpStatusHandler;
-import com.fly.house.authentication.Message;
 import com.fly.house.encrypt.PathEncryptors;
 import com.fly.house.io.operations.api.FileOperation;
+import com.fly.house.rest.CookieService;
+import com.fly.house.rest.HttpHandler;
+import com.fly.house.rest.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -27,9 +27,9 @@ public class RemoteFileOperations implements FileOperation {
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    private CookieManager cookieManager;
+    private CookieService cookieService;
     @Autowired
-    private HttpStatusHandler httpHandler;
+    private HttpHandler httpHandler;
     @Autowired
     private PathEncryptors pathEncryptors;
     @Value("${fileUrl}")
@@ -51,7 +51,7 @@ public class RemoteFileOperations implements FileOperation {
     }
 
     private HttpEntity<Message<String>> constructRequest(Path path) {
-        HttpHeaders header = cookieManager.getCookieHeader();
+        HttpHeaders header = cookieService.getCookieHeader();
         String encodedPath = pathEncryptors.encode(path);
         Message<String> message = new Message<>(encodedPath);
         return new HttpEntity<>(message, header);

@@ -1,11 +1,11 @@
 package com.fly.house.io.repositories;
 
-import com.fly.house.authentication.CookieManager;
-import com.fly.house.authentication.Message;
 import com.fly.house.encrypt.PathEncryptors;
 import com.fly.house.io.repositories.api.AbstractPathRepository;
 import com.fly.house.io.repositories.api.PathRepo;
 import com.fly.house.io.repositories.api.RemoteRepo;
+import com.fly.house.rest.CookieService;
+import com.fly.house.rest.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -41,7 +41,7 @@ public class RemotePathRepository extends AbstractPathRepository {
     private PathEncryptors pathEncryptors;
 
     @Autowired
-    private CookieManager cookieManager;
+    private CookieService cookieService;
 
     private Message<String> responseType = new Message<>();
 
@@ -68,7 +68,7 @@ public class RemotePathRepository extends AbstractPathRepository {
     }
 
     private HttpEntity<Message<String>> constructRequest(Path path) {
-        HttpHeaders header = cookieManager.getCookieHeader();
+        HttpHeaders header = cookieService.getCookieHeader();
         String encodedPath = pathEncryptors.encode(path);
         Message<String> message = new Message<>(encodedPath);
         return new HttpEntity<>(message, header);

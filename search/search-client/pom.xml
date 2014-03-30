@@ -15,11 +15,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>authorization</module>
-        <module>file-share</module>
+        <module>auth-module</module>
+        <module>file-share-module</module>
         <module>ui-module</module>
         <module>watch-service-model</module>
         <module>main-module</module>
+        <module>rest-module</module>
     </modules>
 
     <dependencyManagement>
