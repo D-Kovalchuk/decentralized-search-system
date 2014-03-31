@@ -1,6 +1,7 @@
 package com.fly.house.fileshare.handler;
 
 import com.fly.house.encrypt.PathEncryptors;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -36,13 +37,20 @@ public class PathDecoder extends SimpleChannelInboundHandler<FullHttpRequest> {
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         String uri = request.getUri();
-        logger.debug("Hit an url {} {}", uri, "[request from " + ctx.channel().remoteAddress() + "]");
+        Channel channel = ctx.channel();
+        logger.debug("Hit an url {} {}", uri, "[request from " + channel.remoteAddress() + "]");
         Path decodedPath = decodePath(uri);
-        logger.debug("Decoded path = {} {}", decodedPath.toString(), "[request from " + ctx.channel().remoteAddress() + "]");
-        Attribute<File> attr = ctx.channel().attr(pathAttr);
+        logger.debug("Decoded path = {} {}", decodedPath.toString(), "[request from " + channel.remoteAddress() + "]");
+        Attribute<File> attr = channel.attr(pathAttr);
         attr.set(decodedPath.toFile());
 
         ctx.fireChannelRead(request);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        logger.warn("exception occur while decoding a path", cause);
+        ctx.channel().close();
     }
 
     private Path decodePath(String uri) {

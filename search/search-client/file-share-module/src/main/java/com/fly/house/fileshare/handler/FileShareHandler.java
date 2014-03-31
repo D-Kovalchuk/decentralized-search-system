@@ -45,7 +45,7 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
     private static Logger logger = LoggerFactory.getLogger(FileShareHandler.class);
 
     @Override
-    protected void messageReceived(final ChannelHandlerContext ctx, FullHttpRequest request) {
+    protected void messageReceived(final ChannelHandlerContext ctx, FullHttpRequest request) throws FileNotFoundException {
         writeHeader(ctx, request);
         writeContent(ctx, request);
         ctx.fireChannelRead(request);
@@ -57,21 +57,24 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
         super.channelActive(ctx);
     }
 
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        if (cause instanceof FileNotFoundException) {
+            logger.warn("file not found", cause);
+            sendError(ctx, NOT_FOUND);
+        }
+    }
+
     private File getFile(FullHttpRequest request) {
         final String path = request.getUri();
         return new File(path);
     }
 
-    private void writeContent(ChannelHandlerContext ctx, FullHttpRequest request) {
+    private void writeContent(ChannelHandlerContext ctx, FullHttpRequest request) throws FileNotFoundException {
         AttributeKey<File> pathAttr = AttributeKey.valueOf("decodedPath");
         Attribute<File> attr = ctx.channel().attr(pathAttr);
         File file = attr.get();
-        ContentProvider contentProvider = null;
-        try {
-            contentProvider = new ContentProvider(file);
-        } catch (FileNotFoundException e) {
-            sendError(ctx, NOT_FOUND);
-        }
+        ContentProvider contentProvider = new ContentProvider(file);
 
         ChannelFuture sendFileFuture = ctx.write(contentProvider.getRegion(), ctx.newProgressivePromise());
         sendFileFuture.addListener(new ProgressiveListener(ctx));
@@ -80,11 +83,6 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
         if (!isKeepAlive(request)) {
             lastContentFuture.addListener(ChannelFutureListener.CLOSE);
         }
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
     }
 
     private void writeHeader(ChannelHandlerContext ctx, FullHttpRequest request) {
