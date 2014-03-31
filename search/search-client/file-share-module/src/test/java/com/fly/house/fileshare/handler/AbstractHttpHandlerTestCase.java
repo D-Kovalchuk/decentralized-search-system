@@ -1,9 +1,13 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler;
 
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.handler.codec.http.*;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import org.hamcrest.Matcher;
+
+import java.io.File;
 
 import static org.junit.Assert.assertThat;
 
@@ -19,11 +23,16 @@ public class AbstractHttpHandlerTestCase {
     }
 
     protected void assertThatStatus(Matcher<HttpResponseStatus> statusMatcher) {
-        FullHttpResponse httpResponse = (FullHttpResponse) embeddedChannel.readOutbound();
+        FullHttpResponse httpResponse = embeddedChannel.readOutbound();
         assertThat(httpResponse.getStatus(), statusMatcher);
     }
 
     protected DefaultFullHttpRequest createRequest(HttpMethod method, String uri) {
         return new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, uri);
+    }
+
+    protected void attachFileWithName(String fileName) {
+        Attribute<File> attr = embeddedChannel.attr(AttributeKey.valueOf("decodedPath"));
+        attr.set(new File(fileName));
     }
 }

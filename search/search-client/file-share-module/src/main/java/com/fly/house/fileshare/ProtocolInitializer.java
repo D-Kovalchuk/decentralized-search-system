@@ -1,9 +1,6 @@
 package com.fly.house.fileshare;
 
-import com.fly.house.fileshare.handler.CacheHandler;
-import com.fly.house.fileshare.handler.FileAccessHandler;
-import com.fly.house.fileshare.handler.FileShareHandler;
-import com.fly.house.fileshare.handler.HttpValidatorHandler;
+import com.fly.house.fileshare.handler.*;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -34,6 +31,9 @@ public class ProtocolInitializer extends ChannelInitializer<SocketChannel> {
     @Autowired
     private FileAccessHandler fileAccessHandler;
 
+    @Autowired
+    private PathDecoder pathDecoder;
+
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
@@ -43,6 +43,7 @@ public class ProtocolInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("chunkedWriter", new ChunkedWriteHandler());
         pipeline.addLast("httpValidatorHandler", httpValidatorHandler);
         pipeline.addLast("cacheHandler", cacheHandler);
+        pipeline.addLast("pathDecoder", pathDecoder);
         pipeline.addLast("fileAccessHandler", fileAccessHandler);
         pipeline.addLast("handler", handler);
         pipeline.addLast("encoder", new HttpResponseEncoder());

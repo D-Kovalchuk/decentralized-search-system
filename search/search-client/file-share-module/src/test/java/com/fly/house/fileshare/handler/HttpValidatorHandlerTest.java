@@ -1,6 +1,5 @@
-package com.fly.house.fileshare;
+package com.fly.house.fileshare.handler;
 
-import com.fly.house.fileshare.handler.HttpValidatorHandler;
 import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import org.junit.Before;

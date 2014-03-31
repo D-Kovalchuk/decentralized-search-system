@@ -23,7 +23,7 @@ public class HttpValidatorHandler extends SimpleChannelInboundHandler<FullHttpRe
     private static Logger logger = LoggerFactory.getLogger(HttpValidatorHandler.class);
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) {
+    protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) {
         if (!isDecodedToHttp(request)) {
             sendError(ctx, BAD_REQUEST);
             return;

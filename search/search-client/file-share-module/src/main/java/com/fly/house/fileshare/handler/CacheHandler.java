@@ -26,7 +26,7 @@ public class CacheHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     private static Logger logger = LoggerFactory.getLogger(HttpValidatorHandler.class);
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
+    protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         final String path = request.getUri();
         File file = new File(path);
 

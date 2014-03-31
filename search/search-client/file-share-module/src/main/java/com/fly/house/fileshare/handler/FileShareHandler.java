@@ -11,6 +11,8 @@ import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponse;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
     private static Logger logger = LoggerFactory.getLogger(FileShareHandler.class);
 
     @Override
-    protected void channelRead0(final ChannelHandlerContext ctx, FullHttpRequest request) {
+    protected void messageReceived(final ChannelHandlerContext ctx, FullHttpRequest request) {
         writeHeader(ctx, request);
         writeContent(ctx, request);
         ctx.fireChannelRead(request);
@@ -61,7 +63,9 @@ public class FileShareHandler extends SimpleChannelInboundHandler<FullHttpReques
     }
 
     private void writeContent(ChannelHandlerContext ctx, FullHttpRequest request) {
-        File file = getFile(request);
+        AttributeKey<File> pathAttr = AttributeKey.valueOf("decodedPath");
+        Attribute<File> attr = ctx.channel().attr(pathAttr);
+        File file = attr.get();
         ContentProvider contentProvider = null;
         try {
             contentProvider = new ContentProvider(file);

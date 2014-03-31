@@ -1,11 +1,11 @@
 package com.fly.house.fileshare.handler;
 
-//import com.fly.house.fileshare.Service;
-
 import com.fly.house.fileshare.handler.util.PathService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static com.fly.house.fileshare.handler.util.HttpHelper.sendError;
 import static io.netty.channel.ChannelHandler.Sharable;
@@ -28,7 +27,6 @@ import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
     private PathService pathService;
-
     private static Logger logger = LoggerFactory.getLogger(FileAccessHandler.class);
 
     public FileAccessHandler() {
@@ -40,11 +38,11 @@ public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpReque
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
-        final String path = request.getUri();
-        logger.debug("Hit an url {}", path);
-        File file = new File(path);
-        if (!isPathOnTrack(path)) {
+    protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
+        AttributeKey<File> pathAttr = AttributeKey.valueOf("decodedPath");
+        Attribute<File> attr = ctx.channel().attr(pathAttr);
+        File file = attr.get();
+        if (!isPathOnTrack(file.toPath())) {
             sendError(ctx, FORBIDDEN);
             logger.debug("you don't have an access {}", "[request from " + ctx.channel().remoteAddress() + "]");
             return;
@@ -79,8 +77,8 @@ public class FileAccessHandler extends SimpleChannelInboundHandler<FullHttpReque
         return !file.exists();
     }
 
-    private boolean isPathOnTrack(String path) {
-        Path pathToFolder = Paths.get(path).getParent();
+    private boolean isPathOnTrack(Path path) {
+        Path pathToFolder = path.getParent();
         return pathService.isPathTracked(pathToFolder);
     }
 }
