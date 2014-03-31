@@ -23,7 +23,7 @@ public class CacheHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     @Autowired
     private CacheManager cacheManager;
 
-    private static Logger logger = LoggerFactory.getLogger(HttpValidatorHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(CacheHandler.class);
 
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {

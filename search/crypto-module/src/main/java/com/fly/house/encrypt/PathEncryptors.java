@@ -1,5 +1,6 @@
 package com.fly.house.encrypt;
 
+import com.fly.house.encrypt.exception.DecodePathException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -53,10 +54,16 @@ public class PathEncryptors {
         if (isNull(securePath)) {
             return null;
         }
-        byte[] s = decoder.decode(securePath);
-        for (int i = 0; i < depth - 1; i++) {
-            s = decoder.decode(s);
+        byte[] s;
+        try {
+            s = decoder.decode(securePath);
+            for (int i = 0; i < depth - 1; i++) {
+                s = decoder.decode(s);
+            }
+        } catch (IllegalArgumentException e) {
+            throw new DecodePathException("cannot decode an hash", e);
         }
+
         String decodedPath = new String(s).substring(salt.length());
         return Paths.get(decodedPath);
     }
