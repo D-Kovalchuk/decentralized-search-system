@@ -41,6 +41,9 @@ public class PathWatchService implements Runnable {
                 List<WatchEvent<?>> events = watchKey.pollEvents();
                 EventManager eventManager = new EventManager();
                 List<WatchEvent<Path>> contexts = eventManager.filterEvents(events);
+                if (!isFileParsable(contexts)) {
+                    return;
+                }
                 List<Event> event = eventManager.encapsulateEvents(contexts);
                 operationFactory.putCommands(event);
                 watchKey.reset();
@@ -51,6 +54,12 @@ public class PathWatchService implements Runnable {
             stop();
             logger.warn("WatchService has been interrupted:", e);
         }
+    }
+
+    private boolean isFileParsable(List<WatchEvent<Path>> contexts) {
+        return contexts.stream()
+                .map(WatchEvent<Path>::context)
+                .allMatch(FileFilter::isAcceptedType);
     }
 
     public void stop() {
