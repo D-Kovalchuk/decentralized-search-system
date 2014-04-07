@@ -30,16 +30,16 @@ import static org.mockito.Mockito.*;
  * Created by dimon on 1/29/14.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class WatchServiceStorageTest {
+public class InMemoryWSStorageTest {
 
     @Mock
     private PathRepository pathRepository;
     private Map<Path, WatchService> map;
-    private WatchServiceStorage storage;
+    private InMemoryWSStorage storage;
 
     @Before
     public void setUp() throws Exception {
-        storage = new WatchServiceStorage(pathRepository);
+        storage = new InMemoryWSStorage(pathRepository);
         map = new HashMap<>();
         Whitebox.setInternalState(storage, "storage", map);
     }

@@ -31,7 +31,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
  */
 //TODO integration tests
 @RunWith(MockitoJUnitRunner.class)
-public class AuthenticationServiceTest {
+public class RestAuthenticationServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
@@ -43,7 +43,7 @@ public class AuthenticationServiceTest {
     private HttpHandler httpHandler;
 
     @InjectMocks
-    private AuthenticationService authenticationService;
+    private RestAuthenticationService authenticationService;
 
     private List<String> cookies;
     private HttpHeaders httpHeaders;

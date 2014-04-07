@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class Initializer implements InitializingBean {
 
     @Autowired
-    private WatchServiceStorage storage;
+    private InMemoryWSStorage storage;
 
     @Autowired
     private WatchServiceExecutor watchServiceExecutor;

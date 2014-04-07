@@ -1,6 +1,6 @@
 package com.fly.house.ui.presenter;
 
-import com.fly.house.authentication.AuthenticationService;
+import com.fly.house.authentication.RestAuthenticationService;
 import com.fly.house.authentication.exception.AuthorizationException;
 import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.view.AuthorizationView;
@@ -31,7 +31,7 @@ public class AuthenticationServicePresenterImplTest {
     @Mock
     private ViewContainer container;
     @Mock
-    private AuthenticationService authenticationService;
+    private RestAuthenticationService authenticationService;
     @InjectMocks
     private AuthorizationPresenterImpl presenter;
     @Mock

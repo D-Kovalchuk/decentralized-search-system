@@ -1,6 +1,7 @@
 package com.fly.house.main;
 
 import com.fly.house.fileshare.FileShareServer;
+import com.fly.house.fileshare.FileShareServerImpl;
 import com.fly.house.ui.view.RootView;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -18,7 +19,7 @@ public class ApplicationClass {
         final RootView rootView = appContext.getBean(RootView.class);
         SwingUtilities.invokeLater(rootView::run);
 
-        FileShareServer fileShareServer = appContext.getBean(FileShareServer.class);
+        FileShareServer fileShareServer = appContext.getBean(FileShareServerImpl.class);
         fileShareServer.start();
     }
 }
