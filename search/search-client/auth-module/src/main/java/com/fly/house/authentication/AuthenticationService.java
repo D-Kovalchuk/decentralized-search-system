@@ -20,7 +20,7 @@ import static org.springframework.http.HttpMethod.POST;
  * Created by dimon on 1/26/14.
  */
 @Service
-public class Authorization {
+public class AuthenticationService {
 
     private RestTemplate restTemplate;
 
@@ -31,10 +31,10 @@ public class Authorization {
     @Value("${authUrl}")
     private String authUrl;
 
-    private static Logger logger = LoggerFactory.getLogger(Authorization.class);
+    private static Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     @Autowired
-    public Authorization(CookieService cookieService, RestTemplate restTemplate, HttpHandler httpHandler) {
+    public AuthenticationService(CookieService cookieService, RestTemplate restTemplate, HttpHandler httpHandler) {
         this.cookieService = cookieService;
         this.restTemplate = restTemplate;
         this.httpHandler = httpHandler;

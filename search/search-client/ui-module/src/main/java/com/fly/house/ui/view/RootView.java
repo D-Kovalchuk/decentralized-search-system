@@ -1,6 +1,6 @@
 package com.fly.house.ui.view;
 
-import com.fly.house.authentication.Authorization;
+import com.fly.house.authentication.AuthenticationService;
 import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.event.LoginEvent;
 import com.fly.house.ui.qualifier.View;
@@ -17,7 +17,7 @@ import java.awt.*;
 public class RootView extends JFrame {
 
     @Autowired
-    private Authorization authorization;
+    private AuthenticationService authenticationService;
 
     @Autowired
     private EventBus eventBus;
@@ -38,7 +38,7 @@ public class RootView extends JFrame {
     }
 
     private void fireEvent() {
-        if (authorization.isAuthorized()) {
+        if (authenticationService.isAuthorized()) {
             eventBus.post(new ChoosePathEvent());
         } else {
             eventBus.post(new LoginEvent());

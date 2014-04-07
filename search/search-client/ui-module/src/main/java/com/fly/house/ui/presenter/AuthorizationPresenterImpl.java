@@ -1,7 +1,7 @@
 package com.fly.house.ui.presenter;
 
 
-import com.fly.house.authentication.Authorization;
+import com.fly.house.authentication.AuthenticationService;
 import com.fly.house.authentication.exception.AuthorizationException;
 import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.presenter.api.AbstractPresenter;
@@ -20,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationView> implements AuthorizationPresenter {
 
     private static Logger logger = LoggerFactory.getLogger(AuthorizationPresenterImpl.class);
-    private Authorization authorization;
+    private AuthenticationService authenticationService;
 
     @Autowired
     protected AuthorizationPresenterImpl(EventBus eventBus, AuthorizationView view,
-                                         ViewContainer container, Authorization authorization) {
+                                         ViewContainer container, AuthenticationService authenticationService) {
         super(eventBus, view, container);
-        this.authorization = authorization;
+        this.authenticationService = authenticationService;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
         String login = view.getLoginField().getText();
         String password = view.getPasswordField().getText();
         try {
-            authorization.authentication(login, password);
+            authenticationService.authentication(login, password);
             logger.debug("fired ChoosePathEvent");
             eventBus.post(new ChoosePathEvent());
         } catch (AuthorizationException e) {

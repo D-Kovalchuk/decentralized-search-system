@@ -1,6 +1,6 @@
 package com.fly.house.ui.presenter;
 
-import com.fly.house.authentication.Authorization;
+import com.fly.house.authentication.AuthenticationService;
 import com.fly.house.authentication.exception.AuthorizationException;
 import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.view.AuthorizationView;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
  * Created by dimon on 3/10/14.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AuthorizationPresenterImplTest {
+public class AuthenticationServicePresenterImplTest {
 
     @Mock
     private EventBus eventBus;
@@ -31,7 +31,7 @@ public class AuthorizationPresenterImplTest {
     @Mock
     private ViewContainer container;
     @Mock
-    private Authorization authorization;
+    private AuthenticationService authenticationService;
     @InjectMocks
     private AuthorizationPresenterImpl presenter;
     @Mock
@@ -65,7 +65,7 @@ public class AuthorizationPresenterImplTest {
 
         presenter.onLogin();
 
-        verify(authorization).authentication("login", "password");
+        verify(authenticationService).authentication("login", "password");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class AuthorizationPresenterImplTest {
     @Test
     public void onLoginShouldShowErrorMessage() {
         setUpViewBehavior();
-        doThrow(new AuthorizationException("error message")).when(authorization).authentication(anyString(), anyString());
+        doThrow(new AuthorizationException("error message")).when(authenticationService).authentication(anyString(), anyString());
 
         presenter.onLogin();
 
