@@ -1,5 +1,6 @@
 package com.fly.house.io;
 
+import com.fly.house.authentication.Secure;
 import com.fly.house.io.operations.api.OperationHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -40,6 +41,7 @@ public class WatchServiceExecutor {
         });
     }
 
+    @Secure
     public void createWatchService(Path path) {
         operationFactory.addChangesToHistory(path);
         WatchService watchService = storage.register(path);

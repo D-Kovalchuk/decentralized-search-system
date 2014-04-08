@@ -1,5 +1,6 @@
 package com.fly.house.io;
 
+import com.fly.house.authentication.Secure;
 import com.fly.house.io.exceptions.PathRepositoryException;
 import com.fly.house.io.exceptions.WatchServiceRegistrationException;
 import com.fly.house.io.exceptions.WatchServiceUnregistrationException;
@@ -31,6 +32,7 @@ import static java.util.Collections.unmodifiableMap;
  * @author Dmitriy Kovalchuk
  */
 @Service
+@Secure //fixme make it work at the class level
 public class InMemoryWSStorage implements WatchServiceStorage {
 
     private PathRepository pathManager;
