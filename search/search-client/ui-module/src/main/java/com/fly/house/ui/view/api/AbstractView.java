@@ -45,4 +45,8 @@ public abstract class AbstractView<P extends Presenter> extends JPanel implement
         this.presenter = presenter;
     }
 
+    @Override
+    public TopMenu getTopMenu() {
+        return menu;
+    }
 }

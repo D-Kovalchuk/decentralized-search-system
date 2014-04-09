@@ -47,6 +47,6 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
     @Override
     public void go() {
         super.go();
-        menu.setVisible(false);
+        view.getTopMenu().setVisible(false);
     }
 }

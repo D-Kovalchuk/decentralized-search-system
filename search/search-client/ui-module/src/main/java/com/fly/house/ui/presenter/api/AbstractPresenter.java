@@ -1,12 +1,10 @@
 package com.fly.house.ui.presenter.api;
 
-import com.fly.house.ui.view.TopMenu;
 import com.fly.house.ui.view.ViewContainer;
 import com.fly.house.ui.view.api.View;
 import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.*;
 
@@ -15,8 +13,6 @@ import java.awt.*;
  */
 public abstract class AbstractPresenter<V extends View> implements Presenter {
 
-    @Autowired
-    protected TopMenu menu;
     protected ViewContainer container;
     protected V view;
     protected EventBus eventBus;
@@ -39,7 +35,7 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
         init();
         logger.debug("Clean container");
         container.removeAll();
-        menu.setVisible(true);
+        view.getTopMenu().setVisible(true);
         logger.debug("Add view to container");
         container.add(view.asJPanel(), BorderLayout.CENTER);
         logger.debug("Update ui");

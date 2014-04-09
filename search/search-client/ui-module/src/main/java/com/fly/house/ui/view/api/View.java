@@ -1,6 +1,7 @@
 package com.fly.house.ui.view.api;
 
 import com.fly.house.ui.presenter.api.Presenter;
+import com.fly.house.ui.view.TopMenu;
 
 import javax.swing.*;
 
@@ -12,5 +13,7 @@ public interface View<P extends Presenter> {
     JPanel asJPanel();
 
     void setPresenter(P presenter);
+
+    TopMenu getTopMenu();
 
 }
