@@ -1,11 +1,16 @@
 package com.fly.house.ui.presenter;
 
+import com.fly.house.authentication.exception.AuthorizationException;
 import com.fly.house.io.WatchServiceStorage;
+import com.fly.house.io.exceptions.WatchServiceException;
+import com.fly.house.ui.event.LogoutEvent;
 import com.fly.house.ui.presenter.api.AbstractPresenter;
 import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.PathsView;
 import com.fly.house.ui.view.ViewContainer;
 import com.google.common.eventbus.EventBus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +28,7 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
     private static final int EDITABLE_COLUMN = 1;
     private WatchServiceStorage storage;
     private DefaultTableModel dataModel;
+    private static Logger logger = LoggerFactory.getLogger(PathsPresenterImpl.class);
 
     @Autowired
     public PathsPresenterImpl(EventBus eventBus, PathsView view,
@@ -35,14 +41,19 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
     public void init() {
         super.init();
         String[] header = view.getHeader();
+        try {
+            Set<Path> pathsSet = storage.asMap().keySet();
+            Path[] paths = pathsSet.toArray(new Path[pathsSet.size()]);
+            Object[][] data = new Object[pathsSet.size()][header.length];
+            fillData(paths, data);
 
-        Set<Path> pathsSet = storage.asMap().keySet();
-        Path[] paths = pathsSet.toArray(new Path[pathsSet.size()]);
-        Object[][] data = new Object[pathsSet.size()][header.length];
-        fillData(paths, data);
+            dataModel = new TableModel(data, header, EDITABLE_COLUMN);
+            view.getTable().setModel(dataModel);
+        } catch (AuthorizationException ex) {
+            logger.warn("exception occurred", ex);
+            eventBus.post(new LogoutEvent());
+        }
 
-        dataModel = new TableModel(data, header, EDITABLE_COLUMN);
-        view.getTable().setModel(dataModel);
     }
 
     private void fillData(Path[] paths, Object[][] data) {
@@ -55,14 +66,19 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
     @Override
     public void onUnregisterPath() {
         Vector rowVector = dataModel.getDataVector();
-        for (int i = 0; i < rowVector.size(); i++) {
-            Vector columnVector = (Vector) rowVector.elementAt(i);
-            Boolean valueAt = (Boolean) columnVector.elementAt(1);
-            if (valueAt) {
-                dataModel.removeRow(i);
-                Path path = (Path) columnVector.elementAt(0);
-                storage.unregister(path);
+        try {
+            for (int i = 0; i < rowVector.size(); i++) {
+                Vector columnVector = (Vector) rowVector.elementAt(i);
+                Boolean valueAt = (Boolean) columnVector.elementAt(1);
+                if (valueAt) {
+                    dataModel.removeRow(i);
+                    Path path = (Path) columnVector.elementAt(0);
+                    storage.unregister(path);
+                }
             }
+        } catch (AuthorizationException | WatchServiceException ex) {
+            logger.warn("exception occurred", ex);
+            eventBus.post(new LogoutEvent());
         }
     }
 

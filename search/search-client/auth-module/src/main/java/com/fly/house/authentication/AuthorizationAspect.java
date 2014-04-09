@@ -20,7 +20,7 @@ public class AuthorizationAspect {
     @Around("@annotation(com.fly.house.authentication.Secure) ")
     public Object secure(ProceedingJoinPoint joinPoint) throws Throwable {
         if (!authenticationService.isAuthorized()) {
-            throw new AuthorizationException();
+            throw new AuthorizationException("Not authorized. No cookie was found");
         }
         return joinPoint.proceed();
     }

@@ -1,6 +1,9 @@
 package com.fly.house.ui.presenter;
 
+import com.fly.house.authentication.exception.AuthorizationException;
 import com.fly.house.io.WatchServiceExecutor;
+import com.fly.house.io.exceptions.WatchServiceException;
+import com.fly.house.ui.event.LogoutEvent;
 import com.fly.house.ui.presenter.api.AbstractPresenter;
 import com.fly.house.ui.qualifier.Presenter;
 import com.fly.house.ui.view.ChoosePathView;
@@ -37,8 +40,13 @@ public class ChoosePathPresenterImpl extends AbstractPresenter<ChoosePathView> i
 
     @Override
     public void onAccept() {
-        for (Path path : paths) {
-            executor.createWatchService(path);
+        try {
+            for (Path path : paths) {
+                executor.createWatchService(path);
+            }
+        } catch (AuthorizationException | WatchServiceException ex) {
+            logger.warn("exception occurred", ex);
+            eventBus.post(new LogoutEvent());
         }
     }
 
