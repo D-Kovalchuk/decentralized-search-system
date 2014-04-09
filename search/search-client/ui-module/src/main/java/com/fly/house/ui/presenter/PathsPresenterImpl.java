@@ -38,7 +38,7 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
 
         Set<Path> pathsSet = storage.asMap().keySet();
         Path[] paths = pathsSet.toArray(new Path[pathsSet.size()]);
-        Object[][] data = new Object[header.length][pathsSet.size()];
+        Object[][] data = new Object[pathsSet.size()][header.length];
         fillData(paths, data);
 
         dataModel = new TableModel(data, header, EDITABLE_COLUMN);

@@ -36,7 +36,7 @@ public class HistoryPresenterImpl extends AbstractPresenter<HistoryView> impleme
     public void init() {
         super.init();
         String[] header = view.getHeader();
-        Object[][] data = new Object[header.length][history.getHistory().size()];
+        Object[][] data = new Object[history.getHistory().size()][header.length];
         fillData(data);
         dataModel = new TableModel(data, header, EDITABLE_COLUMN);
         view.getTable().setModel(dataModel);
