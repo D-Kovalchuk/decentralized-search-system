@@ -1,6 +1,6 @@
 package com.fly.house.io;
 
-import com.fly.house.authentication.Secure;
+import com.fly.house.authentication.aspect.Secure;
 import com.fly.house.io.operations.api.OperationHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;

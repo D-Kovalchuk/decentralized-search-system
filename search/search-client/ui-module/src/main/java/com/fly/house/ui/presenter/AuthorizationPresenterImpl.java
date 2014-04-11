@@ -3,6 +3,7 @@ package com.fly.house.ui.presenter;
 
 import com.fly.house.authentication.AuthenticationService;
 import com.fly.house.authentication.exception.AuthorizationException;
+import com.fly.house.authentication.qualifier.Fake;
 import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.presenter.api.AbstractPresenter;
 import com.fly.house.ui.qualifier.Presenter;
@@ -24,7 +25,7 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
 
     @Autowired
     protected AuthorizationPresenterImpl(EventBus eventBus, AuthorizationView view,
-                                         ViewContainer container, AuthenticationService authenticationService) {
+                                         ViewContainer container, @Fake AuthenticationService authenticationService) {
         super(eventBus, view, container);
         this.authenticationService = authenticationService;
     }

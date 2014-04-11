@@ -1,6 +1,6 @@
 package com.fly.house.io;
 
-import com.fly.house.authentication.Secure;
+import com.fly.house.authentication.aspect.Secure;
 import com.fly.house.io.exceptions.PathRepositoryException;
 import com.fly.house.io.exceptions.WatchServiceRegistrationException;
 import com.fly.house.io.exceptions.WatchServiceUnregistrationException;
