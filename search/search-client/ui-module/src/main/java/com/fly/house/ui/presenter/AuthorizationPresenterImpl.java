@@ -47,6 +47,10 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
 
     @Override
     public void go() {
+        if (authenticationService.isAuthorized()) {
+            eventBus.post(new ChoosePathEvent());
+            return;
+        }
         super.go();
         view.getTopMenu().setVisible(false);
     }

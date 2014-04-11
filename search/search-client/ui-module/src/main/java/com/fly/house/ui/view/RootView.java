@@ -1,8 +1,5 @@
 package com.fly.house.ui.view;
 
-import com.fly.house.authentication.AuthenticationService;
-import com.fly.house.authentication.qualifier.Fake;
-import com.fly.house.ui.event.ChoosePathEvent;
 import com.fly.house.ui.event.LoginEvent;
 import com.fly.house.ui.qualifier.View;
 import com.google.common.eventbus.EventBus;
@@ -17,10 +14,6 @@ import java.awt.*;
 @View
 public class RootView extends JFrame {
 
-    @Fake
-    @Autowired
-    private AuthenticationService authenticationService;
-
     @Autowired
     private EventBus eventBus;
 
@@ -33,18 +26,10 @@ public class RootView extends JFrame {
     public void run() {
         setConfig();
         setJMenuBar(menu.asMenuBar());
-        fireEvent();
         addContainer();
+        eventBus.post(new LoginEvent());
         pack();
         setVisible(true);
-    }
-
-    private void fireEvent() {
-        if (authenticationService.isAuthorized()) {
-            eventBus.post(new ChoosePathEvent());
-        } else {
-            eventBus.post(new LoginEvent());
-        }
     }
 
     private void addContainer() {
