@@ -1,9 +1,10 @@
 package com.fly.house.io.operations.api;
 
 import com.fly.house.io.event.Event;
-import com.fly.house.io.snapshot.Snapshot;
-import com.fly.house.io.snapshot.SnapshotBuilder;
-import com.fly.house.io.snapshot.SnapshotComparator;
+import com.fly.house.io.snapshot.SnapshotServiceFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -15,6 +16,11 @@ import java.util.List;
 public abstract class AbstractFileOperationHistory implements OperationHistory {
 
     protected FileOperation fileManager;
+
+    @Autowired
+    private SnapshotServiceFacade snapshotService;
+
+    private static Logger logger = LoggerFactory.getLogger(AbstractFileOperationHistory.class);
 
     public AbstractFileOperationHistory(FileOperation fileManager) {
         this.fileManager = fileManager;
@@ -41,11 +47,8 @@ public abstract class AbstractFileOperationHistory implements OperationHistory {
 
     @Override
     public void addChangesToHistory(Path path) {
-        SnapshotBuilder builder = new SnapshotBuilder(path);
-        SnapshotComparator comparator = new SnapshotComparator();
-        Snapshot freshSnapshot = builder.getFreshSnapshot();
-        Snapshot steelSnapshot = builder.getStaleSnapshot();
-        List<Event> events = comparator.getDiff(freshSnapshot, steelSnapshot);
+        List<Event> events = snapshotService.getDiff(path);
+        logger.debug("in {} has been made changes: {}", path, events);
         putCommands(events);
     }
 

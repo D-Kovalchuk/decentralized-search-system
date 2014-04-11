@@ -25,6 +25,7 @@
         <module>watch-service-model</module>
         <module>main-module</module>
         <module>rest-module</module>
+        <module>client-core-module</module>
     </modules>
 
     <dependencyManagement>

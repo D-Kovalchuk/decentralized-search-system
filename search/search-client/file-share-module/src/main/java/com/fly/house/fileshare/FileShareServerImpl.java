@@ -29,8 +29,8 @@ public class FileShareServerImpl implements FileShareServer {
     public void start() throws Exception {
         logger.debug("Starting server at {}", tcpPort);
         serverChannel = bootstrap.bind(tcpPort)
-                .sync().channel()
-                .closeFuture().sync()
+                .channel()
+                .closeFuture()
                 .channel();
     }
 

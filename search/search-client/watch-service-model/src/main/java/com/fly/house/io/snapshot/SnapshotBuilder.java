@@ -38,11 +38,11 @@ public class SnapshotBuilder {
     public Snapshot getFreshSnapshot() {
         try (Stream<Path> pathStream = Files.list(path)) {
             List<Path> collect = pathStream.collect(Collectors.toList());
-            new Snapshot(collect);
+            return new Snapshot(collect);
         } catch (IOException e) {
+            logger.warn("cannot construct fresh snapshot", e);
             logger.debug("Directory {} does not exist", path.toString());
             logger.debug("Returning empty snapshot");
-            return EMPTY_SNAPSHOT;
         }
         return EMPTY_SNAPSHOT;
     }

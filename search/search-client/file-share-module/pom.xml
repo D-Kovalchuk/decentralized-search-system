@@ -24,6 +24,11 @@
             <groupId>crypto-module</groupId>
             <artifactId>crypto-module</artifactId>
         </dependency>
+        <dependency>
+            <groupId>client-core-module</groupId>
+            <artifactId>client-core-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,5 +1,6 @@
 package com.fly.house.ui.event;
 
+import com.fly.house.core.event.SystemLoginEvent;
 import com.fly.house.ui.presenter.ChoosePathPresenter;
 import com.fly.house.ui.qualifier.Handler;
 import com.google.common.eventbus.Subscribe;
@@ -18,9 +19,13 @@ public class ChoosePathEventHandler {
     @Autowired
     private ChoosePathPresenter presenter;
 
+    @Autowired
+    private SystemEventPublisher publisher;
+
     @Subscribe
     public void onChoosPath(ChoosePathEvent event) {
         logger.debug("handling {}", event.getClass().getName());
+        publisher.publish(new SystemLoginEvent("login"));
         presenter.go();
     }
 

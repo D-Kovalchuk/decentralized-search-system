@@ -1,5 +1,8 @@
 package com.fly.house.io.snapshot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -16,6 +19,8 @@ import static java.util.stream.Collectors.toList;
 public class Snapshot implements Externalizable {
 
     private List<Path> files;
+
+    private static Logger logger = LoggerFactory.getLogger(Snapshot.class);
 
     public Snapshot() {
     }
@@ -37,14 +42,14 @@ public class Snapshot implements Externalizable {
         List<String> paths = files.stream()
                 .map(Path::toString)
                 .collect(toList());
-
+        logger.debug("snapshot content: {}", paths);
         out.writeObject(paths);
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         List<String> paths = (List<String>) in.readObject();
-        System.out.println(paths);
+        logger.debug("retrieved content of snapshot : {}", paths);
         files = paths.stream().map(s -> Paths.get(s)).collect(toList());
     }
 }

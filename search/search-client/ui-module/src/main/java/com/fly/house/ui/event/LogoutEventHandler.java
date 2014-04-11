@@ -1,5 +1,6 @@
 package com.fly.house.ui.event;
 
+import com.fly.house.core.event.SystemLogoutEvent;
 import com.fly.house.ui.presenter.AuthorizationPresenter;
 import com.fly.house.ui.qualifier.Handler;
 import com.google.common.eventbus.Subscribe;
@@ -18,9 +19,13 @@ public class LogoutEventHandler {
     @Autowired
     private AuthorizationPresenter presenter;
 
+    @Autowired
+    private SystemEventPublisher publisher;
+
     @Subscribe
     public void onLogout(LogoutEvent event) {
         logger.debug("handling {}", event.getClass().getName());
+        publisher.publish(new SystemLogoutEvent("logout"));
         presenter.go();
     }
 }

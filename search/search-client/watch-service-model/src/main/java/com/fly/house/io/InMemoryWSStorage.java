@@ -100,6 +100,19 @@ public class InMemoryWSStorage implements WatchServiceStorage {
         closeQuietly(fileSystem);
     }
 
+    public void cleanUp() {
+        storage.forEach((k, v) -> {
+            try {
+                v.close();
+                logger.debug("closing watch service on {} path", k);
+            } catch (IOException e) {
+                logger.warn("fail cleaning resources", e);
+            }
+        });
+        logger.debug("Purging storage");
+        storage.clear();
+    }
+
     private WatchService put(Path path) throws IOException {
         WatchService watchService = createNewWatchService();
         logger.debug("New watch service was created {}", watchService.toString());
@@ -117,7 +130,7 @@ public class InMemoryWSStorage implements WatchServiceStorage {
         if (watchService != null) {
             try {
                 watchService.close();
-            } catch (IOException e) {
+            } catch (IOException | UnsupportedOperationException e) {
                 logger.warn("Cannot close watch service", e);
             }
         }
