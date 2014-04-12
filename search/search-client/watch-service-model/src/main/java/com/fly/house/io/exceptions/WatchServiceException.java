@@ -1,9 +1,11 @@
 package com.fly.house.io.exceptions;
 
+import com.fly.house.core.exception.WSApplicationException;
+
 /**
  * Created by dimon on 1/28/14.
  */
-public class WatchServiceException extends RuntimeException {
+public class WatchServiceException extends WSApplicationException {
 
     public WatchServiceException() {
         super();

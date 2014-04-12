@@ -1,11 +1,11 @@
 package com.fly.house.io.repositories;
 
+import com.fly.house.core.rest.CookieService;
+import com.fly.house.core.rest.Message;
 import com.fly.house.encrypt.PathEncryptors;
 import com.fly.house.io.repositories.api.AbstractPathRepository;
 import com.fly.house.io.repositories.api.PathRepo;
 import com.fly.house.io.repositories.api.RemoteRepo;
-import com.fly.house.rest.CookieService;
-import com.fly.house.rest.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

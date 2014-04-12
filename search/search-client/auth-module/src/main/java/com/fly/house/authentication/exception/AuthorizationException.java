@@ -1,9 +1,11 @@
 package com.fly.house.authentication.exception;
 
+import com.fly.house.core.exception.WSApplicationException;
+
 /**
  * Created by dimon on 3/28/14.
  */
-public class AuthorizationException extends RuntimeException {
+public class AuthorizationException extends WSApplicationException {
 
     public AuthorizationException() {
         super();

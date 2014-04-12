@@ -1,7 +1,9 @@
 package com.fly.house.main;
 
-import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.ImportResource;
 
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
@@ -13,10 +15,4 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
         includeFilters = @Filter(type = FilterType.ANNOTATION, value = Configuration.class))
 @ImportResource("classpath:spring-integration.xml")
 public class AppConfig {
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-
 }

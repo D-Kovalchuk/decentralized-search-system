@@ -1,9 +1,9 @@
 package com.fly.house.authentication;
 
-import com.fly.house.rest.CookieService;
-import com.fly.house.rest.HttpHandler;
-import com.fly.house.rest.Message;
-import com.fly.house.rest.exception.UnauthorizedException;
+import com.fly.house.core.exception.UnauthorizedException;
+import com.fly.house.core.rest.CookieService;
+import com.fly.house.core.rest.HttpHandler;
+import com.fly.house.core.rest.Message;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

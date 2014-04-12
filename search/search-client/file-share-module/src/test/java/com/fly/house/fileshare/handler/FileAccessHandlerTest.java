@@ -1,6 +1,6 @@
 package com.fly.house.fileshare.handler;
 
-import com.fly.house.fileshare.handler.util.PathService;
+import com.fly.house.fileshare.integration.PathService;
 import io.netty.handler.codec.http.FullHttpRequest;
 import org.junit.Before;
 import org.junit.Test;

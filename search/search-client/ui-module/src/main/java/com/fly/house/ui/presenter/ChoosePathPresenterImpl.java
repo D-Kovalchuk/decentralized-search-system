@@ -45,9 +45,11 @@ public class ChoosePathPresenterImpl extends AbstractPresenter<ChoosePathView> i
                 executor.createWatchService(path);
             }
             view.cleanUp();
-        } catch (AuthorizationException | WatchServiceException ex) {
+        } catch (AuthorizationException ex) {
             logger.warn("exception occurred", ex);
             eventBus.post(new LogoutEvent());
+        } catch (WatchServiceException ex) {
+            logger.warn("exception occurred", ex);
         }
     }
 

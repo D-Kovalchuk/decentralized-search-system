@@ -1,9 +1,9 @@
-package com.fly.house.rest.exception;
+package com.fly.house.core.exception;
 
 /**
  * Created by dimon on 3/30/14.
  */
-public class RestException extends RuntimeException {
+public class RestException extends WSApplicationException {
 
     public RestException(String message) {
         super(message);

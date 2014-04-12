@@ -1,9 +1,9 @@
 package com.fly.house.authentication;
 
 import com.fly.house.authentication.qualifier.Rest;
-import com.fly.house.rest.CookieService;
-import com.fly.house.rest.HttpHandler;
-import com.fly.house.rest.Message;
+import com.fly.house.core.rest.CookieService;
+import com.fly.house.core.rest.HttpHandler;
+import com.fly.house.core.rest.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

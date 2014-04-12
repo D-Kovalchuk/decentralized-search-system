@@ -1,4 +1,4 @@
-package com.fly.house.rest.exception;
+package com.fly.house.core.exception;
 
 /**
  * Created by dimon on 2/27/14.

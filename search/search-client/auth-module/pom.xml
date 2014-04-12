@@ -16,8 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>rest-module</groupId>
-            <artifactId>rest-module</artifactId>
+            <groupId>client-core-module</groupId>
+            <artifactId>client-core-module</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

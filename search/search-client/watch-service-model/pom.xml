@@ -21,11 +21,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>rest-module</groupId>
-            <artifactId>rest-module</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>auth-module</groupId>
             <artifactId>auth-module</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -40,7 +35,7 @@
             <artifactId>spring-integration-core</artifactId>
         </dependency>
         <dependency>
-        <groupId>org.apache.tika</groupId>
+            <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
         </dependency>
     </dependencies>

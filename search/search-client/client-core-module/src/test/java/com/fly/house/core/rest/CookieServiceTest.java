@@ -1,4 +1,4 @@
-package com.fly.house.rest;
+package com.fly.house.core.rest;
 
 import org.junit.After;
 import org.junit.Before;

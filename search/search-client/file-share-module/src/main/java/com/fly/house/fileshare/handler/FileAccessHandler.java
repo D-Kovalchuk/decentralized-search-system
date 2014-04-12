@@ -1,6 +1,6 @@
 package com.fly.house.fileshare.handler;
 
-import com.fly.house.fileshare.handler.util.PathService;
+import com.fly.house.fileshare.integration.PathService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;

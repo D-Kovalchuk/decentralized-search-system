@@ -76,9 +76,11 @@ public class PathsPresenterImpl extends AbstractPresenter<PathsView> implements 
                     storage.unregister(path);
                 }
             }
-        } catch (AuthorizationException | WatchServiceException ex) {
+        } catch (AuthorizationException ex) {
             logger.warn("exception occurred", ex);
             eventBus.post(new LogoutEvent());
+        } catch (WatchServiceException ex) {
+            logger.warn("exception occurred", ex);
         }
     }
 

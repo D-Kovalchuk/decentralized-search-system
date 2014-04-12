@@ -1,7 +1,7 @@
-package com.fly.house.rest;
+package com.fly.house.core.rest;
 
-import com.fly.house.rest.exception.CookieIOException;
-import com.fly.house.rest.exception.CookieNotFoundException;
+import com.fly.house.core.exception.CookieIOException;
+import com.fly.house.core.exception.CookieNotFoundException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
