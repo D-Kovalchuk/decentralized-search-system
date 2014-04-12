@@ -32,7 +32,12 @@ public class EventManager {
         for (WatchEvent i : events) {
             WatchEvent<Path> event = cast(i);
             Path path = event.context();
-            if (isHidden(path) || isTemporal(path)) {
+            Path absolutePath = rootPath.resolve(path);
+            if (absolutePath.toFile().isDirectory()) {
+                logger.debug("creation directories unsupported");
+                continue;
+            }
+            if (isHidden(absolutePath) || isTemporal(absolutePath)) {
                 logger.debug("File is hidden or temporal");
                 continue;
             }
@@ -94,10 +99,10 @@ public class EventManager {
     }
 
     private Event createEvent(WatchEvent<Path> event, EventType type) {
-        Path path = event.context();
-        Path absolutePath = rootPath.resolve(path);
-        return new EventBuilder().type(type)
-                .path(absolutePath).build();
+        return new EventBuilder()
+                .type(type)
+                .path(event.context())
+                .build();
     }
 
     private boolean isDeleteEvent(WatchEvent<Path> event) {

@@ -37,7 +37,9 @@ public class SnapshotBuilder {
 
     public Snapshot getFreshSnapshot() {
         try (Stream<Path> pathStream = Files.list(path)) {
-            List<Path> collect = pathStream.collect(Collectors.toList());
+            List<Path> collect = pathStream
+                    .filter(p -> p.toFile().isFile())
+                    .collect(Collectors.toList());
             return new Snapshot(collect);
         } catch (IOException e) {
             logger.warn("cannot construct fresh snapshot", e);
