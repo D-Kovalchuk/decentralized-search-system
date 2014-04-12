@@ -95,6 +95,7 @@ public class FilePathRepository extends AbstractPathRepository {
         try (BufferedWriter writer = newBufferedWriter(pathsFile, defaultCharset())) {
             for (Path path1 : paths) {
                 writer.write(path1.toString());
+                writer.write('\n');
             }
         } catch (IOException e) {
             logger.warn("Cannot remove from paths list file", e);

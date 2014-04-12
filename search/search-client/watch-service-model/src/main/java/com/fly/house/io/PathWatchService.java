@@ -2,6 +2,7 @@ package com.fly.house.io;
 
 import com.fly.house.io.event.Event;
 import com.fly.house.io.event.EventManager;
+import com.fly.house.io.event.EventType;
 import com.fly.house.io.operations.api.OperationHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,13 @@ public class PathWatchService implements Runnable {
     private volatile boolean stop = false;
     private OperationHistory operationFactory;
     private WatchService watchService;
+    private EventManager eventManager;
     private static Logger logger = LoggerFactory.getLogger(PathWatchService.class);
 
-    public PathWatchService(WatchService watchService, OperationHistory operationHistory) {
+    public PathWatchService(Path rootPath, WatchService watchService, OperationHistory operationHistory) {
         this.watchService = watchService;
         this.operationFactory = operationHistory;
+        this.eventManager = new EventManager(rootPath);
     }
 
     @Override
@@ -35,16 +38,16 @@ public class PathWatchService implements Runnable {
     void startWatch() {
         try {
             logger.debug("Block on obtaining WatchKey");
-            WatchKey watchKey = watchService.poll(5, TimeUnit.MINUTES);
+            WatchKey watchKey = watchService.poll(5, TimeUnit.SECONDS);
             logger.debug("WatchKey is taken: {}", watchKey);
             if (watchKey != null) {
                 List<WatchEvent<?>> events = watchKey.pollEvents();
-                EventManager eventManager = new EventManager();
                 List<WatchEvent<Path>> contexts = eventManager.filterEvents(events);
-                if (!isFileParsable(contexts)) {
+                List<Event> event = eventManager.encapsulateEvents(contexts);
+                if (!isFileParsable(event)) {
+                    logger.debug("file with this type is not allowed");
                     return;
                 }
-                List<Event> event = eventManager.encapsulateEvents(contexts);
                 operationFactory.putCommands(event);
                 watchKey.reset();
                 checkWatchKey(watchKey);
@@ -56,9 +59,10 @@ public class PathWatchService implements Runnable {
         }
     }
 
-    private boolean isFileParsable(List<WatchEvent<Path>> contexts) {
-        return contexts.stream()
-                .map(WatchEvent<Path>::context)
+    private boolean isFileParsable(List<Event> events) {
+        return events.stream()
+                .filter(event -> event.getType() == EventType.CREATE)
+                .map(Event::getPath)
                 .allMatch(FileFilter::isAcceptedType);
     }
 

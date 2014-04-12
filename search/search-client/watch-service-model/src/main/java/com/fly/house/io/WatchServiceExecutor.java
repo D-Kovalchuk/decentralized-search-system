@@ -37,7 +37,7 @@ public class WatchServiceExecutor {
     public void init() {
         storage.asMap().forEach((k, v) -> {
             operationFactory.addChangesToHistory(k);
-            executor.submit(new PathWatchService(v, operationFactory));
+            executor.submit(new PathWatchService(k, v, operationFactory));
         });
     }
 
@@ -45,7 +45,7 @@ public class WatchServiceExecutor {
     public void createWatchService(Path path) {
         operationFactory.addChangesToHistory(path);
         WatchService watchService = storage.register(path);
-        executor.submit(new PathWatchService(watchService, operationFactory));
+        executor.submit(new PathWatchService(path, watchService, operationFactory));
     }
 
 

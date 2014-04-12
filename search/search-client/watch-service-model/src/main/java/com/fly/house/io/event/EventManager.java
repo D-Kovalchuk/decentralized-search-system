@@ -9,6 +9,8 @@ import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fly.house.io.event.EventType.CREATE;
+import static com.fly.house.io.event.EventType.DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.util.Arrays.asList;
@@ -18,7 +20,12 @@ import static java.util.Arrays.asList;
  */
 public class EventManager {
 
+    private Path rootPath;
     private static Logger logger = LoggerFactory.getLogger(EventManager.class);
+
+    public EventManager(Path path) {
+        rootPath = path;
+    }
 
     public List<WatchEvent<Path>> filterEvents(List<WatchEvent<?>> events) {
         List<WatchEvent<Path>> eventList = new ArrayList<>();
@@ -42,38 +49,43 @@ public class EventManager {
             if (events.size() == 1) {
                 WatchEvent<Path> event = events.get(0);
                 if (isCreateEvent(event)) {
-                    return asList(createCreateEvent(events));
+                    return asList(createCreateEvent(event));
                 }
                 if (isDeleteEvent(event)) {
-                    return asList(createDeleteEvent(events));
+                    return asList(createDeleteEvent(event));
                 }
             }
         }
         return asList(EventBuilder.UNKNOWN_EVENT);
     }
 
-    private Event createDeleteEvent(List<WatchEvent<Path>> events) {
+    private Event createDeleteEvent(WatchEvent<Path> event) {
         logger.debug("Delete event has been fired");
-        Path path = events.get(0).context();
-        return new EventBuilder().type(EventType.DELETE).path(path).build();
+        return createEvent(event, DELETE);
     }
 
-    private Event createCreateEvent(List<WatchEvent<Path>> events) {
+    private Event createCreateEvent(WatchEvent<Path> event) {
         logger.debug("Create event has been fired");
-        return new EventBuilder().type(EventType.CREATE)
-                .path(events.get(0).context()).build();
+        return createEvent(event, CREATE);
     }
 
     private List<Event> createModifyEvent(List<WatchEvent<Path>> events) {
         List<Event> eventList = new ArrayList<>();
         for (WatchEvent<Path> event : events) {
             Path path = event.context();
+            Path absolutePath = rootPath.resolve(path);
             if (event.kind() == ENTRY_CREATE) {
-                Event createEvent = new EventBuilder().type(EventType.CREATE).path(path).build();
+                Event createEvent = new EventBuilder().
+                        type(EventType.CREATE)
+                        .path(absolutePath)
+                        .build();
                 eventList.add(createEvent);
             }
             if (event.kind() == ENTRY_DELETE) {
-                Event deleteEvent = new EventBuilder().type(EventType.DELETE).path(path).build();
+                Event deleteEvent = new EventBuilder()
+                        .type(DELETE)
+                        .path(absolutePath)
+                        .build();
                 eventList.add(deleteEvent);
             }
         }
@@ -81,6 +93,12 @@ public class EventManager {
         return eventList;
     }
 
+    private Event createEvent(WatchEvent<Path> event, EventType type) {
+        Path path = event.context();
+        Path absolutePath = rootPath.resolve(path);
+        return new EventBuilder().type(type)
+                .path(absolutePath).build();
+    }
 
     private boolean isDeleteEvent(WatchEvent<Path> event) {
         return event.kind() == ENTRY_DELETE;

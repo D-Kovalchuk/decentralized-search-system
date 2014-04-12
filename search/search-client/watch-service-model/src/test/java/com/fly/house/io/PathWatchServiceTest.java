@@ -31,10 +31,11 @@ public class PathWatchServiceTest {
     private OperationHistory operationHistory;
 
     private PathWatchService pathWatchService;
+    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
 
     @Before
     public void setUp() throws Exception {
-        pathWatchService = new PathWatchService(watchService, operationHistory);
+        pathWatchService = new PathWatchService(Paths.get(""), watchService, operationHistory);
     }
 
     @After
@@ -43,18 +44,19 @@ public class PathWatchServiceTest {
 
     @Test
     public void startWatchShouldDoNothingWhenAnyEventsWereFired() throws InterruptedException {
-        when(watchService.poll(5, TimeUnit.MINUTES)).thenReturn(null);
+
+        when(watchService.poll(5, TIME_UNIT)).thenReturn(null);
 
         pathWatchService.startWatch();
 
-        verify(watchService).poll(5, TimeUnit.MINUTES);
+        verify(watchService).poll(5, TIME_UNIT);
         verifyNoMoreInteractions(watchService);
         verifyZeroInteractions(operationHistory);
     }
 
     @Test
     public void startWatchShouldStopWhenThrownClosedWatchServiceException() throws InterruptedException {
-        when(watchService.poll(5, TimeUnit.MINUTES)).thenThrow(new ClosedWatchServiceException());
+        when(watchService.poll(5, TIME_UNIT)).thenThrow(new ClosedWatchServiceException());
 
         pathWatchService.startWatch();
 
@@ -64,7 +66,7 @@ public class PathWatchServiceTest {
 
     @Test
     public void startWatchShouldStopWhenThrownInterruptedException() throws InterruptedException {
-        when(watchService.poll(5, TimeUnit.MINUTES)).thenThrow(new InterruptedException());
+        when(watchService.poll(5, TIME_UNIT)).thenThrow(new InterruptedException());
 
         pathWatchService.startWatch();
 
@@ -78,7 +80,7 @@ public class PathWatchServiceTest {
         List<WatchEvent<?>> event = createEvent(ENTRY_CREATE);
 
         when(watchKey.pollEvents()).thenReturn(event);
-        when(watchService.poll(5, TimeUnit.MINUTES)).thenReturn(watchKey);
+        when(watchService.poll(5, TIME_UNIT)).thenReturn(watchKey);
 
         pathWatchService.startWatch();
 

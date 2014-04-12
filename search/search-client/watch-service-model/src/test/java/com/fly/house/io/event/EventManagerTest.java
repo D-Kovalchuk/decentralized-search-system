@@ -26,12 +26,12 @@ public class EventManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        eventManager = new EventManager();
+        eventManager = new EventManager(Paths.get(""));
     }
 
     @Test
     public void encapsulateEventsShouldReturnNullWhenFiredNoEvents() {
-        List<Event> event = eventManager.encapsulateEvents(new ArrayList<WatchEvent<Path>>());
+        List<Event> event = eventManager.encapsulateEvents(new ArrayList<>());
 
         assertThat(event.get(0).getType(), is(UNKNOWN));
     }
