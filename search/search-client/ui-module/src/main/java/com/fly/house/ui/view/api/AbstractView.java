@@ -13,10 +13,10 @@ import java.awt.*;
  */
 public abstract class AbstractView<P extends Presenter> extends JPanel implements View<P> {
 
-    protected P presenter;
-
     @Autowired
     private TopMenu menu;
+
+    protected P presenter;
 
     protected AbstractView() {
     }

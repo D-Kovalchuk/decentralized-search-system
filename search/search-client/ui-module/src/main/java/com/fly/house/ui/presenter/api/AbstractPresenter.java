@@ -37,6 +37,7 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
         container.removeAll();
         view.getTopMenu().setVisible(true);
         logger.debug("Add view to container");
+        view.cleanUp();
         container.add(view.asJPanel(), BorderLayout.CENTER);
         logger.debug("Update ui");
         container.updateUI();

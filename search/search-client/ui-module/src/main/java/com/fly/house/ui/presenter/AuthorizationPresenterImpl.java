@@ -36,6 +36,7 @@ public class AuthorizationPresenterImpl extends AbstractPresenter<AuthorizationV
         String password = view.getPasswordField().getText();
         try {
             authenticationService.authentication(login, password);
+            view.cleanUp();
             logger.debug("fired ChoosePathEvent");
             eventBus.post(new ChoosePathEvent());
         } catch (AuthorizationException e) {

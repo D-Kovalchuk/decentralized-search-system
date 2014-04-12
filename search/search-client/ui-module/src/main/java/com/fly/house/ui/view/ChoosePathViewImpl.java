@@ -32,10 +32,6 @@ public class ChoosePathViewImpl extends AbstractView<ChoosePathPresenter> implem
         addOkButtonClickListener();
     }
 
-    private void setFileChooseConfig() {
-        fileChooser.setFileSelectionMode(DIRECTORIES_ONLY);
-        fileChooser.setMultiSelectionEnabled(true);
-    }
 
     @Override
     public JFileChooser getFileChooser() {
@@ -47,6 +43,11 @@ public class ChoosePathViewImpl extends AbstractView<ChoosePathPresenter> implem
         return pathArea;
     }
 
+    private void setFileChooseConfig() {
+        fileChooser.setFileSelectionMode(DIRECTORIES_ONLY);
+        fileChooser.setMultiSelectionEnabled(true);
+    }
+
     private void addChooseButtonClickListener() {
         chooseButton.addActionListener(e -> presenter.onPathsChosen());
     }
@@ -54,5 +55,4 @@ public class ChoosePathViewImpl extends AbstractView<ChoosePathPresenter> implem
     private void addOkButtonClickListener() {
         okButton.addActionListener(e -> presenter.onAccept());
     }
-
 }
