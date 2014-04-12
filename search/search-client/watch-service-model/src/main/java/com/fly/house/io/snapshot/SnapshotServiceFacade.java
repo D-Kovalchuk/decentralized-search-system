@@ -2,6 +2,7 @@ package com.fly.house.io.snapshot;
 
 import com.fly.house.io.event.Event;
 import com.fly.house.io.exceptions.SnapshotIOException;
+import com.fly.house.io.operations.api.OperationHistory;
 import com.fly.house.io.repositories.api.FileRepo;
 import com.fly.house.io.repositories.api.PathRepository;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class SnapshotServiceFacade {
     @FileRepo
     private PathRepository pathRepository;
 
+    @Autowired
+    private OperationHistory history;
+
     private SnapshotComparator comparator;
 
     private static Logger logger = LoggerFactory.getLogger(SnapshotServiceFacade.class);
@@ -41,6 +45,9 @@ public class SnapshotServiceFacade {
 
     @PreDestroy
     public void destroy() {
+        if (!history.getHistory().isEmpty()) {
+            return;
+        }
         List<Path> paths = pathRepository.getPaths();
         paths.forEach(k -> {
             try {
