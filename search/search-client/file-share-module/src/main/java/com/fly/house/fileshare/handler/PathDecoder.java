@@ -38,6 +38,11 @@ public class PathDecoder extends SimpleChannelInboundHandler<FullHttpRequest> {
     protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         String uri = request.getUri();
         Channel channel = ctx.channel();
+        if (uri.equals("/favicon.ico")) {
+            channel.close();
+            return;
+        }
+
         logger.debug("Hit an url {} {}", uri, "[request from " + channel.remoteAddress() + "]");
         Path decodedPath = decodePath(uri);
         logger.debug("Decoded path = {} {}", decodedPath.toString(), "[request from " + channel.remoteAddress() + "]");
