@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class WSLogoutEventHandler implements ApplicationListener<SystemLogoutEvent> {
 
     @Autowired
-    private InMemoryWSStorage ws;
+    private WatchServiceStorage ws;
 
     private static Logger logger = LoggerFactory.getLogger(WSLogoutEventHandler.class);
 

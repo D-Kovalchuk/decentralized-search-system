@@ -1,5 +1,6 @@
-package com.fly.house.io;
+package com.fly.house.io.integration;
 
+import com.fly.house.io.WatchServiceStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

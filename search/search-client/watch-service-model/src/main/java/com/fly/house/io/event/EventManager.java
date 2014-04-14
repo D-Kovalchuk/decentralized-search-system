@@ -38,7 +38,7 @@ public class EventManager {
                 continue;
             }
             if (isHidden(absolutePath) || isTemporal(absolutePath)) {
-                logger.debug("File is hidden or temporal");
+                logger.debug("{} file is hidden or temporal", absolutePath.toString());
                 continue;
             }
             eventList.add(event);
@@ -54,43 +54,30 @@ public class EventManager {
             if (events.size() == 1) {
                 WatchEvent<Path> event = events.get(0);
                 if (isCreateEvent(event)) {
-                    return asList(createCreateEvent(event));
+                    logger.debug("Create event has been fired! [path {}]", event.context());
+                    Event create = createEvent(event, CREATE);
+                    return asList(create);
                 }
                 if (isDeleteEvent(event)) {
-                    return asList(createDeleteEvent(event));
+                    logger.debug("Delete event has been fired! [path {}]", event.context());
+                    Event delete = createEvent(event, DELETE);
+                    return asList(delete);
                 }
             }
         }
         return asList(EventBuilder.UNKNOWN_EVENT);
     }
 
-    private Event createDeleteEvent(WatchEvent<Path> event) {
-        logger.debug("Delete event has been fired");
-        return createEvent(event, DELETE);
-    }
-
-    private Event createCreateEvent(WatchEvent<Path> event) {
-        logger.debug("Create event has been fired");
-        return createEvent(event, CREATE);
-    }
 
     private List<Event> createModifyEvent(List<WatchEvent<Path>> events) {
         List<Event> eventList = new ArrayList<>();
         for (WatchEvent<Path> event : events) {
-            Path path = event.context();
-            Path absolutePath = rootPath.resolve(path);
             if (event.kind() == ENTRY_CREATE) {
-                Event createEvent = new EventBuilder().
-                        type(EventType.CREATE)
-                        .path(absolutePath)
-                        .build();
+                Event createEvent = createEvent(event, CREATE);
                 eventList.add(createEvent);
             }
             if (event.kind() == ENTRY_DELETE) {
-                Event deleteEvent = new EventBuilder()
-                        .type(DELETE)
-                        .path(absolutePath)
-                        .build();
+                Event deleteEvent = createEvent(event, DELETE);
                 eventList.add(deleteEvent);
             }
         }
@@ -99,9 +86,10 @@ public class EventManager {
     }
 
     private Event createEvent(WatchEvent<Path> event, EventType type) {
+        Path absolutePath = rootPath.resolve(event.context());
         return new EventBuilder()
                 .type(type)
-                .path(event.context())
+                .path(absolutePath)
                 .build();
     }
 

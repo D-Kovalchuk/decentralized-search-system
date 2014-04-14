@@ -76,8 +76,7 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
     public void fileAccessShouldPassWhenDirExist() throws IOException {
         String dir = "access/fileop";
         FullHttpRequest fullHttpRequest = createRequest(GET, dir);
-        File file = new File(dir);
-        file.mkdir();
+        File file = createDirectory(dir);
         attachFileWithName(dir);
 
         embeddedChannel.writeInbound(fullHttpRequest);
@@ -87,6 +86,23 @@ public class FileAccessHandlerTest extends AbstractHttpHandlerTestCase {
         file.delete();
     }
 
-    //TODO check next if statement
-    //TODO fix this when as an argument will be passed hash of a file path
+    @Test
+    public void fileAccessShouldThrowForbiddenIfWasAccessedDir() throws IOException {
+        String dir = "access/fileop";
+        FullHttpRequest fullHttpRequest = createRequest(GET, dir);
+        File file = createDirectory(dir);
+        attachFileWithName(dir);
+
+        embeddedChannel.writeInbound(fullHttpRequest);
+
+        assertThatStatus(is(FORBIDDEN));
+
+        file.delete();
+    }
+
+    private File createDirectory(String dir) {
+        File file = new File(dir);
+        file.mkdir();
+        return file;
+    }
 }

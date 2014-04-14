@@ -20,7 +20,6 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 /**
  * Created by dimon on 3/26/14.
  */
-//TODO date - re-implement to java 8 date api
 @Component
 public class CacheManager {
 

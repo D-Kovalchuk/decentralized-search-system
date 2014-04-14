@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,6 +34,9 @@ public class RestAuthenticationService implements AuthenticationService {
     @Value("${authUrl}")
     private String authUrl;
 
+    @Value("${logoutUrl}")
+    private String logoutUrl;
+
     private static Logger logger = LoggerFactory.getLogger(RestAuthenticationService.class);
 
     @Autowired
@@ -56,9 +60,11 @@ public class RestAuthenticationService implements AuthenticationService {
 
     @Override
     public void logout() {
-        //todo kill session in the server
+        Message<String> message = (Message<String>) restTemplate.getForObject(logoutUrl, Message.class);
         logger.debug("logout from the service");
-        cookieService.removeCookies();
+        if (message.getCode() == HttpStatus.OK.value()) {
+            cookieService.removeCookies();
+        }
     }
 
     @Override

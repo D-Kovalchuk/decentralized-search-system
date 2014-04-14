@@ -23,7 +23,6 @@ import static org.springframework.http.HttpMethod.POST;
 /**
  * Created by dimon on 1/29/14.
  */
-//todo tests
 @RemoteRepo
 @PathRepo
 public class RemotePathRepository extends AbstractPathRepository {

@@ -13,6 +13,9 @@ public interface WatchServiceStorage {
 
     WatchService unregister(Path path);
 
-    //todo to get rid if it
+    void cleanUp();
+
+    void destroy();
+
     Map<Path, WatchService> asMap();
 }

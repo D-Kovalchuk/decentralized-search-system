@@ -32,7 +32,6 @@ import static java.util.Collections.unmodifiableMap;
  * @author Dmitriy Kovalchuk
  */
 @Service
-@Secure //fixme make it work at the class level
 public class InMemoryWSStorage implements WatchServiceStorage {
 
     private PathRepository pathManager;
@@ -59,6 +58,7 @@ public class InMemoryWSStorage implements WatchServiceStorage {
         }
     }
 
+    @Secure
     @Override
     public WatchService register(Path path) {
         try {
@@ -70,6 +70,7 @@ public class InMemoryWSStorage implements WatchServiceStorage {
         }
     }
 
+    @Secure
     @Override
     public WatchService unregister(Path path) {
         WatchService watchService = null;
@@ -86,6 +87,7 @@ public class InMemoryWSStorage implements WatchServiceStorage {
         return watchService;
     }
 
+    @Secure
     @Override
     public Map<Path, WatchService> asMap() {
         return unmodifiableMap(storage);
@@ -94,12 +96,14 @@ public class InMemoryWSStorage implements WatchServiceStorage {
     /**
      * Close file system and associated with it other resources.
      */
+    @Override
     @PreDestroy
     public void destroy() {
         logger.debug("Closing file system");
         closeQuietly(fileSystem);
     }
 
+    @Override
     public void cleanUp() {
         storage.forEach((k, v) -> {
             try {
