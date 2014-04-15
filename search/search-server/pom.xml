@@ -10,29 +10,27 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <modules>
+        <module>download-module</module>
+        <module>index-module</module>
+        <module>searcher-module</module>
+        <module>web-client-module</module>
+    </modules>
+
     <groupId>search-server</groupId>
     <artifactId>search-server</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <commons.dbcp.version>1.4</commons.dbcp.version>
+        <lucene.version>4.7.0</lucene.version>
+        <postgresql.version>9.1-901.jdbc4</postgresql.version>
+        <h2.version>1.3.173</h2.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-web</artifactId>
-                <version>3.2.3.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-config</artifactId>
-                <version>3.2.3.RELEASE</version>
-            </dependency>
-
             <!-- Tika -->
             <dependency>
                 <groupId>org.apache.tika</groupId>
@@ -40,38 +38,40 @@
                 <version>${tika.version}</version>
             </dependency>
 
-            <!-- Database drivers -->
+            <!--Lucene-->
             <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>9.1-901.jdbc4</version>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${lucene.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>1.3.173</version>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-test-framework</artifactId>
+                <version>${lucene.version}</version>
                 <scope>test</scope>
-            </dependency>
-
-            <!-- Common -->
-            <dependency>
-                <groupId>commons-dbcp</groupId>
-                <artifactId>commons-dbcp</artifactId>
-                <version>${commons.dbcp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <dependencies>
+        <!-- Database drivers -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons.dbcp.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>
