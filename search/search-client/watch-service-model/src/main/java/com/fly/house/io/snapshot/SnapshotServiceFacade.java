@@ -3,7 +3,6 @@ package com.fly.house.io.snapshot;
 import com.fly.house.io.event.Event;
 import com.fly.house.io.exceptions.SnapshotIOException;
 import com.fly.house.io.operations.api.OperationHistory;
-import com.fly.house.io.repositories.api.FileRepo;
 import com.fly.house.io.repositories.api.PathRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,6 @@ import java.util.List;
 public class SnapshotServiceFacade {
 
     @Autowired
-    @FileRepo
     private PathRepository pathRepository;
 
     @Autowired

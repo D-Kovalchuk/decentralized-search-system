@@ -1,7 +1,6 @@
 package com.fly.house.ui.event;
 
 import com.fly.house.authentication.AuthenticationService;
-import com.fly.house.authentication.qualifier.Fake;
 import com.fly.house.core.event.SystemLogoutEvent;
 import com.fly.house.ui.presenter.AuthorizationPresenter;
 import com.fly.house.ui.qualifier.Handler;
@@ -24,7 +23,6 @@ public class LogoutEventHandler {
     @Autowired
     private SystemEventPublisher publisher;
 
-    @Fake
     @Autowired
     private AuthenticationService service;
 

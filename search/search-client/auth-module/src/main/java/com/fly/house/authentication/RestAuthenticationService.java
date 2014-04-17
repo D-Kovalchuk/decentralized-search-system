@@ -1,6 +1,6 @@
 package com.fly.house.authentication;
 
-import com.fly.house.authentication.qualifier.Rest;
+import com.fly.house.core.profile.Production;
 import com.fly.house.core.rest.CookieService;
 import com.fly.house.core.rest.HttpHandler;
 import com.fly.house.core.rest.Message;
@@ -21,8 +21,8 @@ import static org.springframework.http.HttpMethod.POST;
 /**
  * Created by dimon on 1/26/14.
  */
-@Rest
 @Service
+@Production
 public class RestAuthenticationService implements AuthenticationService {
 
     private RestTemplate restTemplate;

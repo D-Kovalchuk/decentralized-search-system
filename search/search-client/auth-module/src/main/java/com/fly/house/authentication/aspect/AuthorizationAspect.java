@@ -2,7 +2,6 @@ package com.fly.house.authentication.aspect;
 
 import com.fly.house.authentication.AuthenticationService;
 import com.fly.house.authentication.exception.AuthorizationException;
-import com.fly.house.authentication.qualifier.Fake;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthorizationAspect {
 
-    @Fake
     @Autowired
     private AuthenticationService authenticationService;
 

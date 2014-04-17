@@ -1,6 +1,6 @@
 package com.fly.house.authentication;
 
-import com.fly.house.authentication.qualifier.Fake;
+import com.fly.house.core.profile.Dev;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 /**
  * Created by dimon on 4/8/14.
  */
-@Fake
 @Service
+@Dev
 public class FakeAuthenticationService implements AuthenticationService {
 
     private boolean authorized;
