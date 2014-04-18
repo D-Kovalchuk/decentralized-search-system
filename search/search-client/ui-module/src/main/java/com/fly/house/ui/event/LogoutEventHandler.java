@@ -31,6 +31,7 @@ public class LogoutEventHandler {
         logger.debug("handling {}", event.getClass().getName());
         publisher.publish(new SystemLogoutEvent("logout"));
         service.logout();
+        logger.debug("Logged out form the system");
         presenter.go();
     }
 }

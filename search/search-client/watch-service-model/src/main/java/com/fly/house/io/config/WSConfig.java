@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 @ComponentScan("com.fly.house.io")
 @PropertySource("classpath:watch-service.properties")
 @ImportResource("classpath:sa-config.xml")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class WSConfig {
 
     @Autowired

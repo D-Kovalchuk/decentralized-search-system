@@ -11,6 +11,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @ComponentScan("com.fly.house.authentication")
 @PropertySource("classpath:auth.properties")
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableAspectJAutoProxy
 public class AuthConfig {
 }

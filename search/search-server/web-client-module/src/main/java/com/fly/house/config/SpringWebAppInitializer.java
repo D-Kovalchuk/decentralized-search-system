@@ -1,5 +1,6 @@
 package com.fly.house.config;
 
+import com.fly.house.registration.config.WebSocketConfig;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -17,7 +18,7 @@ public class SpringWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{MvcConfig.class};
+        return new Class<?>[]{MvcConfig.class, WebSocketConfig.class};
     }
 
     @Override

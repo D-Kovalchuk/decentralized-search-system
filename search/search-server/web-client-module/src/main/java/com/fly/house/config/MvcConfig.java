@@ -43,7 +43,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(engine());
         viewResolver.setOrder(1);
-        viewResolver.setViewNames(new String[]{"*.html"});
+        viewResolver.setViewNames(new String[]{"*"});
         viewResolver.setCache(false);
         return viewResolver;
     }
