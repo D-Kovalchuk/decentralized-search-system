@@ -1,19 +1,19 @@
 package com.fly.house.config;
 
+import com.fly.house.registration.config.RedisConfig;
+import com.fly.house.registration.config.WebSecurityConfig;
 import com.fly.house.registration.config.WebSocketConfig;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.Filter;
 
 /**
  * Created by dimon on 4/2/14.
  */
 public class SpringWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+    //todo add search module config
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{};
+        return new Class<?>[]{WebSecurityConfig.class, RedisConfig.class};
     }
 
     @Override
@@ -26,10 +26,10 @@ public class SpringWebAppInitializer extends AbstractAnnotationConfigDispatcherS
         return new String[]{"/"};
     }
 
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[]{
-                new OpenEntityManagerInViewFilter()
-        };
-    }
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        return new Filter[]{
+//                new OpenEntityManagerInViewFilter()
+//        };
+//    }
 }
