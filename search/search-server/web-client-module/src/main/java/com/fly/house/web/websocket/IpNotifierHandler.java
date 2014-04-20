@@ -1,9 +1,9 @@
-package com.fly.house.registration.handler;
+package com.fly.house.web.websocket;
 
+import com.fly.house.dao.ip.IpRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
@@ -22,7 +22,7 @@ public class IpNotifierHandler extends BinaryWebSocketHandler {
     private static Logger logger = LoggerFactory.getLogger(IpNotifierHandler.class);
 
     @Autowired
-    private RedisTemplate<String, InetAddress> redisTemplate;
+    private IpRepository ipRepository;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -31,7 +31,7 @@ public class IpNotifierHandler extends BinaryWebSocketHandler {
         String userName = getUserName(session);
         if (nonNull(userName)) {
             logger.debug("Saving into database key={} , value={}", userName, ipAddress);
-            redisTemplate.opsForValue().set(userName, ipAddress);
+            ipRepository.put(userName, ipAddress);
         }
     }
 
@@ -41,7 +41,7 @@ public class IpNotifierHandler extends BinaryWebSocketHandler {
         String userName = getUserName(session);
         if (nonNull(userName)) {
             logger.debug("Removing from database key={}", userName);
-            redisTemplate.delete(userName);
+            ipRepository.remove(userName);
         }
     }
 

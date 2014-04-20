@@ -1,4 +1,4 @@
-package com.fly.house.registration.config;
+package com.fly.house.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

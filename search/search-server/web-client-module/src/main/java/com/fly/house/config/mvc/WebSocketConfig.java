@@ -1,6 +1,6 @@
-package com.fly.house.registration.config;
+package com.fly.house.config.mvc;
 
-import com.fly.house.registration.handler.IpNotifierHandler;
+import com.fly.house.web.websocket.IpNotifierHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +17,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
  */
 @Configuration
 @EnableWebSocket
-@ComponentScan("com.fly.house.registration")
+@ComponentScan("com.fly.house.web.websocket")
 public class WebSocketConfig implements WebSocketConfigurer {
 
     @Autowired
