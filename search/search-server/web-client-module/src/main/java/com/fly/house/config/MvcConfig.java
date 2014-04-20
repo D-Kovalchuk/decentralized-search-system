@@ -8,44 +8,22 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.thymeleaf.spring3.SpringTemplateEngine;
-import org.thymeleaf.spring3.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
  * Created by dimon on 4/15/14.
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.fly.house.web")
+@ComponentScan(value = {"com.fly.house.web", "com.fly.house.registration.web"})
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
-    public TemplateResolver resolver() {
-        ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
-        resolver.setPrefix("/WEB-INF/templates/");
-        resolver.setSuffix(".html");
-        resolver.setTemplateMode("HTML5");
-        resolver.setCacheable(false);
-        return resolver;
-    }
-
-    @Bean
-    public SpringTemplateEngine engine() {
-        SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(resolver());
-        return engine;
-    }
-
-    @Bean
-    public ViewResolver viewResolver() {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(engine());
-        viewResolver.setOrder(1);
-        viewResolver.setViewNames(new String[]{"*"});
-        viewResolver.setCache(false);
-        return viewResolver;
+    public ViewResolver resolver() {
+        InternalResourceViewResolver url = new InternalResourceViewResolver();
+        url.setPrefix("/WEB-INF/jsp/");
+        url.setSuffix(".jsp");
+        return url;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.fly.house.authentication.ip.notifier;
 
-import com.fly.house.core.rest.CookieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static java.util.Objects.nonNull;
+
 /**
  * Created by dimon on 4/17/14.
  */
@@ -28,9 +29,6 @@ public class IpNotifierConnectionManager {
     private Session session;
 
     @Autowired
-    private CookieService cookieService;
-
-    @Autowired
     private IpNotifier ipNotifier;
 
     private static Logger logger = LoggerFactory.getLogger(IpNotifierConnectionManager.class);
@@ -38,13 +36,7 @@ public class IpNotifierConnectionManager {
     public void connect() {
         final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
-            //todo send the cookie
-            //set cookie
-//            HttpHeaders cookieHeader = cookieService.getCookieHeader();
-//            ClientEndpointConfig endpointConfig = create().build();
-//            endpointConfig
-//                    .getConfigurator()
-//                    .beforeRequest(cookieHeader);
+            //todo set cookie
             session = container.connectToServer(ipNotifier, null, new URI(wsUrl));
         } catch (DeploymentException | URISyntaxException | IOException e) {
             logger.warn("Cannon connect to the server", e);
@@ -54,7 +46,7 @@ public class IpNotifierConnectionManager {
     @PreDestroy
     public void destroy() {
         try {
-            if (session.isOpen()) {
+            if (nonNull(session) && session.isOpen()) {
                 session.close();
             }
         } catch (IOException e) {

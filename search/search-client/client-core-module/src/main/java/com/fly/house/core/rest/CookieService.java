@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -34,6 +35,16 @@ public class CookieService {
     public CookieService(@Qualifier("cookiePath") Path path) {
         cookieDirPath = path;
     }
+
+    @PostConstruct
+    public void init() {
+        try {
+            getCookieHeader();
+        } catch (CookieNotFoundException e) {
+            logger.debug("Cookie dose not exist yet");
+        }
+    }
+
 
     public HttpHeaders getCookieHeader() {
         if (!cookieHeader.isEmpty()) {
