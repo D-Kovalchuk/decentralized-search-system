@@ -1,9 +1,8 @@
 package com.fly.house.authentication;
 
-import com.fly.house.core.exception.UnauthorizedException;
+import com.fly.house.authentication.exception.AuthorizationException;
 import com.fly.house.core.rest.CookieService;
 import com.fly.house.core.rest.HttpHandler;
-import com.fly.house.core.rest.Message;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,20 +10,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 /**
  * Created by dimon on 1/31/14.
@@ -56,18 +56,18 @@ public class RestAuthenticationServiceTest {
         password = "password";
         httpHeaders = new HttpHeaders();
         cookies = asList("dfwf34eewfw");
-        httpHeaders.put("Cookie", cookies);
+        httpHeaders.put("Set-Cookie", cookies);
     }
 
     @Test
     public void authenticationShouldSaveCookieWhenResponseIsOk() {
-        ResponseEntity<Message<Account>> responseEntity = new ResponseEntity<>(new Message<Account>(), httpHeaders, OK);
-        when(restTemplate.exchange(anyString(),
-                eq(POST),
-                any(HttpEntity.class),
-                any(Message.class),
-                eq(login),
-                eq(password))
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("user", "login");
+        map.add("password", "password");
+        ResponseEntity<Void> responseEntity = new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        when(restTemplate.postForEntity(anyString(),
+                eq(map),
+                eq(Void.class))
         ).thenReturn(responseEntity);
 
         authenticationService.authentication(login, password);
@@ -76,15 +76,16 @@ public class RestAuthenticationServiceTest {
         verify(cookieService).saveCookie(cookies);
     }
 
-    @Test(expected = UnauthorizedException.class)
+
+    @Test(expected = AuthorizationException.class)
     public void authenticationShouldSaveCookieWhenResponseIsUnauthorized() {
-        ResponseEntity<Message<Account>> responseEntity = new ResponseEntity<>(new Message<Account>(), httpHeaders, UNAUTHORIZED);
-        when(restTemplate.exchange(anyString(),
-                eq(POST),
-                any(HttpEntity.class),
-                any(Message.class),
-                eq(login),
-                eq(password))
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("user", "login");
+        map.add("password", "password");
+        ResponseEntity<Void> responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        when(restTemplate.postForEntity(anyString(),
+                eq(map),
+                eq(Void.class))
         ).thenReturn(responseEntity);
 
         authenticationService.authentication(login, password);
