@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ public class Account extends BasedEntity {
     @NotEmpty
     private String password;
 
-    @OneToMany(mappedBy = "account")
+    @ManyToMany(mappedBy = "accounts")
     private List<Artifact> artifacts;
 
     public String getPassword() {

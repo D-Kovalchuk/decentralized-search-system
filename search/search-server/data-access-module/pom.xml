@@ -70,6 +70,7 @@
             <groupId>redis.embedded</groupId>
             <artifactId>embedded-redis</artifactId>
             <version>0.2</version>
+            <scope>test</scope>
         </dependency>
         <!-- Common -->
         <dependency>

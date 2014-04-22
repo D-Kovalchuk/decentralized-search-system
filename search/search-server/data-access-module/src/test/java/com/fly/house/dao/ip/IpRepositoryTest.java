@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.embedded.RedisServer;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -41,7 +42,7 @@ public class IpRepositoryTest {
     @BeforeClass
     public static void startRedis() throws IOException {
         IP = InetAddress.getLocalHost();
-        redisServer = new RedisServer(6379);
+        redisServer = new RedisServer(new File("/home/dimon/Programs/redis-2.8.8/src/redis-server"), 6379);
         redisServer.start();
     }
 
