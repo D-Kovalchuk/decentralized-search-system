@@ -29,13 +29,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers("/rest/**").permitAll()
                 //todo remove when web socket would set cookie
                 .antMatchers("/redis").permitAll()
+                .antMatchers("/registration").permitAll()
                 .antMatchers("/**").hasRole("USER")
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
                 .and()
                 .csrf()
                 .disable();
