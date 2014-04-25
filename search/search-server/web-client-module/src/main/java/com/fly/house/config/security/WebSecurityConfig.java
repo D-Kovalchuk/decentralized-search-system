@@ -1,5 +1,6 @@
 package com.fly.house.config.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.sql.DataSource;
 
 /**
  * Created by dimon on 4/17/14.
@@ -15,6 +19,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -50,9 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user123")
-                .password("password123")
-                .roles("USER");
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .passwordEncoder(new BCryptPasswordEncoder(4))
+                .usersByUsernameQuery("select name, password, true from account where name=?")
+                .authoritiesByUsernameQuery("select name, role from account where name=?");
     }
 }

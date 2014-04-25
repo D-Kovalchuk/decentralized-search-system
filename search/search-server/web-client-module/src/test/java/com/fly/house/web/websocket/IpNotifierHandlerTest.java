@@ -1,6 +1,6 @@
 package com.fly.house.web.websocket;
 
-import com.fly.house.dao.ip.IpRepository;
+import com.fly.house.dao.service.security.ip.IpRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

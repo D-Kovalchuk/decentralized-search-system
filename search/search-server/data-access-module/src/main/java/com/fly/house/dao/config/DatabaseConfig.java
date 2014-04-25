@@ -2,6 +2,7 @@ package com.fly.house.dao.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,7 +23,8 @@ import static org.springframework.orm.jpa.vendor.Database.POSTGRESQL;
  * Created by dimon on 4/15/14.
  */
 @Configuration
-@EnableJpaRepositories("com.fly.house.repository")
+@EnableJpaRepositories("com.fly.house.dao.repository")
+@ComponentScan("com.fly.house.dao.service")
 @EnableTransactionManagement
 public class DatabaseConfig {
 

@@ -12,7 +12,7 @@ import java.net.InetAddress;
  * Created by dimon on 4/18/14.
  */
 @Configuration
-@ComponentScan("com.fly.house.dao.ip")
+@ComponentScan("com.fly.house.dao.service.security.ip")
 public class RedisConfig {
 
     @Bean

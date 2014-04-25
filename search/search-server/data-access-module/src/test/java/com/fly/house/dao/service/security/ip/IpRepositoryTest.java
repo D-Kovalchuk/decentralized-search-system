@@ -1,4 +1,4 @@
-package com.fly.house.dao.ip;
+package com.fly.house.dao.service.security.ip;
 
 import com.fly.house.dao.config.RedisConfig;
 import org.junit.*;

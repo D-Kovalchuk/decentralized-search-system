@@ -1,4 +1,4 @@
-package com.fly.house.dao.ip;
+package com.fly.house.dao.service.security.ip;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;

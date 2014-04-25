@@ -1,8 +1,10 @@
 package com.fly.house.web.controller.security;
 
+import com.fly.house.dao.service.security.registration.RegistrationService;
 import com.fly.house.model.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,6 +26,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class RegistrationsController {
 
     private static Logger logger = LoggerFactory.getLogger(RegistrationsController.class);
+
+    @Autowired
+    private RegistrationService registrationService;
 
     @InitBinder
     public void setAllowedFields(WebDataBinder fields) {
@@ -49,10 +54,9 @@ public class RegistrationsController {
             return "registration";
         }
 
-
-        //todo save account to db
-        String name = account.getName();
         String password = account.getPassword();
+        String name = account.getName();
+        registrationService.register(account);
         try {
             request.login(name, password);
         } catch (ServletException e) {

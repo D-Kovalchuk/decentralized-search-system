@@ -4,8 +4,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import static com.fly.house.model.Role.ROLE_USER;
+import static javax.persistence.EnumType.STRING;
 
 /**
  * Created by dimon on 4/15/14.
@@ -25,6 +30,22 @@ public class Account extends BasedEntity {
 
     @ManyToMany(mappedBy = "accounts")
     private List<Artifact> artifacts;
+
+    @NotNull
+    @Enumerated(STRING)
+    private Role role;
+
+    public Account() {
+        role = ROLE_USER;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public String getPassword() {
         return password;
