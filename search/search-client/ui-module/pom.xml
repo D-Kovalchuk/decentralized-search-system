@@ -14,6 +14,9 @@
     <artifactId>ui-module</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <com.google.guava.version>16.0.1</com.google.guava.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -29,22 +32,19 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>16.0.1</version>
+            <version>${com.google.guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.7.4</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.7.4</version>
         </dependency>
     </dependencies>
 

@@ -1,6 +1,6 @@
 package com.fly.house.fileshare.handler;
 
-import com.fly.house.encrypt.PathEncryptors;
+import com.fly.house.core.encrypt.PathEncryptors;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;

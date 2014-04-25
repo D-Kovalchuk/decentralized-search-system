@@ -35,6 +35,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>search-core</groupId>
+                <artifactId>search-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
             <!-- Tika -->
             <dependency>
                 <groupId>org.apache.tika</groupId>

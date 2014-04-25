@@ -14,20 +14,20 @@
     <artifactId>file-share</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <io.netty.version>5.0.0.Alpha1</io.netty.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>search-core</groupId>
+            <artifactId>search-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>5.0.0.Alpha1</version>
-        </dependency>
-        <dependency>
-            <groupId>crypto-module</groupId>
-            <artifactId>crypto-module</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>client-core-module</groupId>
-            <artifactId>client-core-module</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${io.netty.version}</version>
         </dependency>
     </dependencies>
 

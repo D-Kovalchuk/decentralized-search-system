@@ -23,9 +23,9 @@ public class RegistrationService {
     private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public RegistrationService(AccountRepository repository) {
+    public RegistrationService(AccountRepository repository, BCryptPasswordEncoder encoder) {
         this.repository = repository;
-        this.encoder = new BCryptPasswordEncoder(4);
+        this.encoder = encoder;
     }
 
     public Account register(Account account) {

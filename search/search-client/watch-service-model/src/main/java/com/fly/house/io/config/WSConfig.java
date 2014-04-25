@@ -1,5 +1,7 @@
 package com.fly.house.io.config;
 
+import com.fly.house.core.encrypt.CryptConfig;
+import com.fly.house.core.rest.config.RestClientConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
@@ -14,6 +16,7 @@ import java.nio.file.Paths;
  */
 @Configuration
 @ComponentScan("com.fly.house.io")
+@Import({RestClientConfig.class, CryptConfig.class})
 @PropertySource("classpath:watch-service.properties")
 @ImportResource("classpath:sa-config.xml")
 @EnableAspectJAutoProxy(proxyTargetClass = true)

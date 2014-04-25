@@ -4,46 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>search-core</groupId>
+    <artifactId>search-core</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
     <parent>
-        <groupId>search-client</groupId>
-        <artifactId>search-client</artifactId>
+        <artifactId>search</artifactId>
+        <groupId>search</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>auth-module</groupId>
-    <artifactId>auth-module</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <glassfish.tyrus.version>1.5</glassfish.tyrus.version>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>search-core</groupId>
-            <artifactId>search-core</artifactId>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
+            <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.2.4.CI-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.tyrus.bundles</groupId>
-            <artifactId>tyrus-standalone-client</artifactId>
-            <version>${glassfish.tyrus.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -68,4 +52,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>

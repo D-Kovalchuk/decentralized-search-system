@@ -1,6 +1,6 @@
 package com.fly.house.fileshare.handler;
 
-import com.fly.house.encrypt.PathEncryptors;
+import com.fly.house.core.encrypt.PathEncryptors;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

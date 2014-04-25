@@ -1,8 +1,10 @@
 package com.fly.house.config.security;
 
+import com.fly.house.core.encrypt.CryptConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,10 +20,14 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableWebSecurity
+@Import(CryptConfig.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -58,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .passwordEncoder(new BCryptPasswordEncoder(4))
+                .passwordEncoder(encoder)
                 .usersByUsernameQuery("select name, password, true from account where name=?")
                 .authoritiesByUsernameQuery("select name, role from account where name=?");
     }

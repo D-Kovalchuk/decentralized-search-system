@@ -1,9 +1,7 @@
 package com.fly.house.authentication.config;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
+import com.fly.house.core.rest.config.RestClientConfig;
+import org.springframework.context.annotation.*;
 
 /**
  * Created by dimon on 3/28/14.
@@ -11,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @ComponentScan("com.fly.house.authentication")
 @PropertySource("classpath:auth.properties")
+@Import(RestClientConfig.class)
 @EnableAspectJAutoProxy
 public class AuthConfig {
 }

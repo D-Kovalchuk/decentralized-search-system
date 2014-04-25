@@ -12,7 +12,7 @@
     <modules>
         <module>search-client</module>
         <module>search-server</module>
-        <module>crypto-module</module>
+        <module>search-core</module>
     </modules>
 
     <properties>
