@@ -2,10 +2,9 @@ package com.fly.house.dao.config;
 
 import com.fly.house.core.encrypt.CryptConfig;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
@@ -28,16 +27,20 @@ import static org.springframework.orm.jpa.vendor.Database.POSTGRESQL;
 @Import(CryptConfig.class)
 @EnableJpaRepositories("com.fly.house.dao.repository")
 @ComponentScan("com.fly.house.dao.service")
+@PropertySource("classpath:database-connection.properties")
 @EnableTransactionManagement
 public class DatabaseConfig {
+
+    @Autowired
+    private Environment env;
 
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost/filesharedb");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("n123456n");
-        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl(env.getProperty("jdbc.url"));
+        dataSource.setUsername(env.getProperty("jdbc.username"));
+        dataSource.setPassword(env.getProperty("jdbc.password"));
+        dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
         return dataSource;
     }
 
