@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <account id="1" email="world.bin.info@gmail.com" name="login1"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="2" email="world.bin.info1@gmail.com" name="login2"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="3" email="world.bin.info2@gmail.com" name="login3"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="4" email="world.bin.info3@gmail.com" name="login4"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="5" email="world.bin.info4@gmail.com" name="login5"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="6" email="world.bin.info5@gmail.com" name="login6"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="7" email="world.bin.info6@gmail.com" name="login7"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="8" email="world.bin.info7@gmail.com" name="login8"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="9" email="world.bin.info8@gmail.com" name="login9"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="10" email="world.bin.info9@gmail.com" name="login10"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="11" email="world.bin.info10@gmail.com" name="login11"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="12" email="world.bin.info11@gmail.com" name="login12"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="13" email="world.bin.info12@gmail.com" name="login13"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="14" email="world.bin.info13@gmail.com" name="login14"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="15" email="world.bin.info14@gmail.com" name="login15"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+    <account id="16" email="world.bin.info15@gmail.com" name="login16"
+             password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
+
+    <artifact id="1" category="COMPUTER_SCIENCE" fulltext="fulltext fulltext fulltext fulltext"
+              shorttext="fulltext fulltext" size="10" title="Title" type="xml"/>
+    <artifact id="2" category="MATH" fulltext="fulltext fulltext fulltext fulltext" shorttext="fulltext fulltext"
+              size="100" title="Title2" type="pdf"/>
+    <artifact id="3" category="NONE" fulltext="fulltext fulltext fulltext fulltext" shorttext="fulltext fulltext"
+              size="400" title="Title3" type="pdf"/>
+
+    <artifact_account artifacts_id="1" accounts_id="1"/>
+    <artifact_account artifacts_id="2" accounts_id="1"/>
+    <artifact_account artifacts_id="3" accounts_id="16"/>
+</dataset>

@@ -17,6 +17,7 @@
         <module>web-client-module</module>
         <module>business-entities-module</module>
         <module>data-access-module</module>
+        <module>reg-module</module>
     </modules>
 
     <groupId>search-server</groupId>

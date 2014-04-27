@@ -3,6 +3,7 @@ package com.fly.house.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
@@ -19,10 +20,12 @@ import static javax.persistence.EnumType.STRING;
 public class Account extends BasedEntity {
 
     @NotEmpty
+    @Column(unique = true)
     private String name;
 
     @Email
     @NotEmpty
+    @Column(unique = true)
     private String email;
 
     @NotEmpty
@@ -37,6 +40,13 @@ public class Account extends BasedEntity {
 
     public Account() {
         role = ROLE_USER;
+    }
+
+    public Account(String name, String email, String password) {
+        this();
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public Role getRole() {
@@ -77,5 +87,16 @@ public class Account extends BasedEntity {
 
     public void setArtifacts(List<Artifact> artifacts) {
         this.artifacts = artifacts;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", artifacts=" + artifacts +
+                ", role=" + role +
+                '}';
     }
 }

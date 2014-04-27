@@ -9,10 +9,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.net.InetAddress;
 
 /**
- * Created by dimon on 4/18/14.
+ * Created by dimon on 4/27/14.
  */
 @Configuration
-@ComponentScan("com.fly.house.dao.service.security.ip")
+@ComponentScan("com.fly.house.dao.repository")
 public class RedisConfig {
 
     @Bean

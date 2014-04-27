@@ -1,6 +1,7 @@
-package com.fly.house.dao.service.security.ip;
+package com.fly.house.dao;
 
 import com.fly.house.dao.config.RedisConfig;
+import com.fly.house.dao.repository.IpRepository;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

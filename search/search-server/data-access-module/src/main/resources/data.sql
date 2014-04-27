@@ -1,0 +1,11 @@
+insert into account (email, name, password, role, id) values ('world.bin.info@gmail.com', 'login', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 1);
+insert into account (email, name, password, role, id) values ('login1@gmail.com', 'login2', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 2);
+insert into account (email, name, password, role, id) values ('login2@gmail.com', 'login3', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 3);
+insert into account (email, name, password, role, id) values ('login3@gmail.com', 'login4', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 4);
+insert into account (email, name, password, role, id) values ('login4@gmail.com', 'login5', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 5);
+insert into account (email, name, password, role, id) values ('login5@gmail.com', 'login6', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 6);
+insert into account (email, name, password, role, id) values ('login6@gmail.com', 'login7', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 7);
+insert into account (email, name, password, role, id) values ('login7@gmail.com', 'login8', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 8);
+insert into account (email, name, password, role, id) values ('login8@gmail.com', 'login9', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 9);
+insert into account (email, name, password, role, id) values ('login9@gmail.com', 'login10', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 10);
+insert into account (email, name, password, role, id) values ('login10@gmail.com', 'login11', '$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi', 'ROLE_USER', 11);

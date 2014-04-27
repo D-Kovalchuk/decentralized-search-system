@@ -24,6 +24,7 @@
         <tika.version>0.7</tika.version>
         <jackson.version>1.9.13</jackson.version>
         <commons.codec.version>1.9</commons.codec.version>
+        <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
     <dependencies>
@@ -103,6 +104,23 @@
                 <groupId>org.springframework.integration</groupId>
                 <artifactId>spring-integration-core</artifactId>
                 <version>${spring.integration.version}</version>
+            </dependency>
+
+            <!--AOP-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
             </dependency>
 
             <!-- Tika -->

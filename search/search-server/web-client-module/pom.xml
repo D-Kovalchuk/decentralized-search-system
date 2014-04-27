@@ -34,6 +34,11 @@
             <groupId>search-core</groupId>
             <artifactId>search-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>reg-module</groupId>
+            <artifactId>reg-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <!-- Spring -->
         <!--Web-->

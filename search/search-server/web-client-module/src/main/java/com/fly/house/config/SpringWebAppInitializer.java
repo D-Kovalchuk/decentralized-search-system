@@ -3,9 +3,11 @@ package com.fly.house.config;
 import com.fly.house.config.mvc.MvcConfig;
 import com.fly.house.config.mvc.WebSocketConfig;
 import com.fly.house.config.security.WebSecurityConfig;
-import com.fly.house.dao.config.RedisConfig;
+import com.fly.house.registration.config.RegistrationConfig;
 import com.fly.house.serach.config.SearchConfig;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -17,7 +19,16 @@ public class SpringWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{WebSecurityConfig.class, RedisConfig.class, SearchConfig.class};
+        return new Class<?>[]{WebSecurityConfig.class, RegistrationConfig.class, SearchConfig.class};
+    }
+
+
+    @Override
+    protected WebApplicationContext createRootApplicationContext() {
+        WebApplicationContext context = super.createRootApplicationContext();
+        ConfigurableEnvironment environment = (ConfigurableEnvironment) context.getEnvironment();
+        environment.setActiveProfiles("production");
+        return context;
     }
 
     @Override

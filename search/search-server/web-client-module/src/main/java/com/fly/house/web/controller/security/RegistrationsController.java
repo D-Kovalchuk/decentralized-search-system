@@ -1,7 +1,7 @@
 package com.fly.house.web.controller.security;
 
-import com.fly.house.dao.service.security.registration.RegistrationService;
 import com.fly.house.model.Account;
+import com.fly.house.registration.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class RegistrationsController {
     private static Logger logger = LoggerFactory.getLogger(RegistrationsController.class);
 
     @Autowired
-    private RegistrationService registrationService;
+    private AccountService accountService;
 
     @InitBinder
     public void setAllowedFields(WebDataBinder fields) {
@@ -56,7 +56,7 @@ public class RegistrationsController {
 
         String password = account.getPassword();
         String name = account.getName();
-        registrationService.register(account);
+        accountService.register(account);
         try {
             request.login(name, password);
         } catch (ServletException e) {

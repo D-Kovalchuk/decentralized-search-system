@@ -1,6 +1,6 @@
 package com.fly.house.web.websocket;
 
-import com.fly.house.dao.service.security.ip.IpRepository;
+import com.fly.house.dao.repository.IpRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
-package com.fly.house.dao.service.security.ip;
+package com.fly.house.dao.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
@@ -11,7 +11,7 @@ import java.net.InetAddress;
 /**
  * Created by dimon on 4/20/14.
  */
-@Service
+@Repository
 public class IpRepository {
 
     @Autowired
