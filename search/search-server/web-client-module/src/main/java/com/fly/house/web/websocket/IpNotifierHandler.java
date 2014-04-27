@@ -1,6 +1,6 @@
 package com.fly.house.web.websocket;
 
-import com.fly.house.dao.repository.IpRepository;
+import com.fly.house.registration.service.OnlineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class IpNotifierHandler extends BinaryWebSocketHandler {
     private static Logger logger = LoggerFactory.getLogger(IpNotifierHandler.class);
 
     @Autowired
-    private IpRepository ipRepository;
+    private OnlineService onlineService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -31,7 +31,7 @@ public class IpNotifierHandler extends BinaryWebSocketHandler {
         String userName = getUserName(session);
         if (nonNull(userName)) {
             logger.debug("Saving into database key={} , value={}", userName, ipAddress);
-            ipRepository.put(userName, ipAddress);
+            onlineService.online(userName, ipAddress);
         }
     }
 
@@ -41,7 +41,7 @@ public class IpNotifierHandler extends BinaryWebSocketHandler {
         String userName = getUserName(session);
         if (nonNull(userName)) {
             logger.debug("Removing from database key={}", userName);
-            ipRepository.remove(userName);
+            onlineService.offline(userName);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.fly.house.web.websocket;
 
-import com.fly.house.dao.repository.IpRepository;
+import com.fly.house.registration.service.OnlineService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class IpNotifierHandlerTest {
     private IpNotifierHandler handler;
 
     @Mock
-    private IpRepository ipRepository;
+    private OnlineService ipRepository;
 
     @Mock
     private WebSocketSession session;
@@ -51,7 +51,7 @@ public class IpNotifierHandlerTest {
 
         handler.afterConnectionEstablished(session);
 
-        verify(ipRepository).put("userName", inetSocketAddress.getAddress());
+        verify(ipRepository).online("userName", inetSocketAddress.getAddress());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class IpNotifierHandlerTest {
 
         handler.afterConnectionClosed(session, null);
 
-        verify(ipRepository).remove(USER_NAME);
+        verify(ipRepository).offline(USER_NAME);
     }
 
     @Test
