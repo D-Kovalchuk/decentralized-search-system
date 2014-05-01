@@ -84,6 +84,9 @@ public class EntityManagerConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.search.default.directory_provider", env.getProperty("hibernate.search.default.directory_provider"));
+        properties.setProperty("hibernate.search.default.indexBase", env.getProperty("hibernate.search.default.indexBase"));
+        properties.setProperty("hibernate.search.Artifact.sharding_strategy.nbr_of_shards", env.getProperty("hibernate.search.Artifact.sharding_strategy.nbr_of_shards"));
         return properties;
     }
 

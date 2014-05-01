@@ -19,7 +19,6 @@ import static org.hibernate.search.annotations.TermVector.WITH_POSITION_OFFSETS;
 /**
  * Created by dimon on 4/15/14.
  */
-//todo set up configuration for lucene
 @Entity
 @Indexed
 @AnalyzerDef(
@@ -53,19 +52,20 @@ public class Artifact extends BasedEntity {
     @Basic(fetch = LAZY)
     private String shortText;
 
-    @ManyToMany
     @Basic(fetch = LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Account> accounts;
 
-    @Field
     @Enumerated(STRING)
-    @Analyzer(definition = "customanalyzer")
-    @FieldBridge(impl = CategoryBridge.class)
     private ArtifactCategory category;
 
     private String type;
 
     private Long size;
+
+    public Artifact() {
+        category = ArtifactCategory.NONE;
+    }
 
     public String getFullText() {
         return fullText;
@@ -122,4 +122,19 @@ public class Artifact extends BasedEntity {
     public void setSize(Long size) {
         this.size = size;
     }
+
+    @Override
+    public String toString() {
+        return "Artifact{" +
+                "id='" + getId() + '\'' +
+                "title='" + title + '\'' +
+                ", fullText='" + fullText + '\'' +
+                ", shortText='" + shortText + '\'' +
+                ", accounts=" + accounts +
+                ", category=" + category +
+                ", type='" + type + '\'' +
+                ", size=" + size +
+                '}';
+    }
+
 }

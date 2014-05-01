@@ -3,10 +3,7 @@ package com.fly.house.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -38,6 +35,9 @@ public class Account extends BasedEntity {
     @Enumerated(STRING)
     private Role role;
 
+    @Transient
+    private boolean online;
+
     public Account() {
         role = ROLE_USER;
     }
@@ -47,6 +47,14 @@ public class Account extends BasedEntity {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 
     public Role getRole() {
@@ -93,9 +101,9 @@ public class Account extends BasedEntity {
     public String toString() {
         return "Account{" +
                 "name='" + name + '\'' +
+                "online='" + online + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", artifacts=" + artifacts +
                 ", role=" + role +
                 '}';
     }
