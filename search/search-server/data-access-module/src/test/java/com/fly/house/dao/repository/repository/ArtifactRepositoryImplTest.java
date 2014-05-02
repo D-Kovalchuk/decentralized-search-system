@@ -2,6 +2,7 @@ package com.fly.house.dao.repository.repository;
 
 import com.fly.house.dao.config.DataAccessConfig;
 import com.fly.house.dao.repository.ArtifactRepository;
+import com.fly.house.dao.repository.IpRepository;
 import com.fly.house.dao.test.AbstractDbUnit;
 import com.fly.house.model.Account;
 import com.fly.house.model.Artifact;
@@ -21,11 +22,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+import java.net.InetAddress;
 import java.util.List;
 
 import static com.fly.house.model.ArtifactCategory.COMPUTER_SCIENCE;
@@ -39,6 +42,7 @@ import static org.springframework.transaction.TransactionDefinition.PROPAGATION_
  */
 
 //todo fix ignored tests
+@Transactional
 @ActiveProfiles("dev")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataAccessConfig.class)
@@ -61,9 +65,15 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
     @Autowired
     private PlatformTransactionManager transactionManager;
 
+
+    @Autowired
+    private IpRepository ipRepository;
+
     @Before
-    @Transactional
     public void setUp() throws Exception {
+        ipRepository.put("login1", InetAddress.getByName("localhost"));
+        ipRepository.put("login3", InetAddress.getByName("localhost"));
+
         FullTextEntityManager fullTextEntityManager = getFullTextEntityManager(em);
 
         loadDataSet(env);
@@ -73,7 +83,6 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
     }
 
     @Test
-    @Transactional
     public void save() throws Exception {
         Artifact artifact = createArtifact();
 
@@ -99,7 +108,6 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
     }
 
     @Test
-    @Transactional
     public void deleteShouldDeleteArtifact() throws Exception {
         artifactRepository.delete(1L);
 
@@ -108,14 +116,12 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
         assertThat(artifact).isNull();
     }
 
-    @Transactional
     @Test(expected = DataAccessException.class)
     public void deleteShouldThrowExceptionWhenArtifactDoesNotExist() throws Exception {
         artifactRepository.delete(-1L);
     }
 
     @Test
-    @Transactional
     public void update() throws Exception {
         Artifact artifact = em.find(Artifact.class, 1L);
         artifact.setTitle("New TiTle");
@@ -146,7 +152,7 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
     public void searchOnlyAvailableByTitle() {
         Page<Artifact> artifacts = artifactRepository.searchOnlyAvailable("Title", PAGE_REQUEST);
 
-        assertThat(artifacts.getNumberOfElements()).isEqualTo(1);
+        assertThat(artifacts.getNumberOfElements()).isEqualTo(2);
     }
 
     @Test
@@ -154,12 +160,11 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
     public void searchOnlyAvailableByFullText() {
         Page<Artifact> artifacts = artifactRepository.searchOnlyAvailable("If you find", PAGE_REQUEST);
 
-        assertThat(artifacts.getNumberOfElements()).isEqualTo(1);
+        assertThat(artifacts.getNumberOfElements()).isEqualTo(2);
     }
 
     @Test
-    @Ignore
-    public void searchOnlyAvailable() throws Exception {
+    public void searchOnlyAvailableShouldReturnDocumentsOnlyIfOneOfUsersOnline() throws Exception {
         Page<Artifact> artifacts = artifactRepository.searchOnlyAvailable("If you find", PAGE_REQUEST);
 
         List<Artifact> content = artifacts.getContent();
@@ -171,6 +176,7 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
 
     @Test
     @Ignore
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void index() throws Exception {
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setPropagationBehavior(PROPAGATION_REQUIRES_NEW);
@@ -185,8 +191,10 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
         artifactRepository.index(artifact.getId());
         transactionManager.commit(transaction);
 
+        transaction = transactionManager.getTransaction(def);
         Page<Artifact> page = artifactRepository.search("full text", PAGE_REQUEST);
         assertThat(page.getNumberOfElements()).isGreaterThan(0);
+        transactionManager.commit(transaction);
     }
 
     private Artifact createArtifact() {

@@ -4,36 +4,35 @@ import com.fly.house.core.profile.Dev;
 import org.springframework.stereotype.Repository;
 
 import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by dimon on 5/1/14.
  */
-//todo fix fake repository
 @Dev
 @Repository
 public class FakeIpRepository implements IpRepository {
 
-    private boolean online = true;
+    private Map<String, InetAddress> redis = new HashMap<>();
 
     @Override
     public void put(String userName, InetAddress ipAddress) {
-
+        redis.put(userName, ipAddress);
     }
 
     @Override
     public void remove(String key) {
-
+        redis.remove(key);
     }
 
     @Override
     public boolean isOnline(String key) {
-        boolean tmp = online;
-        online = false;
-        return tmp;
+        return redis.containsKey(key);
     }
 
     @Override
     public long size() {
-        return 0;
+        return redis.size();
     }
 }
