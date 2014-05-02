@@ -87,6 +87,7 @@ public class EntityManagerConfig {
         properties.setProperty("hibernate.search.default.directory_provider", env.getProperty("hibernate.search.default.directory_provider"));
         properties.setProperty("hibernate.search.default.indexBase", env.getProperty("hibernate.search.default.indexBase"));
         properties.setProperty("hibernate.search.Artifact.sharding_strategy.nbr_of_shards", env.getProperty("hibernate.search.Artifact.sharding_strategy.nbr_of_shards"));
+        properties.setProperty("hibernate.search.indexing_strategy", env.getProperty("hibernate.search.indexing_strategy"));
         return properties;
     }
 

@@ -65,6 +65,11 @@ public class ArtifactRepositoryImpl implements ArtifactRepository {
         return foldPage(artifacts, pageRequest, resultSize);
     }
 
+    public void index(Long id) {
+        Artifact artifact = fullTextEntityManager.getReference(Artifact.class, id);
+        fullTextEntityManager.index(artifact);
+    }
+
     @Override
     public Artifact save(Artifact artifact) {
         fullTextEntityManager.persist(artifact);
@@ -74,21 +79,21 @@ public class ArtifactRepositoryImpl implements ArtifactRepository {
 
     @Override
     public void update(Artifact artifact) {
-        entityManager.merge(artifact);
+        fullTextEntityManager.merge(artifact);
         logger.debug("Object updated: {}", artifact);
     }
 
     @Override
     public void delete(Long id) {
-        Artifact artifact = entityManager.getReference(Artifact.class, id);
-        entityManager.remove(artifact);
+        Artifact artifact = fullTextEntityManager.getReference(Artifact.class, id);
+        fullTextEntityManager.remove(artifact);
         logger.debug("Artifact with id = {} has been deleted", artifact.getId());
     }
 
     @Override
     @Transactional(readOnly = false)
     public Artifact findOne(Long id) {
-        return entityManager.find(Artifact.class, id);
+        return fullTextEntityManager.find(Artifact.class, id);
     }
 
     private List<Artifact> getAvailableArtifacts(FullTextQuery fullTextQuery, Supplier<Long> s) {

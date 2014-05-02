@@ -21,4 +21,6 @@ public interface ArtifactRepository {
 
     Artifact findOne(Long id);
 
+    void index(Long id);
+
 }
