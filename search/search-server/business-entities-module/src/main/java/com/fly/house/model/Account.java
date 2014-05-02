@@ -3,10 +3,7 @@ package com.fly.house.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -38,6 +35,15 @@ public class Account extends BasedEntity {
     @Enumerated(STRING)
     private Role role;
 
+    @Transient
+    private boolean online;
+
+    @OneToMany
+    private List<File> files;
+
+    @OneToMany
+    private List<Path> paths;
+
     public Account() {
         role = ROLE_USER;
     }
@@ -47,6 +53,38 @@ public class Account extends BasedEntity {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public List<Artifact> getArtifacts() {
+        return artifacts;
+    }
+
+    public void setArtifacts(List<Artifact> artifacts) {
+        this.artifacts = artifacts;
+    }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 
     public Role getRole() {
@@ -81,21 +119,13 @@ public class Account extends BasedEntity {
         this.email = email;
     }
 
-    public List<Artifact> getArtifacts() {
-        return artifacts;
-    }
-
-    public void setArtifacts(List<Artifact> artifacts) {
-        this.artifacts = artifacts;
-    }
-
     @Override
     public String toString() {
         return "Account{" +
                 "name='" + name + '\'' +
+                "online='" + online + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", artifacts=" + artifacts +
                 ", role=" + role +
                 '}';
     }

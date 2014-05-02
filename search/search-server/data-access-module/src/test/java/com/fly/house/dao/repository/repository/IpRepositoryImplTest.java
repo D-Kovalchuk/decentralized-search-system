@@ -1,12 +1,14 @@
-package com.fly.house.dao;
+package com.fly.house.dao.repository.repository;
 
-import com.fly.house.dao.config.RedisConfig;
+import com.fly.house.dao.config.DataAccessConfig;
 import com.fly.house.dao.repository.IpRepository;
+import com.fly.house.dao.repository.IpRepositoryImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.embedded.RedisServer;
@@ -22,9 +24,10 @@ import static org.junit.Assert.*;
 /**
  * Created by dimon on 4/20/14.
  */
+@ActiveProfiles("production")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = RedisConfig.class)
-public class IpRepositoryTest {
+@ContextConfiguration(classes = DataAccessConfig.class)
+public class IpRepositoryImplTest {
 
     @Autowired
     private IpRepository ipRepository;
@@ -49,7 +52,7 @@ public class IpRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        hashOps = redisTemplate.boundHashOps(IpRepository.KEY_NAMESPACE);
+        hashOps = redisTemplate.boundHashOps(IpRepositoryImpl.KEY_NAMESPACE);
     }
 
     @AfterClass

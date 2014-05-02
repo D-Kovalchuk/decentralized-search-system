@@ -25,6 +25,7 @@
         <jackson.version>1.9.13</jackson.version>
         <commons.codec.version>1.9</commons.codec.version>
         <aspectj.version>1.7.4</aspectj.version>
+        <fest-assert.version>1.4</fest-assert.version>
     </properties>
 
     <dependencies>
@@ -60,6 +61,13 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>${fest-assert.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- Logging -->
         <dependency>
