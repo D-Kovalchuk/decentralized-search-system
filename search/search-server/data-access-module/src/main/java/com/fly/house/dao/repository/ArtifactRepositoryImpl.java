@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -91,7 +90,6 @@ public class ArtifactRepositoryImpl implements ArtifactRepository {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public Artifact findOne(Long id) {
         return fullTextEntityManager.find(Artifact.class, id);
     }

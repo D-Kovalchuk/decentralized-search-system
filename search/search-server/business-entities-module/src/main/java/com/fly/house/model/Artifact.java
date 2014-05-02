@@ -56,15 +56,47 @@ public class Artifact extends BasedEntity {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Account> accounts;
 
+    @Basic(fetch = LAZY)
+    @OneToMany(mappedBy = "artifact", cascade = CascadeType.REMOVE)
+    private List<File> files;
+
     @Enumerated(STRING)
     private ArtifactCategory category;
 
+    @NotEmpty
+    private String digest;
+
+    @NotEmpty
     private String type;
 
     private Long size;
 
     public Artifact() {
         category = ArtifactCategory.NONE;
+    }
+
+    public String getDigest() {
+        return digest;
+    }
+
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public String getFullText() {
@@ -81,14 +113,6 @@ public class Artifact extends BasedEntity {
 
     public void setShortText(String shortText) {
         this.shortText = shortText;
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
     }
 
     public String getTitle() {
@@ -131,9 +155,11 @@ public class Artifact extends BasedEntity {
                 ", fullText='" + fullText + '\'' +
                 ", shortText='" + shortText + '\'' +
                 ", accounts=" + accounts +
+                ", files=" + files +
                 ", category=" + category +
                 ", type='" + type + '\'' +
                 ", size=" + size +
+                ", digest=" + digest +
                 '}';
     }
 

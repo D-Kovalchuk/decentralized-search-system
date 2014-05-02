@@ -204,6 +204,7 @@ public class ArtifactRepositoryImplTest extends AbstractDbUnit {
         artifact.setFullText("full text full text full text full text full text full text full text full text full text");
         artifact.setShortText("full text full text full text full text full text");
         artifact.setSize(100L);
+        artifact.setDigest("f5467ul242l432t342eqxt");
         artifact.setType("pdf/application");
         artifact.setAccounts(asList(new Account("name", "name@email.com", "password123")));
         return artifact;

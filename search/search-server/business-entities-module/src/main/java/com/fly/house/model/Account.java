@@ -38,6 +38,12 @@ public class Account extends BasedEntity {
     @Transient
     private boolean online;
 
+    @OneToMany
+    private List<File> files;
+
+    @OneToMany
+    private List<Path> paths;
+
     public Account() {
         role = ROLE_USER;
     }
@@ -47,6 +53,30 @@ public class Account extends BasedEntity {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public List<Artifact> getArtifacts() {
+        return artifacts;
+    }
+
+    public void setArtifacts(List<Artifact> artifacts) {
+        this.artifacts = artifacts;
+    }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 
     public boolean isOnline() {
@@ -87,14 +117,6 @@ public class Account extends BasedEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Artifact> getArtifacts() {
-        return artifacts;
-    }
-
-    public void setArtifacts(List<Artifact> artifacts) {
-        this.artifacts = artifacts;
     }
 
     @Override

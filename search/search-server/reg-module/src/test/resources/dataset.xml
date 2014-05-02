@@ -33,12 +33,18 @@
     <account id="16" email="world.bin.info15@gmail.com" name="login16"
              password="$2a$04$ScZkZgl1rWJ46Q8ShHgfFOcUdcHmzvk/mydKYWq8c46HEwkPHF6vi" role="ROLE_USER"/>
 
-    <artifact id="1" category="COMPUTER_SCIENCE" fulltext="fulltext fulltext fulltext fulltext"
-              shorttext="fulltext fulltext" size="10" title="Title" type="xml"/>
-    <artifact id="2" category="MATH" fulltext="fulltext fulltext fulltext fulltext" shorttext="fulltext fulltext"
-              size="100" title="Title2" type="pdf"/>
-    <artifact id="3" category="NONE" fulltext="fulltext fulltext fulltext fulltext" shorttext="fulltext fulltext"
-              size="400" title="Title3" type="pdf"/>
+    <artifact id="1" category="COMPUTER_SCIENCE"
+              fulltext="Canned email responses. If you find yourself typing in the same email response over-and-over, you can use PhraseExpress to save you time. Enter your email once into the program. In the future, anytime you need this canned response, it's one-click away."
+              shorttext="Canned email responses. If you find yourself typing in the same..."
+              size="10" title="Title" type="xml" digest="n1234n"/>
+    <artifact id="2" category="MATH"
+              fulltext="Chunks of HTML or CSS code. If you are webdesigner, you might find yourself hunting down snippets of code, you used in a past project. With PhraseExpress, you can store all your code snippets you may ever need again for instant access in any code editor."
+              shorttext="Chunks of HTML or CSS code. If you are webdesigner, you might find..."
+              size="100" title="Title2" type="pdf" digest="n123nn"/>
+    <artifact id="3" category="NONE"
+              fulltext="Email Signatures. Do you find yourself juggling a handful of signatures in your mail program or in online communities? With PhraseExpress, you can create and store as many signatures as you need, e.g. in different languages or if you roam between different branch offices."
+              shorttext="Email Signatures. Do you find yourself juggling a handful of signatures..."
+              size="400" title="Title3" type="pdf" digest="n1234n"/>
 
     <artifact_account artifacts_id="1" accounts_id="1"/>
     <artifact_account artifacts_id="2" accounts_id="1"/>
