@@ -51,4 +51,31 @@ public class File extends BasedEntity {
     public void setArtifact(Artifact artifact) {
         this.artifact = artifact;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        File file = (File) o;
+
+        if (!account.equals(file.account)) return false;
+        if (!path.equals(file.path)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = path.hashCode();
+        result = 31 * result + account.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "path='" + path + '\'' +
+                '}';
+    }
 }

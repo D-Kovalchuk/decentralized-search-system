@@ -45,4 +45,33 @@ public class Path extends BasedEntity {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Path path1 = (Path) o;
+
+        if (!account.equals(path1.account)) return false;
+        if (!path.equals(path1.path)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = path.hashCode();
+        result = 31 * result + account.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Path{" +
+                "path='" + path + '\'' +
+                ", account=" + account +
+                ", files=" + files +
+                '}';
+    }
 }

@@ -120,13 +120,37 @@ public class Account extends BasedEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        if (!email.equals(account.email)) return false;
+        if (!name.equals(account.name)) return false;
+        if (!password.equals(account.password)) return false;
+        if (role != account.role) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Account{" +
                 "name='" + name + '\'' +
-                "online='" + online + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", online=" + online +
                 '}';
     }
 }

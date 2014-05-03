@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by dimon on 03.05.14.
@@ -33,13 +34,11 @@ public class FileDownloadCompleteEventHandler implements ApplicationListener<Fil
     public void onApplicationEvent(FileDownloadCompleteEvent event) {
         File file = (File) event.getSource();
         File savedFile = save(file);
-        queue.remove(savedFile);
+        remove(savedFile);
     }
 
     @Transactional
     public File save(File file) {
-        //todo find and set account into file
-        //Account account = accountService.findAccountByName(name);
         Artifact artifact = file.getArtifact();
         String digest = artifact.getDigest();
 //        String digest = generateDigest(artifact);
@@ -50,6 +49,22 @@ public class FileDownloadCompleteEventHandler implements ApplicationListener<Fil
             artifact.setDigest(digest);
         }
         return fileRepository.save(file);
+    }
+
+    private void remove(File file) {
+        boolean remove = queue.remove(file);
+        if (!remove) {
+            delayRemoval(file);
+        }
+    }
+
+    private void delayRemoval(File file) {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        queue.remove(file);
     }
 
 //    private String generateDigest(Artifact artifact) {

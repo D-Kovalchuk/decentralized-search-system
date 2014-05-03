@@ -26,8 +26,7 @@ public class Converter {
         String name = pathPackage.getName();
         if (onlineService.isOnline(name)) {
             InetAddress ip = onlineService.getAddress(name);
-            //todo fix
-            Account account = new Account()/*accountService.findAccountByName()*/;
+            Account account = accountService.findAccountByName(name);
             return new DownloadInfo(pathPackage, ip, account);
         } else {
             throw new UserOfflineException();
