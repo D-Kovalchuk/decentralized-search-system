@@ -22,6 +22,12 @@ public class File extends BasedEntity {
     @OneToOne
     private Account account;
 
+    public File(Account account, Artifact artifact, String path) {
+        this.path = path;
+        this.artifact = artifact;
+        this.account = account;
+    }
+
     public String getPath() {
         return path;
     }

@@ -1,4 +1,4 @@
-package com.fly.house.ui.event;
+package com.fly.house.core.event;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;

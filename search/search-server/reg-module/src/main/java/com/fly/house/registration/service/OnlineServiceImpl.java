@@ -35,4 +35,9 @@ public class OnlineServiceImpl implements OnlineService {
     public boolean isOnline(String name) {
         return repository.isOnline(name);
     }
+
+    @Override
+    public InetAddress getAddress(String name) {
+        return repository.getAddress(name);
+    }
 }

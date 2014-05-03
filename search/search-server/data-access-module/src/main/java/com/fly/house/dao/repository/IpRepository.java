@@ -15,4 +15,5 @@ public interface IpRepository {
 
     long size();
 
+    InetAddress getAddress(String name);
 }
