@@ -20,4 +20,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("select a from Account a order by a.artifacts.size desc")
     List<Account> findTop();
+
+    Account findByName(String name);
 }

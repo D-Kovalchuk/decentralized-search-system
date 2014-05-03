@@ -55,4 +55,9 @@ public class AccountServiceImpl implements AccountService {
         return repository.findAll(pageable);
     }
 
+    @Override
+    public Account findAccountByName(String name) {
+        return repository.findByName(name);
+    }
+
 }

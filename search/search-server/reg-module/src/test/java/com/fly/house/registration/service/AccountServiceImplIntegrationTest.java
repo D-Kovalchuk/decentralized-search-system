@@ -162,6 +162,13 @@ public class AccountServiceImplIntegrationTest extends AbstractDbUnit {
         assertThat(top.size(), Matchers.equalTo(5));
     }
 
+    @Test
+    public void findAccountByName() throws Exception {
+        Account account = accountService.findAccountByName("login1");
+
+        assertNotNull(account);
+    }
+
     private Account createAccount() {
         return new Account(DEFAULT_LOGIN, DEFAULT_EMAIL, PURE_PASSWORD);
     }

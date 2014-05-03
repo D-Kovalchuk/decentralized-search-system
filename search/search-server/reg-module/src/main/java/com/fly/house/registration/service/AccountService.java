@@ -17,4 +17,6 @@ public interface AccountService {
     List<Account> findTop(int n);
 
     Page<Account> findAllAccounts(int page, int size);
+
+    Account findAccountByName(String name);
 }
