@@ -48,5 +48,10 @@ public class IpRepositoryImpl implements IpRepository {
         return hashOps.size();
     }
 
+    //todo test
+    @Override
+    public InetAddress getAddress(String name) {
+        return hashOps.get(name);
+    }
 
 }

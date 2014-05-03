@@ -14,4 +14,7 @@ public interface OnlineService {
     long size();
 
     boolean isOnline(String name);
+
+    InetAddress getAddress(String name);
+
 }

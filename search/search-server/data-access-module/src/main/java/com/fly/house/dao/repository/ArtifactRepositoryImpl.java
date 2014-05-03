@@ -17,6 +17,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -92,6 +94,15 @@ public class ArtifactRepositoryImpl implements ArtifactRepository {
     @Override
     public Artifact findOne(Long id) {
         return fullTextEntityManager.find(Artifact.class, id);
+    }
+
+    public Artifact findByDigest(String digest) {
+        TypedQuery<Artifact> query = fullTextEntityManager.createQuery("select a from Artifact a where a.digest = :digest", Artifact.class);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     private List<Artifact> getAvailableArtifacts(FullTextQuery fullTextQuery, Supplier<Long> s) {

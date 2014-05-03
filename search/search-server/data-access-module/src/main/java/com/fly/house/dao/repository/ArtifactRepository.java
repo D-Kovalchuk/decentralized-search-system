@@ -23,4 +23,6 @@ public interface ArtifactRepository {
 
     void index(Long id);
 
+    Artifact findByDigest(String digest);
+
 }

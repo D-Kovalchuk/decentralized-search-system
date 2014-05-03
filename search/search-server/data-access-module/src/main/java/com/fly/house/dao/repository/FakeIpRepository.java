@@ -35,4 +35,9 @@ public class FakeIpRepository implements IpRepository {
     public long size() {
         return redis.size();
     }
+
+    @Override
+    public InetAddress getAddress(String name) {
+        return redis.get(name);
+    }
 }

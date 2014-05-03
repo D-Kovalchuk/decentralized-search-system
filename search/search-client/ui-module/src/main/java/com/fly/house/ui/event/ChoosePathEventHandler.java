@@ -1,5 +1,6 @@
 package com.fly.house.ui.event;
 
+import com.fly.house.core.event.SystemEventPublisher;
 import com.fly.house.core.event.SystemLoginEvent;
 import com.fly.house.ui.presenter.ChoosePathPresenter;
 import com.fly.house.ui.qualifier.Handler;
