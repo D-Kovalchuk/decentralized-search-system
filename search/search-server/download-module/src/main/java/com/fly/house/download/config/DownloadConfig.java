@@ -29,6 +29,15 @@ public class DownloadConfig {
     @Value("${destination}")
     private String destination;
 
+    @Value("${nextDestination}")
+    private String nextDestination;
+
+    @Value("${bufferSize}")
+    private int bufferSize;
+
+    @Value("${jmsSessionCacheSize}")
+    private int jmsSessionCacheSize;
+
     @Bean
     public JmsTemplate jmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate();
@@ -47,7 +56,7 @@ public class DownloadConfig {
     @Bean
     public CachingConnectionFactory cachingConnectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(connectionFactory());
-        connectionFactory.setSessionCacheSize(10);
+        connectionFactory.setSessionCacheSize(jmsSessionCacheSize);
         return connectionFactory;
     }
 
@@ -57,8 +66,13 @@ public class DownloadConfig {
     }
 
     @Bean
+    public ActiveMQQueue nextDestination() {
+        return new ActiveMQQueue(nextDestination);
+    }
+
+    @Bean
     public BlockingQueue<CompletableFuture<Optional<File>>> workerQueue() {
-        return new LinkedBlockingQueue<>();
+        return new LinkedBlockingQueue<>(bufferSize);
     }
 
 }

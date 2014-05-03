@@ -51,13 +51,12 @@ public class DownloadManager {
         try {
             return new URL("http", hostAddress, port, path);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new FileDownloadException(e);
         }
     }
 
     private Artifact parse(InputStream in) throws TikaException, SAXException, IOException {
         Parser parser = new AutoDetectParser();
-
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
         BodyContentHandler contentHandler = new BodyContentHandler();
