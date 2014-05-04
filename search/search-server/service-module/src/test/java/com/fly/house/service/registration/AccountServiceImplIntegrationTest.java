@@ -1,12 +1,12 @@
-package com.fly.house.registration.service;
+package com.fly.house.service.registration;
 
 
 import com.fly.house.dao.repository.AccountRepository;
 import com.fly.house.dao.test.AbstractDbUnit;
 import com.fly.house.model.Account;
 import com.fly.house.model.Artifact;
-import com.fly.house.registration.config.RegistrationConfig;
-import com.fly.house.registration.exception.RegistrationException;
+import com.fly.house.service.config.RegistrationConfig;
+import com.fly.house.service.exception.RegistrationException;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

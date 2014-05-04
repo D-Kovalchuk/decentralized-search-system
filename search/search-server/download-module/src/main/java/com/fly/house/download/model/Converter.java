@@ -3,8 +3,8 @@ package com.fly.house.download.model;
 import com.fly.house.core.dto.PathPackage;
 import com.fly.house.download.exception.UserOfflineException;
 import com.fly.house.model.Account;
-import com.fly.house.registration.service.AccountService;
-import com.fly.house.registration.service.OnlineService;
+import com.fly.house.service.registration.AccountService;
+import com.fly.house.service.registration.OnlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

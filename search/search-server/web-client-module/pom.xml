@@ -35,8 +35,8 @@
             <artifactId>search-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>reg-module</groupId>
-            <artifactId>reg-module</artifactId>
+            <groupId>service-module</groupId>
+            <artifactId>service-module</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

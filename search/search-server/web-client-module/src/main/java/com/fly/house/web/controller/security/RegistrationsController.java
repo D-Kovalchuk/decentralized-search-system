@@ -1,7 +1,7 @@
 package com.fly.house.web.controller.security;
 
 import com.fly.house.model.Account;
-import com.fly.house.registration.service.AccountService;
+import com.fly.house.service.registration.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

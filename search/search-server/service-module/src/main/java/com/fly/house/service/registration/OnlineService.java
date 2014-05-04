@@ -1,4 +1,4 @@
-package com.fly.house.registration.service;
+package com.fly.house.service.registration;
 
 import java.net.InetAddress;
 

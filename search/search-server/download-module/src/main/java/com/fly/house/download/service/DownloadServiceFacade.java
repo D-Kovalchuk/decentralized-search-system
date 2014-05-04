@@ -65,6 +65,10 @@ public class DownloadServiceFacade {
         futureBuffer.remove(file);
     }
 
+
+    //fixme
+    //throws DataAccessException
+    //it must be not here
     @Transactional
     private File save(File file) {
         Artifact artifact = file.getArtifact();

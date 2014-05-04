@@ -1,6 +1,6 @@
 package com.fly.house.web.websocket;
 
-import com.fly.house.registration.service.OnlineService;
+import com.fly.house.service.registration.OnlineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

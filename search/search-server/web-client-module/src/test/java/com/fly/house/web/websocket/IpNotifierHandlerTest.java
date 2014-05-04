@@ -1,6 +1,6 @@
 package com.fly.house.web.websocket;
 
-import com.fly.house.registration.service.OnlineService;
+import com.fly.house.service.registration.OnlineService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

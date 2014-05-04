@@ -1,4 +1,4 @@
-package com.fly.house.registration.exception;
+package com.fly.house.service.exception;
 
 
 import com.fly.house.core.exception.BusinessException;

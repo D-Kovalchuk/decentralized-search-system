@@ -1,4 +1,4 @@
-package com.fly.house.registration.config;
+package com.fly.house.service.config;
 
 import com.fly.house.dao.config.DataAccessConfig;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(DataAccessConfig.class)
-@ComponentScan({"com.fly.house.registration.service", "com.fly.house.registration.aspect"})
+@ComponentScan({"com.fly.house.service.registration", "com.fly.house.service.aspect"})
 @EnableAspectJAutoProxy
 public class RegistrationConfig {
 

@@ -1,6 +1,6 @@
-package com.fly.house.registration.aspect;
+package com.fly.house.service.aspect;
 
-import com.fly.house.registration.exception.RegistrationException;
+import com.fly.house.service.exception.RegistrationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +18,7 @@ public class ExceptionHandlingAspect {
 
     private static Logger logger = LoggerFactory.getLogger(ExceptionHandlingAspect.class);
 
-    @Around("execution(public * com.fly.house.registration.service.*.*(..))")
+    @Around("execution(public * com.fly.house.service.registration.*.*(..))")
     public Object translate(ProceedingJoinPoint joinPoint) {
         try {
             return joinPoint.proceed();
