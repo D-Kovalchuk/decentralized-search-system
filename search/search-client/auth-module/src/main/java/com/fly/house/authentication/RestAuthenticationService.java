@@ -1,6 +1,7 @@
 package com.fly.house.authentication;
 
 import com.fly.house.authentication.exception.AuthorizationException;
+import com.fly.house.core.dto.AccountDto;
 import com.fly.house.core.exception.RestException;
 import com.fly.house.core.profile.Production;
 import com.fly.house.core.rest.CookieService;
@@ -53,7 +54,8 @@ public class RestAuthenticationService implements AuthenticationService {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("user", login);
         map.add("password", password);
-        ResponseEntity<Void> entity = restTemplate.postForEntity(authUrl, map, Void.class);
+        ResponseEntity<AccountDto> entity = restTemplate.postForEntity(authUrl, map, AccountDto.class);
+        //todo save accountDto
         try {
             httpHandler.handle(entity.getStatusCode());
         } catch (RestException e) {

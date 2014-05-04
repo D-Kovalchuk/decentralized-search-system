@@ -6,6 +6,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 
@@ -74,5 +75,11 @@ public class DownloadConfig {
     public BlockingQueue<CompletableFuture<Optional<File>>> workerQueue() {
         return new LinkedBlockingQueue<>(bufferSize);
     }
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
 
 }

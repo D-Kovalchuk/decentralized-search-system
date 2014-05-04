@@ -1,9 +1,9 @@
-package com.fly.house.authentication;
+package com.fly.house.core.dto;
 
 /**
  * Created by dimon on 1/31/14.
  */
-public class Account {
+public class AccountDto {
 
     private Long id;
 
@@ -11,32 +11,29 @@ public class Account {
 
     private String password;
 
-    public Account(String login, String password) {
+    private String email;
+
+    public AccountDto(String login, String password, String email) {
         this.login = login;
         this.password = password;
+        this.email = email;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getEmail() {
+        return email;
     }
 }

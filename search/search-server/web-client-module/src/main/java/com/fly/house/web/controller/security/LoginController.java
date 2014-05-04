@@ -1,7 +1,12 @@
 package com.fly.house.web.controller.security;
 
+import com.fly.house.core.dto.AccountDto;
+import com.fly.house.model.Account;
+import com.fly.house.service.converter.AccountConverter;
+import com.fly.house.service.registration.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,16 +30,22 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/rest")
 public class LoginController {
 
+    @Autowired
+    private AccountService accountService;
+
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @RequestMapping(value = "/login", params = {"user", "password"}, method = POST)
-    public ResponseEntity<String> login(HttpServletRequest request,
+    public ResponseEntity<AccountDto> login(HttpServletRequest request,
                                         @RequestParam String user,
                                         @RequestParam String password) throws ServletException {
         try {
             request.login(user, password);
             logger.debug("User {} logged in successfully", user);
-            return new ResponseEntity<>(OK);
+            Account account = accountService.findAccountByName(user);
+            AccountConverter converter = new AccountConverter();
+            AccountDto responseBody = converter.convert(account);
+            return new ResponseEntity<>(responseBody, OK);
         } catch (ServletException e) {
             logger.warn("Exception occurred: ", e);
             return new ResponseEntity<>(UNAUTHORIZED);

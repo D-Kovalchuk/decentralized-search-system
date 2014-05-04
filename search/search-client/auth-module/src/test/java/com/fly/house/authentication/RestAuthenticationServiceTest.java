@@ -1,6 +1,7 @@
 package com.fly.house.authentication;
 
 import com.fly.house.authentication.exception.AuthorizationException;
+import com.fly.house.core.dto.AccountDto;
 import com.fly.house.core.rest.CookieService;
 import com.fly.house.core.rest.HttpHandler;
 import org.junit.Before;
@@ -64,10 +65,10 @@ public class RestAuthenticationServiceTest {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("user", "login");
         map.add("password", "password");
-        ResponseEntity<Void> responseEntity = new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        ResponseEntity<AccountDto> responseEntity = new ResponseEntity<>(httpHeaders, HttpStatus.OK);
         when(restTemplate.postForEntity(anyString(),
                 eq(map),
-                eq(Void.class))
+                        eq(AccountDto.class))
         ).thenReturn(responseEntity);
 
         authenticationService.authentication(login, password);
@@ -82,10 +83,10 @@ public class RestAuthenticationServiceTest {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("user", "login");
         map.add("password", "password");
-        ResponseEntity<Void> responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        ResponseEntity<AccountDto> responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         when(restTemplate.postForEntity(anyString(),
                 eq(map),
-                eq(Void.class))
+                        eq(AccountDto.class))
         ).thenReturn(responseEntity);
 
         authenticationService.authentication(login, password);
