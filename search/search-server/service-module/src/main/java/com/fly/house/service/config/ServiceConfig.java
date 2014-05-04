@@ -13,6 +13,6 @@ import org.springframework.context.annotation.Import;
 @Import(DataAccessConfig.class)
 @ComponentScan({"com.fly.house.service.registration", "com.fly.house.service.aspect"})
 @EnableAspectJAutoProxy
-public class RegistrationConfig {
+public class ServiceConfig {
 
 }

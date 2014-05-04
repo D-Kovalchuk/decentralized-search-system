@@ -13,7 +13,6 @@
     <modules>
         <module>download-module</module>
         <module>index-module</module>
-        <module>searcher-module</module>
         <module>web-client-module</module>
         <module>business-entities-module</module>
         <module>data-access-module</module>

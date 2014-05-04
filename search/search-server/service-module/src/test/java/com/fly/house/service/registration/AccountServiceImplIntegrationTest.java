@@ -5,7 +5,7 @@ import com.fly.house.dao.repository.AccountRepository;
 import com.fly.house.dao.test.AbstractDbUnit;
 import com.fly.house.model.Account;
 import com.fly.house.model.Artifact;
-import com.fly.house.service.config.RegistrationConfig;
+import com.fly.house.service.config.ServiceConfig;
 import com.fly.house.service.exception.RegistrationException;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
  */
 @Transactional
 @ActiveProfiles("dev")
-@ContextConfiguration(classes = RegistrationConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AccountServiceImplIntegrationTest extends AbstractDbUnit {
 
