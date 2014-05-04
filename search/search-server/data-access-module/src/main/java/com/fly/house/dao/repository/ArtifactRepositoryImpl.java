@@ -105,6 +105,14 @@ public class ArtifactRepositoryImpl implements ArtifactRepository {
         }
     }
 
+    @Override
+    public long size() {
+        TypedQuery<Artifact> query = fullTextEntityManager.createQuery("select a from Artifact a", Artifact.class);
+        return query
+                .getResultList()
+                .size();
+    }
+
     private List<Artifact> getAvailableArtifacts(FullTextQuery fullTextQuery, Supplier<Long> s) {
         List<Artifact> resultList = fullTextQuery.getResultList();
         return resultList.stream()

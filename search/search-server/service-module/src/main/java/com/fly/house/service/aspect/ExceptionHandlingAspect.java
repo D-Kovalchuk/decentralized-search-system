@@ -1,5 +1,6 @@
 package com.fly.house.service.aspect;
 
+import com.fly.house.service.exception.FileManipulationException;
 import com.fly.house.service.exception.RegistrationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,7 +20,7 @@ public class ExceptionHandlingAspect {
     private static Logger logger = LoggerFactory.getLogger(ExceptionHandlingAspect.class);
 
     @Around("execution(public * com.fly.house.service.registration.*.*(..))")
-    public Object translate(ProceedingJoinPoint joinPoint) {
+    public Object translateToRegistration(ProceedingJoinPoint joinPoint) {
         try {
             return joinPoint.proceed();
         } catch (DataAccessException e) {
@@ -36,4 +37,17 @@ public class ExceptionHandlingAspect {
             throw new RegistrationException(t);
         }
     }
+
+    @Around("execution(public * com.fly.house.service.file.*.*(..))")
+    public Object translateToFile(ProceedingJoinPoint joinPoint) {
+        try {
+            return joinPoint.proceed();
+        } catch (DataAccessException e) {
+            logger.warn("Exception occur while modifying database", e);
+            throw new RegistrationException(e);
+        } catch (Throwable throwable) {
+            throw new FileManipulationException(throwable);
+        }
+    }
+
 }

@@ -1,13 +1,13 @@
-package com.fly.house.dao.repository;
+package com.fly.house.service.file;
 
 import com.fly.house.model.Artifact;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Created by dimon on 4/29/14.
+ * Created by dimon on 04.05.14.
  */
-public interface ArtifactRepository {
+public interface ArtifactService {
 
     Page<Artifact> searchOnlyAvailable(String queryString, Pageable pageable);
 
@@ -22,8 +22,6 @@ public interface ArtifactRepository {
     Artifact findOne(Long id);
 
     void index(Long id);
-
-    Artifact findByDigest(String digest);
 
     long size();
 }
