@@ -13,7 +13,8 @@ public class AccountDto {
 
     private String email;
 
-    public AccountDto(String login, String password, String email) {
+    public AccountDto(Long id, String login, String password, String email) {
+        this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;

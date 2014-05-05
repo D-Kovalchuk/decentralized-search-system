@@ -11,6 +11,7 @@ public class AccountConverter implements Converter<AccountDto, Account> {
     @Override
     public AccountDto convert(Account account) {
         return new AccountDto(
+                account.getId(),
                 account.getName(),
                 account.getPassword(),
                 account.getEmail());
