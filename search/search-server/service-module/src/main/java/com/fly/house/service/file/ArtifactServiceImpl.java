@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * Created by dimon on 04.05.14.
  */
 @Service
+@Transactional
 public class ArtifactServiceImpl implements ArtifactService {
 
     @Autowired
@@ -18,11 +21,13 @@ public class ArtifactServiceImpl implements ArtifactService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Artifact> searchOnlyAvailable(String queryString, Pageable pageable) {
         return artifactRepository.searchOnlyAvailable(queryString, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Artifact> search(String queryString, Pageable pageRequest) {
         return artifactRepository.search(queryString, pageRequest);
     }
@@ -43,6 +48,7 @@ public class ArtifactServiceImpl implements ArtifactService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Artifact findOne(Long id) {
         return artifactRepository.findOne(id);
     }
@@ -53,6 +59,7 @@ public class ArtifactServiceImpl implements ArtifactService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long size() {
         return artifactRepository.size();
     }

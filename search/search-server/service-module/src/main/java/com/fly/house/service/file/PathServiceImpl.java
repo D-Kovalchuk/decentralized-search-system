@@ -4,6 +4,7 @@ import com.fly.house.dao.repository.PathRepository;
 import com.fly.house.model.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Created by dimon on 04.05.14.
  */
 @Service
+@Transactional
 public class PathServiceImpl implements PathService {
 
     @Autowired
@@ -27,6 +29,7 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Path> findByAccountName(String name) {
         return pathRepository.findByAccountName(name);
     }
