@@ -32,6 +32,8 @@ public class RestAuthenticationService implements AuthenticationService {
 
     private HttpHandler httpHandler;
 
+    private AccountRepository accountRepository;
+
     @Value("${authUrl}")
     private String authUrl;
 
@@ -40,11 +42,14 @@ public class RestAuthenticationService implements AuthenticationService {
 
     private static Logger logger = LoggerFactory.getLogger(RestAuthenticationService.class);
 
-    @Autowired
-    public RestAuthenticationService(CookieService cookieService, RestTemplate restTemplate, HttpHandler httpHandler) {
-        this.cookieService = cookieService;
+    public RestAuthenticationService(RestTemplate restTemplate,
+                                     CookieService cookieService,
+                                     HttpHandler httpHandler,
+                                     AccountRepository accountRepository) {
         this.restTemplate = restTemplate;
+        this.cookieService = cookieService;
         this.httpHandler = httpHandler;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -55,16 +60,20 @@ public class RestAuthenticationService implements AuthenticationService {
         map.add("user", login);
         map.add("password", password);
         ResponseEntity<AccountDto> entity = restTemplate.postForEntity(authUrl, map, AccountDto.class);
-        //todo save accountDto
+        handleErrors(entity);
+        List<String> cookie = entity.getHeaders().get("Set-Cookie");
+        logger.debug("Cookie was retrieved {}", cookie);
+        cookieService.saveCookie(cookie);
+        AccountDto accountDto = entity.getBody();
+        accountRepository.save(accountDto);
+    }
+
+    private void handleErrors(ResponseEntity<AccountDto> entity) {
         try {
             httpHandler.handle(entity.getStatusCode());
         } catch (RestException e) {
             throw new AuthorizationException(e);
         }
-        List<String> cookie = entity.getHeaders().get("Set-Cookie");
-
-        logger.debug("Cookie was retrieved {}", cookie);
-        cookieService.saveCookie(cookie);
     }
 
     @Override

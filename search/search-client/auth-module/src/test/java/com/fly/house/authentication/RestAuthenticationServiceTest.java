@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -42,6 +43,9 @@ public class RestAuthenticationServiceTest {
 
     @Spy
     private HttpHandler httpHandler;
+
+    @Mock
+    private AccountRepository accountRepository;
 
     @InjectMocks
     private RestAuthenticationService authenticationService;
@@ -75,6 +79,7 @@ public class RestAuthenticationServiceTest {
 
         verify(httpHandler).handle(OK);
         verify(cookieService).saveCookie(cookies);
+        verify(accountRepository).save(any(AccountDto.class));
     }
 
 
