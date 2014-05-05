@@ -9,4 +9,8 @@ public class ConverterFactory {
         return new AccountConverter();
     }
 
+    public static FileConverter getFileConverter() {
+        return new FileConverter();
+    }
+
 }

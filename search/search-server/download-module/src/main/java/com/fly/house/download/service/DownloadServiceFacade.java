@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static com.fly.house.service.converter.ConverterFactory.getAccountConverter;
+import static com.fly.house.service.converter.ConverterFactory.getFileConverter;
 
 /**
  * Created by dimon on 03.05.14.
@@ -54,11 +55,8 @@ public class DownloadServiceFacade {
     }
 
     public void sendBack(File file) {
-        Account account = file.getAccount();
-        String path = file.getPath();
-        AccountDto accountDto = getAccountConverter().convert(account);
         //todo fix hardcoded port
-        PathPackage pathPackage = new PathPackage(accountDto, path, 8080);
+        PathPackage pathPackage = getFileConverter().convert(file);
         messagingService.sendBack(pathPackage);
         futureBuffer.remove(file);
     }
