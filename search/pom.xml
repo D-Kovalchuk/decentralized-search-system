@@ -26,6 +26,8 @@
         <commons.codec.version>1.9</commons.codec.version>
         <aspectj.version>1.7.4</aspectj.version>
         <fest-assert.version>1.4</fest-assert.version>
+        <spring.jms.version>4.0.3.RELEASE</spring.jms.version>
+        <activemq.all.verison>5.9.1</activemq.all.verison>
     </properties>
 
     <dependencies>
@@ -112,6 +114,17 @@
                 <groupId>org.springframework.integration</groupId>
                 <artifactId>spring-integration-core</artifactId>
                 <version>${spring.integration.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>${spring.jms.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-all</artifactId>
+                <version>${activemq.all.verison}</version>
             </dependency>
 
             <!--AOP-->

@@ -23,7 +23,8 @@ public class Converter {
     private AccountService accountService;
 
     public DownloadInfo convert(PathPackage pathPackage) {
-        String name = pathPackage.getName();
+        //todo find by id
+        String name = pathPackage.getAccount().getLogin();
         if (onlineService.isOnline(name)) {
             InetAddress ip = onlineService.getAddress(name);
             Account account = accountService.findAccountByName(name);

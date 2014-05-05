@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 public class PathPackage implements Serializable {
 
-    private String name;
+    private AccountDto accountDto;
 
     private String path;
 
     private int port;
 
-    public PathPackage(String name, String path, int port) {
-        this.name = name;
+    public PathPackage(AccountDto accountDto, String path, int port) {
+        this.accountDto = accountDto;
         this.path = path;
         this.port = port;
     }
@@ -23,8 +23,8 @@ public class PathPackage implements Serializable {
         return port;
     }
 
-    public String getName() {
-        return name;
+    public AccountDto getAccount() {
+        return accountDto;
     }
 
     public String getPath() {

@@ -1,15 +1,20 @@
 package com.fly.house.download.service;
 
+import com.fly.house.core.dto.AccountDto;
 import com.fly.house.core.dto.PathPackage;
 import com.fly.house.download.model.DownloadInfo;
 import com.fly.house.model.Account;
 import com.fly.house.model.File;
+import com.fly.house.service.converter.Converter;
+import com.fly.house.service.converter.ConverterFactory;
 import com.fly.house.service.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+
+import static com.fly.house.service.converter.ConverterFactory.getAccountConverter;
 
 /**
  * Created by dimon on 03.05.14.
@@ -50,16 +55,12 @@ public class DownloadServiceFacade {
 
     public void sendBack(File file) {
         Account account = file.getAccount();
-        String name = account.getName();
         String path = file.getPath();
+        AccountDto accountDto = getAccountConverter().convert(account);
         //todo fix hardcoded port
-        PathPackage pathPackage = new PathPackage(name, path, 8080);
+        PathPackage pathPackage = new PathPackage(accountDto, path, 8080);
         messagingService.sendBack(pathPackage);
         futureBuffer.remove(file);
     }
 
-
-    //fixme
-    //throws DataAccessException
-    //it must be not here
 }

@@ -22,7 +22,7 @@ import static org.springframework.http.HttpMethod.POST;
  * Created by dimon on 1/26/14.
  */
 @Component
-public class RemoteFileOperations implements FileOperation {
+public class RestFileOperations implements FileOperation {
 
     @Autowired
     private RestTemplate restTemplate;
