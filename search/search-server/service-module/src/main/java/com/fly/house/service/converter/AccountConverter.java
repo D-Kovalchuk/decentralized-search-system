@@ -6,7 +6,7 @@ import com.fly.house.model.Account;
 /**
  * Created by dimon on 04.05.14.
  */
-public class AccountConverter implements Converter<AccountDto, Account> {
+public class AccountConverter implements Converter<Account, AccountDto> {
 
     @Override
     public AccountDto convert(Account account) {

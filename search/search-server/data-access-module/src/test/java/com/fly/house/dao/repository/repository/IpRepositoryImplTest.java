@@ -27,6 +27,7 @@ import static org.junit.Assert.*;
 @ActiveProfiles("production")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataAccessConfig.class)
+@Ignore
 public class IpRepositoryImplTest {
 
     @Autowired

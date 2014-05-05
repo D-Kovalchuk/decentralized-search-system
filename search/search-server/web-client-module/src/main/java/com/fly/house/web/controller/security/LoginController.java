@@ -3,6 +3,7 @@ package com.fly.house.web.controller.security;
 import com.fly.house.core.dto.AccountDto;
 import com.fly.house.model.Account;
 import com.fly.house.service.converter.AccountConverter;
+import com.fly.house.service.converter.ConverterFactory;
 import com.fly.house.service.registration.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Objects;
 
+import static com.fly.house.service.converter.ConverterFactory.getAccountConverter;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -43,8 +45,7 @@ public class LoginController {
             request.login(user, password);
             logger.debug("User {} logged in successfully", user);
             Account account = accountService.findAccountByName(user);
-            AccountConverter converter = new AccountConverter();
-            AccountDto responseBody = converter.convert(account);
+            AccountDto responseBody = getAccountConverter().convert(account);
             return new ResponseEntity<>(responseBody, OK);
         } catch (ServletException e) {
             logger.warn("Exception occurred: ", e);
