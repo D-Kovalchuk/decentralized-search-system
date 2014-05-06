@@ -1,6 +1,8 @@
 package com.fly.house.download.service;
 
 import com.fly.house.model.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +23,23 @@ public class FutureBuffer {
 
     private static final int DELAY_TIME = 2;
 
+    private static Logger logger = LoggerFactory.getLogger(FutureBuffer.class);
+
     public void add(CompletableFuture<Optional<File>> future) throws InterruptedException {
+        logger.debug("{} has been added to the queue", future);
         queue.put(future);
     }
 
     public void remove(File file) {
-        boolean remove = queue.removeIf(future -> isCompleted(future) && isEqual(future, file));
+        boolean remove = removeIfComplated(file);
+        logger.debug("Remove ({}) file {}", remove, file);
         if (!remove) {
             delayRemoval(file);
         }
+    }
+
+    private boolean removeIfComplated(File file) {
+        return queue.removeIf(future -> isCompleted(future) && isEqual(future, file));
     }
 
     private boolean isCompleted(CompletableFuture<Optional<File>> future) {
@@ -48,11 +58,12 @@ public class FutureBuffer {
     }
 
     private void delayRemoval(File file) {
+        logger.debug("Delay removal. Delay time = {}", DELAY_TIME);
         try {
             TimeUnit.SECONDS.sleep(DELAY_TIME);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.warn("Exception occurred", e);
         }
-        queue.removeIf(future -> isCompleted(future) && isEqual(future, file));
+        removeIfComplated(file);
     }
 }

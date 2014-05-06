@@ -5,6 +5,8 @@ import com.fly.house.download.model.Converter;
 import com.fly.house.download.model.DownloadInfo;
 import com.fly.house.model.Artifact;
 import com.fly.house.model.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
@@ -28,9 +30,11 @@ public class MessagingService {
     @Autowired
     private Converter converter;
 
+    private static Logger logger = LoggerFactory.getLogger(MessagingService.class);
+
     public DownloadInfo receiveAndConvert() {
         PathPackage pathPackage = (PathPackage) jmsTemplate.receiveAndConvert();
-        //todo handle UserOffline Exception
+        logger.debug("Message received");
         return converter.convert(pathPackage);
     }
 

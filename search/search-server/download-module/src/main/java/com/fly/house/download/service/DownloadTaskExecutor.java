@@ -7,6 +7,8 @@ import com.fly.house.download.model.DownloadInfo;
 import com.fly.house.model.Account;
 import com.fly.house.model.Artifact;
 import com.fly.house.model.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,8 @@ public class DownloadTaskExecutor {
     @Autowired
     private SystemEventPublisher publisher;
 
+    private static Logger logger = LoggerFactory.getLogger(DownloadTaskExecutor.class);
+
     public CompletableFuture<Optional<File>> process(DownloadInfo downloadInfo) {
         return CompletableFuture
                 .supplyAsync(getFileSupplier(downloadInfo), executor)
@@ -49,9 +53,11 @@ public class DownloadTaskExecutor {
     private BiFunction<File, Throwable, Optional<File>> handler() {
         return (file, ex) -> {
             if (nonNull(ex)) {
+                logger.debug("Error occurred while downloading file", ex);
                 publisher.publish(new FileDownloadErrorEvent(file, ex));
                 return Optional.of(file);
             } else {
+                logger.debug("File downloading completed: {}", file);
                 publisher.publish(new FileDownloadCompleteEvent(file));
                 return Optional.of(file);
             }
