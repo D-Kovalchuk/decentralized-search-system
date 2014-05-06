@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(DataAccessConfig.class)
-@ComponentScan({"com.fly.house.service.registration", "com.fly.house.service.aspect"})
+@ComponentScan({"com.fly.house.service.registration", "com.fly.house.service.file", "com.fly.house.service.aspect"})
 @EnableAspectJAutoProxy
 public class ServiceConfig {
 
