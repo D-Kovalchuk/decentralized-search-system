@@ -18,7 +18,10 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static org.apache.tika.metadata.HttpHeaders.CONTENT_LENGTH;
+import static org.apache.tika.metadata.HttpHeaders.CONTENT_MD5;
 import static org.apache.tika.metadata.HttpHeaders.CONTENT_TYPE;
+import static org.apache.tika.metadata.TikaMetadataKeys.RESOURCE_NAME_KEY;
 
 /**
  * Created by dimon on 03.05.14.
@@ -68,11 +71,11 @@ public class DownloadManager {
         Artifact artifact = new Artifact();
         artifact.setType(metadata.get(metadata.get(CONTENT_TYPE)));
 
-        String size = metadata.get(Metadata.CONTENT_LENGTH);
-        String digest = metadata.get(Metadata.CONTENT_MD5);
+        String name = metadata.get(RESOURCE_NAME_KEY);
+        String size = metadata.get(CONTENT_LENGTH);
+        String digest = metadata.get(CONTENT_MD5);
 
-        //todo fix
-        artifact.setTitle("");
+        artifact.setTitle(name);
         artifact.setDigest(digest);
         artifact.setSize(Long.valueOf(size));
         artifact.setFullText(contentHandler.toString());
