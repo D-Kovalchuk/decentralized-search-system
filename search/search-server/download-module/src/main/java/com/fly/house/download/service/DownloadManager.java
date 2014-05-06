@@ -69,7 +69,7 @@ public class DownloadManager {
 
     private Artifact retrieveInfo(Metadata metadata, BodyContentHandler contentHandler) {
         Artifact artifact = new Artifact();
-        artifact.setType(metadata.get(metadata.get(CONTENT_TYPE)));
+        artifact.setType(metadata.get(CONTENT_TYPE));
 
         String name = metadata.get(RESOURCE_NAME_KEY);
         String size = metadata.get(CONTENT_LENGTH);
