@@ -1,12 +1,8 @@
 package com.fly.house.download.service;
 
-import com.fly.house.core.dto.AccountDto;
 import com.fly.house.core.dto.PathPackage;
 import com.fly.house.download.model.DownloadInfo;
-import com.fly.house.model.Account;
 import com.fly.house.model.File;
-import com.fly.house.service.converter.Converter;
-import com.fly.house.service.converter.ConverterFactory;
 import com.fly.house.service.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import static com.fly.house.service.converter.ConverterFactory.getAccountConverter;
 import static com.fly.house.service.converter.ConverterFactory.getFileConverter;
 
 /**
@@ -55,7 +50,6 @@ public class DownloadServiceFacade {
     }
 
     public void sendBack(File file) {
-        //todo fix hardcoded port
         PathPackage pathPackage = getFileConverter().convert(file);
         messagingService.sendBack(pathPackage);
         futureBuffer.remove(file);

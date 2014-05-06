@@ -1,5 +1,6 @@
 package com.fly.house.download.model;
 
+import com.fly.house.core.dto.AccountDto;
 import com.fly.house.core.dto.PathPackage;
 import com.fly.house.download.exception.UserOfflineException;
 import com.fly.house.model.Account;
@@ -23,11 +24,11 @@ public class Converter {
     private AccountService accountService;
 
     public DownloadInfo convert(PathPackage pathPackage) {
-        //todo find by id
-        String name = pathPackage.getAccount().getLogin();
+        AccountDto accountDto = pathPackage.getAccount();
+        String name = accountDto.getLogin();
         if (onlineService.isOnline(name)) {
             InetAddress ip = onlineService.getAddress(name);
-            Account account = accountService.findAccountByName(name);
+            Account account = accountService.findAccountById(accountDto.getId());
             return new DownloadInfo(pathPackage, ip, account);
         } else {
             throw new UserOfflineException();

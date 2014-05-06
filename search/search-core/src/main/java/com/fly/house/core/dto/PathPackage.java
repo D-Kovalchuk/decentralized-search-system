@@ -19,6 +19,11 @@ public class PathPackage implements Serializable {
         this.port = port;
     }
 
+    public PathPackage(AccountDto accountDto, String path) {
+        this.accountDto = accountDto;
+        this.path = path;
+    }
+
     public int getPort() {
         return port;
     }

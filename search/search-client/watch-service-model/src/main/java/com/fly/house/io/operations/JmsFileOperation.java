@@ -6,6 +6,7 @@ import com.fly.house.core.dto.PathPackage;
 import com.fly.house.io.operations.api.FileOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class JmsFileOperation implements FileOperation {
     @Qualifier("createDestination")
     private Destination createQueue;
 
+    @Value("${port}")
+    private int port;
+
     @Override
     public void create(Path path) {
         send(path, createQueue);
@@ -44,7 +48,7 @@ public class JmsFileOperation implements FileOperation {
 
     private void send(Path path, Destination destination) {
         AccountDto accountDto = accountRepository.get();
-        PathPackage pathPackage = new PathPackage(accountDto, path.toString(), 8980);
+        PathPackage pathPackage = new PathPackage(accountDto, path.toString(), port);
 
         jmsTemplate.convertAndSend(destination, pathPackage);
     }

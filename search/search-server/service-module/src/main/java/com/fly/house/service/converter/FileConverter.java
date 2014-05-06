@@ -4,6 +4,7 @@ import com.fly.house.core.dto.AccountDto;
 import com.fly.house.core.dto.PathPackage;
 import com.fly.house.model.Account;
 import com.fly.house.model.File;
+import org.springframework.beans.factory.annotation.Value;
 
 import static com.fly.house.service.converter.ConverterFactory.getAccountConverter;
 
@@ -15,6 +16,6 @@ public class FileConverter implements Converter<File, PathPackage> {
     public PathPackage convert(File entity) {
         Account account = entity.getAccount();
         AccountDto accountDto = getAccountConverter().convert(account);
-        return new PathPackage(accountDto, entity.getPath(), 8980);
+        return new PathPackage(accountDto, entity.getPath());
     }
 }
